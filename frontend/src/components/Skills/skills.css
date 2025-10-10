@@ -1,0 +1,122 @@
+.skills__container {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.skills__content {
+  background-color: var(--container-color);
+  border: 1px solid var(--border-color);
+  padding: 1.75rem 1.25rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.skills__content:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--text-color-light);
+}
+
+.skills__title {
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-semi-bold);
+  text-align: center;
+  margin-bottom: var(--mb-2);
+  color: var(--title-color);
+}
+
+.skills__box {
+  display: flex;
+  justify-content: center;
+  column-gap: 1.25rem;
+}
+
+.skills__group {
+  display: grid;
+  align-items: flex-start;
+  row-gap: 1rem;
+}
+
+.skills__data {
+  display: flex;
+  column-gap: 0.5rem;
+  align-items: center;
+  padding: 0.35rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.skills__data:hover {
+  background-color: var(--body-color);
+  transform: translateX(3px);
+}
+
+.skills .bx-badge-check {
+  font-size: 1rem;
+  color: var(--text-color);
+  flex-shrink: 0;
+}
+
+.skills__name {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  line-height: 1.4;
+  color: var(--title-color);
+}
+
+.skills__level {
+  font-size: var(--tiny-font-size);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For large devices */
+@media screen and (max-width: 992px) {
+  .skills__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .skills__content {
+    padding: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .skills__container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .skills__content {
+    padding: 1.5rem 0.75rem;
+  }
+
+  .skills__box {
+    column-gap: 0.75rem;
+  }
+}
+
+/* For small devices */
+@media screen and (max-width: 350px) {
+  .skills__content {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .skills__box {
+    column-gap: 0.75rem;
+  }
+
+  .skills__name {
+    font-size: var(--small-font-size);
+  }
+
+  .skills__data {
+    column-gap: 0.5rem;
+    padding: 0.25rem;
+  }
+
+  .skills .bx-badge-check {
+    font-size: 1rem;
+  }
+}
