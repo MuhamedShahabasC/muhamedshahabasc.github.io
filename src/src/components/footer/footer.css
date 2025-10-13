@@ -41,8 +41,7 @@
 }
 
 .footer__social-icon {
-  background-color: var(--title-color);
-  color: var(--container-color);
+  color: var(--title-color);
   font-size: 1.25rem;
   padding: 0.5rem;
   border-radius: 0.5rem;
