@@ -1,6 +1,9 @@
 import React from "react";
+import icons from '../../../utils/iconMap';
 
 const ScrollDown = () => {
+  const ArrowDownIcon = icons.arrowDown;
+
   const svgStyles = {
     fillRule: "evenodd",
     clipRule: "evenodd",
@@ -47,12 +50,11 @@ const ScrollDown = () => {
           ></path>
         </svg>
         <span className="home__scroll-name">Scroll down</span>
-        <i
-          className="uil uil-arrow-down"
+        <ArrowDownIcon
           style={{
             color: "var(--title-color)",
           }}
-        ></i>
+        />
       </a>
     </div>
   );

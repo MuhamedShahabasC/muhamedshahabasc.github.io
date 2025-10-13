@@ -1,9 +1,19 @@
 import { useState } from "react";
 import "./header.css";
+import icons from '../../utils/iconMap';
 
 const Header = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
+
+  const HomeIcon = icons.home;
+  const UserIcon = icons.user;
+  const FileIcon = icons.file;
+  const BriefcaseIcon = icons.briefcase;
+  const SceneryIcon = icons.scenery;
+  const MessageIcon = icons.message;
+  const TimesIcon = icons.times;
+  const AppsIcon = icons.apps;
 
   // Change header bg
   window.addEventListener("scroll", function () {
@@ -31,7 +41,7 @@ const Header = () => {
                 onClick={() => handleNavLinkClick("home")}
                 className={`nav__link ${activeNav === "home" && "active-link"}`}
               >
-                <i className="uil uil-estate nav__icon"></i> Home
+                <HomeIcon className="nav__icon" /> Home
               </a>
             </li>
             <li className="nav__item">
@@ -42,7 +52,7 @@ const Header = () => {
                 }`}
                 onClick={() => handleNavLinkClick("about")}
               >
-                <i className="uil uil-user nav__icon"></i> About
+                <UserIcon className="nav__icon" /> About
               </a>
             </li>
             <li className="nav__item">
@@ -53,7 +63,7 @@ const Header = () => {
                 }`}
                 onClick={() => handleNavLinkClick("skills")}
               >
-                <i className="uil uil-file-alt nav__icon"></i> Skills
+                <FileIcon className="nav__icon" /> Skills
               </a>
             </li>
             <li className="nav__item">
@@ -64,7 +74,7 @@ const Header = () => {
                 }`}
                 onClick={() => handleNavLinkClick("services")}
               >
-                <i className="uil uil-briefcase-alt nav__icon"></i> Services
+                <BriefcaseIcon className="nav__icon" /> Services
               </a>
             </li>
             <li className="nav__item">
@@ -75,7 +85,7 @@ const Header = () => {
                 }`}
                 onClick={() => handleNavLinkClick("portfolio")}
               >
-                <i className="uil uil-scenery nav__icon"></i> Portfolio
+                <SceneryIcon className="nav__icon" /> Portfolio
               </a>
             </li>
             <li className="nav__item">
@@ -86,18 +96,18 @@ const Header = () => {
                 }`}
                 onClick={() => handleNavLinkClick("contact")}
               >
-                <i className="uil uil-message nav__icon"></i> Contact
+                <MessageIcon className="nav__icon" /> Contact
               </a>
             </li>
           </ul>
 
-          <i
-            className="uil uil-times nav__close"
+          <TimesIcon
+            className="nav__close"
             onClick={() => setToggleMenu(false)}
-          ></i>
+          />
         </div>
         <div className="nav__toggle" onClick={() => setToggleMenu(true)}>
-          <i className="uil uil-apps"></i>
+          <AppsIcon />
         </div>
       </nav>
     </header>

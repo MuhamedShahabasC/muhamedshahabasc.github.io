@@ -1,4 +1,13 @@
+import icons from '../../../utils/iconMap';
+
 const Social = () => {
+  const EnvelopeIcon = icons.envelope;
+  const MobileIcon = icons.mobile;
+  const MediumIcon = icons.medium;
+  const LinkedinIcon = icons.linkedin;
+  const WhatsappIcon = icons.whatsapp;
+  const GithubIcon = icons.github;
+
   return (
     <div className="home__social">
       <a
@@ -6,11 +15,11 @@ const Social = () => {
         target="_blank"
         className="home__social-icon"
       >
-        <i class="uil uil-envelope-alt"></i>
+        <EnvelopeIcon />
         <span className="home__social-label">muhamedshahabasc@gmail.com</span>
       </a>
       <a href="tel:+919495728746" target="_blank" className="home__social-icon">
-        <i className="uil uil-mobile-android"></i>
+        <MobileIcon />
         <span className="home__social-label">+91 9495728746</span>
       </a>
       <a
@@ -18,7 +27,7 @@ const Social = () => {
         target="_blank"
         className="home__social-icon"
       >
-        <i className="uil uil-medium-m"></i>
+        <MediumIcon />
         <span className="home__social-label">Medium Blog</span>
       </a>
       <a
@@ -26,7 +35,7 @@ const Social = () => {
         target="_blank"
         className="home__social-icon"
       >
-        <i class="uil uil-linkedin-alt"></i>
+        <LinkedinIcon />
         <span className="home__social-label">LinkedIn</span>
       </a>
       <a
@@ -34,7 +43,7 @@ const Social = () => {
         target="_blank"
         className="home__social-icon"
       >
-        <i class="uil uil-whatsapp"></i>
+        <WhatsappIcon />
         <span className="home__social-label">WhatsApp</span>
       </a>
       <a
@@ -42,7 +51,7 @@ const Social = () => {
         target="_blank"
         className="home__social-icon"
       >
-        <i className="uil uil-github"></i>
+        <GithubIcon />
         <span className="home__social-label">GitHub</span>
       </a>
     </div>

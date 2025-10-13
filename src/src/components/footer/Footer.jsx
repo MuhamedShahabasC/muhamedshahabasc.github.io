@@ -1,6 +1,14 @@
 import "./footer.css";
+import icons from '../../utils/iconMap';
 
 const Footer = () => {
+  const EnvelopeIcon = icons.envelope;
+  const MobileIcon = icons.mobile;
+  const MediumIcon = icons.medium;
+  const LinkedinIcon = icons.linkedin;
+  const WhatsappIcon = icons.whatsapp;
+  const GithubIcon = icons.github;
+
   return (
     <footer className="footer">
       <div className="footer__container container">
@@ -26,22 +34,22 @@ const Footer = () => {
 
         <div className="footer__social">
           <a href="mailto:muhamedshahabasc@gmail.com" target="_blank" className="footer__social-icon">
-            <i className="uil uil-envelope-alt"></i>
+            <EnvelopeIcon />
           </a>
           <a href="tel:+919495728746" target="_blank" className="footer__social-icon">
-            <i className="uil uil-mobile-android"></i>
+            <MobileIcon />
           </a>
           <a href="https://medium.com/@muhamedshahabasc" target="_blank" className="footer__social-icon">
-            <i className="uil uil-medium-m"></i>
+            <MediumIcon />
           </a>
           <a href="https://www.linkedin.com/in/MuhamedShahabasC" target="_blank" className="footer__social-icon">
-            <i className="uil uil-linkedin-alt"></i>
+            <LinkedinIcon />
           </a>
           <a href="https://wa.me/919495728746" target="_blank" className="footer__social-icon">
-            <i className="uil uil-whatsapp"></i>
+            <WhatsappIcon />
           </a>
           <a href="https://github.com/MuhamedShahabasC" target="_blank" className="footer__social-icon">
-            <i className="uil uil-github"></i>
+            <GithubIcon />
           </a>
         </div>
 

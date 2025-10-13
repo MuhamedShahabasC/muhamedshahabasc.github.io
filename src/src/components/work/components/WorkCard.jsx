@@ -1,8 +1,30 @@
 const WorkCard = ({ item }) => {
+  // Handle both optimized image objects and plain URLs (for placeholder images)
+  const isOptimizedImage = typeof item.image === 'object' && item.image.src;
+  
+  const imgProps = isOptimizedImage
+    ? {
+        src: item.image.src,
+        srcSet: item.image.srcSet,
+        sizes: item.image.sizes,
+        width: item.image.width,
+        height: item.image.height,
+      }
+    : {
+        src: item.image,
+        width: 400,
+        height: 300,
+      };
+
   return (
     <div className="work__card" key={item.id}>
       <div className="work__img-wrapper">
-        <img src={item.image} alt={item.title} className="work__img" />
+        <img 
+          {...imgProps}
+          alt={item.title}
+          className="work__img"
+          loading="lazy"
+        />
         {item.type && (
           <span className="work__type-badge">{item.type}</span>
         )}
