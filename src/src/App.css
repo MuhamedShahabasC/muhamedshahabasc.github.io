@@ -1,8 +1,6 @@
 /*=============== REUSABLE CSS CLASSES ===============*/
 .section {
   padding: 6rem 0 2rem;
-  scroll-snap-align: start;
-  scroll-margin-top: var(--header-height);
 }
 
 .section__title {

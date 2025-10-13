@@ -1,5 +1,5 @@
 import "./about.css";
-import AboutImg from "../../assets/Shahabas_SDE.jpg";
+import AboutImg from "../../assets/Shahabas_SDE.webp";
 import Info from "./components/Info";
 
 const About = () => {

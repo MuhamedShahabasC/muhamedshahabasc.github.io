@@ -1,7 +1,6 @@
 import Data from "./components/Data";
-import ScrollDown from "./components/ScrollDown";
 import Social from "./components/Social";
-import heroImage from "../../assets/Shahabas_SDE.jpg";
+import heroImage from "../../assets/Shahabas_SDE.webp";
 import "./home.css";
 
 const Home = () => {
@@ -22,7 +21,6 @@ const Home = () => {
 
           <Data />
         </div>
-        <ScrollDown />
       </div>
     </section>
   );
