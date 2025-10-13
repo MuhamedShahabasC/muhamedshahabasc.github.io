@@ -1,5 +1,5 @@
 import "./about.css";
-import AboutImg from "../../assets/Shahabas_SDE.webp";
+import { shahabasImage } from "../../constants/images";
 import Info from "./components/Info";
 
 const About = () => {
@@ -9,7 +9,7 @@ const About = () => {
       <span className="section__subtitle">My introduction</span>
 
       <div className="about__container container grid">
-        <img src={AboutImg} alt="Muhamed Shahabas C" className="about__img" />
+        <img src={shahabasImage} alt="Muhamed Shahabas C" className="about__img" />
         <div className="about__data">
           <Info />
           <p className="about__description">

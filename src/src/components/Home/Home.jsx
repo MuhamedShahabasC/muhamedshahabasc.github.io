@@ -1,6 +1,6 @@
 import Data from "./components/Data";
 import Social from "./components/Social";
-import heroImage from "../../assets/Shahabas_SDE.webp";
+import { shahabasImage } from "../../constants/images";
 import "./home.css";
 
 const Home = () => {
@@ -11,7 +11,7 @@ const Home = () => {
           <Social />
 
           <img 
-            src={heroImage}
+            src={shahabasImage}
             alt="Muhamed Shahabas - Software Developer"
             width="300"
             height="300"
