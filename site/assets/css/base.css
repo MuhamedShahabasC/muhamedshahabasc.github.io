@@ -101,17 +101,8 @@ body.dark-theme {
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-html::-webkit-scrollbar {
-  display: none;
 }
 
 body,
@@ -129,14 +120,6 @@ body {
   position: relative;
   overflow-x: hidden;
   width: 100%;
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-body::-webkit-scrollbar {
-  display: none;
 }
 
 body::before,
@@ -162,7 +145,7 @@ body::after {
   width: 400px;
   height: 400px;
   background: radial-gradient(circle, hsl(142, 60%, 85%), transparent);
-  bottom: -150px;
+  bottom: 0;
   left: -150px;
 }
 
