@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "remove-prev-build": "rm -rf ../assets/ ../index.html",
+    "remove-prev-build": "rm -rf ../assets/ ../blogs/ ../index.html",
     "build": "npm run remove-prev-build && vite build && mv dist/* ../ && rm -rf dist",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

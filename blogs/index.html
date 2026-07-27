@@ -7,31 +7,24 @@
       name="description"
       content="Technical notes and explainers by Muhamed Shahabas C."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <title>Blogs · Muhamed Shahabas C</title>
     <style>
       :root {
-        color-scheme: light dark;
-        --paper: #f7f8fc;
-        --surface: rgba(255, 255, 255, 0.82);
-        --text: #171b2d;
-        --muted: #697083;
-        --line: #dfe3ef;
-        --primary: #465bd8;
-        --primary-soft: #e9edff;
-        --shadow: 0 24px 70px rgba(39, 52, 126, 0.12);
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --paper: #10131f;
-          --surface: rgba(25, 29, 47, 0.9);
-          --text: #f2f4ff;
-          --muted: #a7aec4;
-          --line: #303650;
-          --primary: #9eabff;
-          --primary-soft: #252d5a;
-          --shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
-        }
+        --body-color: hsl(230, 60%, 99%);
+        --container-color: #fff;
+        --title-color: hsl(230, 20%, 15%);
+        --text-color: hsl(230, 8%, 45%);
+        --text-color-light: hsl(230, 8%, 65%);
+        --border-color: hsl(230, 20%, 90%);
+        --primary-color: hsl(230, 70%, 55%);
+        --primary-color-light: hsl(230, 70%, 90%);
+        --shadow-md: 0 4px 16px hsla(230, 70%, 15%, 0.12);
       }
 
       * {
@@ -42,12 +35,11 @@
         margin: 0;
         min-height: 100vh;
         background:
-          radial-gradient(circle at 85% 5%, var(--primary-soft), transparent 32rem),
-          var(--paper);
-        color: var(--text);
-        font-family:
-          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
+          radial-gradient(circle at 100% 0, hsl(230, 70%, 95%), transparent 32rem),
+          radial-gradient(circle at 0 100%, hsl(142, 60%, 96%), transparent 28rem),
+          var(--body-color);
+        color: var(--text-color);
+        font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
         line-height: 1.6;
       }
 
@@ -76,11 +68,11 @@
       }
 
       .back {
-        color: var(--muted);
+        color: var(--text-color);
       }
 
       .back:hover {
-        color: var(--primary);
+        color: var(--title-color);
       }
 
       header {
@@ -90,7 +82,7 @@
 
       .eyebrow {
         margin: 0 0 14px;
-        color: var(--primary);
+        color: var(--primary-color);
         font-size: 0.75rem;
         font-weight: 750;
         letter-spacing: 0.14em;
@@ -102,11 +94,14 @@
         font-size: clamp(2.75rem, 8vw, 5.4rem);
         line-height: 0.98;
         letter-spacing: -0.055em;
+        background: linear-gradient(135deg, var(--title-color), var(--primary-color));
+        background-clip: text;
+        color: transparent;
       }
 
       .intro {
         margin: 0;
-        color: var(--muted);
+        color: var(--text-color);
         font-size: clamp(1rem, 2.2vw, 1.2rem);
       }
 
@@ -116,12 +111,11 @@
         gap: 32px;
         align-items: end;
         padding: clamp(24px, 5vw, 42px);
-        border: 1px solid var(--line);
-        border-radius: 24px;
-        background: var(--surface);
-        box-shadow: var(--shadow);
+        border: 1.5px solid var(--border-color);
+        border-radius: 0.5rem;
+        background: var(--container-color);
+        box-shadow: var(--shadow-md);
         text-decoration: none;
-        backdrop-filter: blur(18px);
         transition:
           transform 180ms ease,
           border-color 180ms ease;
@@ -129,13 +123,13 @@
 
       .blog-card:hover {
         transform: translateY(-4px);
-        border-color: var(--primary);
+        border-color: var(--title-color);
       }
 
       .number {
         display: block;
         margin-bottom: 38px;
-        color: var(--muted);
+        color: var(--text-color-light);
         font-size: 0.75rem;
         letter-spacing: 0.12em;
       }
@@ -146,12 +140,13 @@
         font-size: clamp(1.6rem, 4vw, 2.5rem);
         line-height: 1.15;
         letter-spacing: -0.035em;
+        color: var(--title-color);
       }
 
       .summary {
         max-width: 610px;
         margin: 0;
-        color: var(--muted);
+        color: var(--text-color);
       }
 
       .arrow {
@@ -159,9 +154,9 @@
         width: 48px;
         height: 48px;
         place-items: center;
-        border-radius: 50%;
-        background: var(--primary);
-        color: var(--paper);
+        border-radius: 0.5rem;
+        background: var(--primary-color);
+        color: var(--container-color);
         font-size: 1.35rem;
       }
 
@@ -177,6 +172,11 @@
 
         .blog-card {
           grid-template-columns: 1fr;
+          gap: 24px;
+        }
+
+        .number {
+          margin-bottom: 28px;
         }
 
         .arrow {
