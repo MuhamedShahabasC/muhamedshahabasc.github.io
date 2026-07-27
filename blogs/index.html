@@ -13,14 +13,25 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.8/css/line.css"
+    />
+    <link rel="stylesheet" href="/blogs/header.css" />
+    <script src="/blogs/header.js" defer></script>
     <title>Blogs · Muhamed Shahabas C</title>
     <style>
       :root {
+        --header-height: 3rem;
         --body-color: hsl(230, 60%, 99%);
         --container-color: #fff;
         --title-color: hsl(230, 20%, 15%);
+        --title-color-dark: hsl(230, 20%, 10%);
         --text-color: hsl(230, 8%, 45%);
         --text-color-light: hsl(230, 8%, 65%);
+        --small-font-size: 0.875rem;
+        --font-medium: 500;
+        --z-fixed: 100;
         --border-color: hsl(230, 20%, 90%);
         --primary-color: hsl(230, 70%, 55%);
         --primary-color-light: hsl(230, 70%, 90%);
@@ -47,53 +58,6 @@
       a {
         color: inherit;
         text-decoration: none;
-      }
-
-      .site-header {
-        position: fixed;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        width: 100%;
-        background: var(--body-color);
-        box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
-      }
-
-      .navbar {
-        display: flex;
-        width: min(968px, calc(100% - 32px));
-        height: 4.5rem;
-        margin: 0 auto;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1rem;
-      }
-
-      .nav-logo {
-        flex: 0 0 auto;
-        color: var(--title-color);
-        font-size: 0.875rem;
-        font-weight: 500;
-      }
-
-      .nav-links {
-        display: flex;
-        margin: 0;
-        padding: 0;
-        align-items: center;
-        gap: 2rem;
-        list-style: none;
-      }
-
-      .nav-link {
-        color: var(--text-color);
-        font-size: 0.875rem;
-        font-weight: 500;
-        transition: color 180ms ease;
-      }
-
-      .nav-link:hover {
-        color: var(--title-color);
       }
 
       .shell {
@@ -191,30 +155,6 @@
       }
 
       @media (max-width: 768px) {
-        .site-header {
-          position: static;
-        }
-
-        .navbar {
-          width: 100%;
-          height: auto;
-          padding: 1rem;
-          align-items: center;
-          flex-direction: column;
-        }
-
-        .nav-links {
-          display: grid;
-          width: min(100%, 360px);
-          grid-template-columns: repeat(3, 1fr);
-          gap: 0.75rem 1rem;
-        }
-
-        .nav-link {
-          display: block;
-          text-align: center;
-        }
-
         .shell {
           width: min(100% - 24px, 968px);
           padding: 3.5rem 0 4rem;
@@ -241,17 +181,47 @@
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <nav class="navbar" aria-label="Primary navigation">
-        <a class="nav-logo" href="/">Muhamed Shahabas C</a>
-        <ul class="nav-links">
-          <li><a class="nav-link" href="/#home">Home</a></li>
-          <li><a class="nav-link" href="/#about">About</a></li>
-          <li><a class="nav-link" href="/#skills">Skills</a></li>
-          <li><a class="nav-link" href="/#services">Services</a></li>
-          <li><a class="nav-link" href="/#portfolio">Portfolio</a></li>
-          <li><a class="nav-link" href="/#contact">Contact</a></li>
-        </ul>
+    <header class="header">
+      <nav class="nav container" aria-label="Primary navigation">
+        <a href="/" class="nav__logo">Muhamed Shahabas C</a>
+        <div class="nav__menu">
+          <ul class="nav__list">
+            <li class="nav__item">
+              <a href="/#home" class="nav__link">
+                <i class="uil uil-estate nav__icon"></i> Home
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/#about" class="nav__link">
+                <i class="uil uil-user nav__icon"></i> About
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/#skills" class="nav__link">
+                <i class="uil uil-file-alt nav__icon"></i> Skills
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/#services" class="nav__link">
+                <i class="uil uil-briefcase-alt nav__icon"></i> Services
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/#portfolio" class="nav__link">
+                <i class="uil uil-scenery nav__icon"></i> Portfolio
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="/#contact" class="nav__link">
+                <i class="uil uil-message nav__icon"></i> Contact
+              </a>
+            </li>
+          </ul>
+          <i class="uil uil-times nav__close" aria-label="Close navigation"></i>
+        </div>
+        <div class="nav__toggle" aria-label="Open navigation">
+          <i class="uil uil-apps"></i>
+        </div>
       </nav>
     </header>
 
