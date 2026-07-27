@@ -5,7 +5,16 @@
 - Static personal portfolio deployed to Netlify.
 - Editable site source lives in `site/`.
 - `dist/` is generated deployment output and is not committed.
-- The site uses semantic HTML, Alpine.js for page state, and Lit for isolated web components.
+- The site uses semantic HTML, Alpine.js for page state, Lit for isolated web components, and Konva only for article canvases.
+- Browser dependencies, fonts, and assets are vendored under `site/assets/`; the site has no npm or runtime CDN dependency.
+
+## Structure
+
+- Home page: `site/index.html`
+- Blog index: `site/blogs/index.html`
+- Blog articles: `site/blogs/*.html`
+- Shared styles and scripts: `site/assets/css/` and `site/assets/js/`
+- Build and verification: `scripts/build.sh` and `scripts/verify.sh`
 
 ## Commands
 
@@ -18,10 +27,15 @@ Run commands from the repository root:
 ## Working Rules
 
 - Edit source only under `site/`; never hand-edit `dist/`.
+- Do not add React, Vite, npm, a package manager, or another build framework.
 - Use relative internal URLs so the site remains path-prefix-safe.
 - Keep primary content in HTML. Use Alpine for page state and Lit only for isolated enhancements.
 - Preserve the shared theme contract: `localStorage["theme"]`, `light`/`dark`, `body.dark-theme`, and `themechange`.
-- Run `scripts/verify.sh` and browser-check responsive light/dark behavior before declaring a change complete.
+- Keep the home, blog index, and article header, color tokens, and responsive behavior consistent.
+- Public pages require a unique title and description, canonical URL, Open Graph and Twitter metadata, and appropriate JSON-LD.
+- Update `site/sitemap.xml` and `site/robots.txt` when public routes or the canonical domain change.
+- Run `scripts/verify.sh`, then browser-check affected pages at desktop and mobile sizes in light and dark modes.
+- Confirm there are no console errors, horizontal overflow, broken interactions, or mojibake.
 - Never commit `.env` or expose credentials in code, logs, documentation, or responses.
 - Do not push, deploy, or publish unless the user explicitly requests it.
 
