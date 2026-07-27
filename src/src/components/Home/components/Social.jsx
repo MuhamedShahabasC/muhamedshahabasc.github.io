@@ -4,6 +4,7 @@ const Social = () => {
   const EnvelopeIcon = icons.envelope;
   const MobileIcon = icons.mobile;
   const MediumIcon = icons.medium;
+  const BlogIcon = icons.blog;
   const LinkedinIcon = icons.linkedin;
   const WhatsappIcon = icons.whatsapp;
   const GithubIcon = icons.github;
@@ -29,6 +30,10 @@ const Social = () => {
       >
         <MediumIcon />
         <span className="home__social-label">Medium Blog</span>
+      </a>
+      <a href="/blogs/" className="home__social-icon">
+        <BlogIcon />
+        <span className="home__social-label">Blogs</span>
       </a>
       <a
         href="https://www.linkedin.com/in/MuhamedShahabasC"

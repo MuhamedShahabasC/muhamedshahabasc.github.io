@@ -17,7 +17,8 @@ import {
   HiOutlineArrowRight,
   HiOutlineGlobeAlt,
   HiOutlineServer,
-  HiOutlineCheckCircle
+  HiOutlineCheckCircle,
+  HiOutlineBookOpen
 } from 'react-icons/hi2';
 
 import { 
@@ -36,6 +37,7 @@ export const icons = {
   whatsapp: FaWhatsapp,
   github: FaGithub,
   medium: FaMedium,
+  blog: HiOutlineBookOpen,
   
   // Navigation icons
   arrowDown: HiOutlineArrowDown,
