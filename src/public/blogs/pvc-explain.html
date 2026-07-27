@@ -1,4 +1,8 @@
+<!doctype html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Persistent Volumes on Azure</title>
 <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 <link rel="stylesheet" href="/blogs/header.css">
@@ -377,6 +381,8 @@
     * { transition-duration: .01ms !important; }
   }
 </style>
+</head>
+<body>
 
 <header class="header">
   <nav class="nav container" aria-label="Primary navigation">
@@ -413,17 +419,17 @@
 <div class="wrap">
 
   <header class="masthead">
-    <p class="kicker">Kubernetes storage · Azure · interactive</p>
+    <p class="kicker">Kubernetes storage &#183; Azure &#183; interactive</p>
     <h1>A claim is a request.<br>A volume is the thing.</h1>
     <p class="thesis">
-      <b>PersistentVolumeClaim</b> — "I need 30&nbsp;GiB, writable, by one pod."<br>
-      <b>StorageClass</b> — the factory that knows how to make that.<br>
-      <b>PersistentVolume</b> — the object standing in for a real disk.<br>
-      <b>Managed disk</b> — the real disk, sitting in one Azure zone.
+      <b>PersistentVolumeClaim</b> &#8212; "I need 30&nbsp;GiB, writable, by one pod."<br>
+      <b>StorageClass</b> &#8212; the factory that knows how to make that.<br>
+      <b>PersistentVolume</b> &#8212; the object standing in for a real disk.<br>
+      <b>Managed disk</b> &#8212; the real disk, sitting in one Azure zone.
     </p>
     <p class="standfirst">
       Three of those four live in the cluster and are cheap to recreate. The fourth is
-      where your data physically is — and it is the only one with a blast radius.
+      where your data physically is &#8212; and it is the only one with a blast radius.
       This page walks the binding lifecycle, then breaks things on purpose to show
       exactly what Azure's default storage classes do and don't survive.
     </p>
@@ -434,7 +440,7 @@
     <h2>How a claim becomes a disk</h2>
     <p>
       There are two ways a claim gets satisfied, and they run in opposite directions.
-      In <b>dynamic</b> provisioning a StorageClass manufactures the volume on demand —
+      In <b>dynamic</b> provisioning a StorageClass manufactures the volume on demand &#8212;
       nothing on the right-hand side exists until the claim asks for it. In
       <b>static</b> provisioning the storage was there first, and a human wrote the PV
       by hand to describe it. Switch modes and watch the order of events reverse.
@@ -443,14 +449,14 @@
     <div class="bench">
       <div class="bench-bar bench-modes">
         <span class="seg-label">Provisioning mode</span>
-        <button id="life-dyn" class="seg-on">Dynamic — a StorageClass builds it</button>
-        <button id="life-stat">Static — it already exists</button>
+        <button id="life-dyn" class="seg-on">Dynamic &#8212; a StorageClass builds it</button>
+        <button id="life-stat">Static &#8212; it already exists</button>
       </div>
       <div id="stage-life" class="bench-stage"></div>
       <div id="read-life" class="step-readout"></div>
       <div class="bench-bar">
-        <button id="life-prev">← Back</button>
-        <button id="life-next" class="primary">Next step →</button>
+        <button id="life-prev">&#8592; Back</button>
+        <button id="life-next" class="primary">Next step &#8594;</button>
         <button id="life-play">Play all</button>
         <button id="life-reset">Reset</button>
         <span class="spacer"></span>
@@ -466,7 +472,7 @@
         waiting on the cloud, the StorageClass name is wrong, or
         <code>WaitForFirstConsumer</code> is holding out for a pod to schedule first so
         it knows which zone to build in. <b>Static:</b> no existing PV satisfies the
-        claim — usually capacity, an access mode the PV doesn't offer, or a PV still
+        claim &#8212; usually capacity, an access mode the PV doesn't offer, or a PV still
         <code>Released</code> from a previous owner.
       </p>
     </div>
@@ -476,7 +482,7 @@
     <p class="eyebrow"><span class="num">02</span><span>Access modes</span></p>
     <h2>Why one pod gets the disk and three pods get the file share</h2>
     <p>
-      An access mode isn't a policy setting — it's a physical property of the storage.
+      An access mode isn't a policy setting &#8212; it's a physical property of the storage.
       A managed disk attaches to exactly one VM at a time, so no amount of YAML makes
       it <code>ReadWriteMany</code>. Try to schedule pods across nodes below and watch
       which volumes refuse.
@@ -486,9 +492,9 @@
       <div id="stage-modes" class="bench-stage"></div>
       <div id="read-modes" class="step-readout"></div>
       <div class="bench-bar">
-        <button id="m-n1">Schedule pod → node-1</button>
-        <button id="m-n2">Schedule pod → node-2</button>
-        <button id="m-n3">Schedule pod → node-3</button>
+        <button id="m-n1">Schedule pod &#8594; node-1</button>
+        <button id="m-n2">Schedule pod &#8594; node-2</button>
+        <button id="m-n3">Schedule pod &#8594; node-3</button>
         <button id="m-reset">Clear</button>
       </div>
     </div>
@@ -497,7 +503,7 @@
       This is the single constraint that decides your topology, and it is why
       charts that mount an RWO volume usually carry a hard guard against
       <code>replicaCount &gt; 1</code>. The classic casualty is an embedded
-      single-writer database — SQLite on an RWO disk cannot be shared by two
+      single-writer database &#8212; SQLite on an RWO disk cannot be shared by two
       replicas, and would corrupt if it could.
     </p>
   </section>
@@ -508,7 +514,7 @@
     <p>
       Now the question you actually asked. Three volumes, three different redundancy
       SKUs, one region. Inject failures and watch what survives. <b>LRS is the default
-      everywhere</b> — <code>managed-csi</code>, <code>default</code>,
+      everywhere</b> &#8212; <code>managed-csi</code>, <code>default</code>,
       <code>managed-csi-premium</code> all give you LRS unless you write your own
       StorageClass.
     </p>
@@ -528,7 +534,7 @@
       <span class="lede">The answer, stated plainly</span>
       <p>
         <b>Azure managed disks have no built-in disaster recovery.</b> LRS keeps three
-        synchronous copies inside <em>one</em> datacenter — that covers a failed drive
+        synchronous copies inside <em>one</em> datacenter &#8212; that covers a failed drive
         or a failed rack, and nothing larger. Zone loss needs a ZRS SKU you have to ask
         for by name. Region loss needs a backup product; there is no replication flag
         that gets you there, because a managed disk is a regional resource and cannot
@@ -541,7 +547,7 @@
     <p class="eyebrow"><span>Reference</span></p>
     <h2>What Azure actually hands you</h2>
     <p>
-      Every one of these is a CSI driver — provisioning is pluggable, and a single
+      Every one of these is a CSI driver &#8212; provisioning is pluggable, and a single
       cluster can run many side by side. A local dev cluster (k3d, minikube, kind)
       usually ships exactly one, <code>rancher.io/local-path</code>: a node-local
       directory with zero replication, which is why nothing you learn about
@@ -575,7 +581,7 @@
             <td>drive / rack only</td>
           </tr>
           <tr>
-            <td><span class="muted">custom — you write it</span></td>
+            <td><span class="muted">custom &#8212; you write it</span></td>
             <td>disk.csi.azure.com</td>
             <td>RWO</td>
             <td>Premium_ZRS<br>StandardSSD_ZRS</td>
@@ -584,16 +590,16 @@
           <tr>
             <td>azurefile<br><span class="muted">azurefile-csi</span></td>
             <td>file.csi.azure.com</td>
-            <td>RWX · ROX · RWO</td>
+            <td>RWX &#183; ROX &#183; RWO</td>
             <td>Standard_LRS</td>
             <td>configurable to GRS</td>
           </tr>
           <tr>
             <td>azurefile-csi-premium</td>
             <td>file.csi.azure.com</td>
-            <td>RWX · ROX · RWO</td>
+            <td>RWX &#183; ROX &#183; RWO</td>
             <td>Premium_LRS</td>
-            <td>zone at best — no GRS on premium</td>
+            <td>zone at best &#8212; no GRS on premium</td>
           </tr>
           <tr>
             <td><span class="muted">add-on</span></td>
@@ -605,7 +611,7 @@
           <tr>
             <td><span class="muted">add-on</span></td>
             <td>netapp.csi.azure.com</td>
-            <td>RWX · RWO</td>
+            <td>RWX &#183; RWO</td>
             <td>ANF pool</td>
             <td>cross-region replication</td>
           </tr>
@@ -618,13 +624,13 @@
       <p>
         <b>Zone pinning.</b> An LRS disk lives in one availability zone, and the PV
         carries a <code>nodeAffinity</code> to match. Its pod can only ever schedule
-        in that zone — so a single RWO PVC quietly makes a workload zonal, even in a
+        in that zone &#8212; so a single RWO PVC quietly makes a workload zonal, even in a
         three-zone cluster.
       </p>
       <p>
         <b>Reclaim policy.</b> <code>default</code> and <code>managed-csi</code> are
         <code>reclaimPolicy: Delete</code>. Delete the PVC and the Azure disk is
-        destroyed with it — no soft-delete, no recycle bin. Anything you would miss
+        destroyed with it &#8212; no soft-delete, no recycle bin. Anything you would miss
         needs a copy of the class with <code>Retain</code>.
       </p>
     </div>
@@ -646,7 +652,7 @@
     <p>
       <code>WaitForFirstConsumer</code> is the one to internalise. With the default
       <code>Immediate</code> binding, Azure picks the zone before the scheduler has
-      picked a node — and if it guesses a zone with no capacity for your pod, the pod
+      picked a node &#8212; and if it guesses a zone with no capacity for your pod, the pod
       is unschedulable forever against a perfectly healthy disk.
     </p>
   </section>
@@ -658,7 +664,7 @@
       It is tempting to read the lifecycle as "the pod asks and Kubernetes allows."
       Neither half is quite right, and the difference is what makes storage outlive
       workloads. <b>The claim is its own object.</b> It is not a field inside the pod,
-      and nothing grants it permission — it is a standing request that a provisioner
+      and nothing grants it permission &#8212; it is a standing request that a provisioner
       either fulfils or leaves <code>Pending</code>.
     </p>
 
@@ -669,7 +675,7 @@
         <span class="path">Helm / Kustomize / plain YAML</span>
         <span class="what">
           <strong>Asks for nothing.</strong> A templating engine renders manifests.
-          It has no opinion about storage and no runtime presence — swap Helm for
+          It has no opinion about storage and no runtime presence &#8212; swap Helm for
           <code>kubectl apply -f</code> and every object below is identical.
         </span>
       </li>
@@ -685,8 +691,8 @@
         <span class="path">kind: Deployment</span>
         <span class="what">
           <strong>Only consumes.</strong> It borrows an existing claim by name
-          through <code>claimName</code>. Delete the Deployment and the PVC — and
-          the disk behind it — are untouched.
+          through <code>claimName</code>. Delete the Deployment and the PVC &#8212; and
+          the disk behind it &#8212; are untouched.
         </span>
       </li>
     </ul>
@@ -714,12 +720,12 @@
       <span class="k">containers</span>:
         - <span class="k">name</span>: app
           <span class="k">volumeMounts</span>:
-            - <span class="k">name</span>: state        <span class="c"># ② pod-local alias</span>
+            - <span class="k">name</span>: state        <span class="c"># &#9313; pod-local alias</span>
               <span class="k">mountPath</span>: /state
       <span class="k">volumes</span>:
-        - <span class="k">name</span>: state            <span class="c"># ② same alias</span>
+        - <span class="k">name</span>: state            <span class="c"># &#9313; same alias</span>
           <span class="k">persistentVolumeClaim</span>:
-            <span class="k">claimName</span>: <span class="s">app-state</span>  <span class="c"># ① the only real link</span></pre>
+            <span class="k">claimName</span>: <span class="s">app-state</span>  <span class="c"># &#9312; the only real link</span></pre>
       </div>
     </div>
 
@@ -734,10 +740,10 @@
     <div class="note">
       <span class="lede">Is PersistentVolumeClaim a CRD?</span>
       <p>
-        No — it is a <b>built-in core resource</b>, compiled into the API server and
+        No &#8212; it is a <b>built-in core resource</b>, compiled into the API server and
         stable since Kubernetes 1.0. The <code>apiVersion: v1</code> gives it away:
         that is the <em>core</em> API group, the one with no group name. Every custom
-        resource carries a group instead — <code>cert-manager.io/v1</code>,
+        resource carries a group instead &#8212; <code>cert-manager.io/v1</code>,
         <code>argoproj.io/v1alpha1</code>. Confirm it on any cluster:
         <code>kubectl get crd</code> will not list PVCs, while
         <code>kubectl api-resources --api-group=''</code> will. Same for
@@ -749,12 +755,12 @@
     <h3>The one case where a workload does mint claims</h3>
     <p>
       A <b>StatefulSet</b> is the exception. Its <code>volumeClaimTemplates</code>
-      generate a PVC per replica — <code>data-web-0</code>, <code>data-web-1</code> —
+      generate a PVC per replica &#8212; <code>data-web-0</code>, <code>data-web-1</code> &#8212;
       each following its pod across reschedules. That is how you give every replica
       its own disk, and it is the standard answer when RWO blocks you from scaling a
       Deployment. Note the tradeoff: those PVCs are <em>not</em> garbage-collected
       when the StatefulSet is deleted. That is deliberate, and it means scaling down
-      leaves disks — and their bills — behind.
+      leaves disks &#8212; and their bills &#8212; behind.
     </p>
 
     <div class="note warn">
@@ -777,13 +783,13 @@
         ephemeral storage lives inside the workload and dies with it, while persistent
         storage is a separate object referenced by name <b>precisely because it has to
         outlive every pod that mounts it</b>. If a claim were a field on a pod, it
-        could not survive the pod — and then none of it would be persistent.
+        could not survive the pod &#8212; and then none of it would be persistent.
       </p>
     </div>
   </section>
 
   <footer>
-    Diagrams drawn with Konva 10.3.0 (MIT), inlined — the page loads nothing from the network.<br>
+    Diagrams drawn with Konva 10.3.0 (MIT), inlined &#8212; the page loads nothing from the network.<br>
     Storage-class names, default SKUs and redundancy behaviour reflect standard AKS defaults
     and change over time; confirm against <code>kubectl get sc</code> on your own cluster
     before relying on any of it.
@@ -856,7 +862,7 @@
     g.add(txt({ x: o.x + 19, y: o.y - 5, text: o.label, fs: 10, ls: 1.6, fill: o.stroke, bold: true }));
   }
 
-  /* Cylinder — the universal "this is a disk" glyph. */
+  /* Cylinder \u2014 the universal "this is a disk" glyph. */
   function cylinder(o) {
     var g = new Konva.Group({ x: o.x, y: o.y });
     var w = o.w, h = o.h, ry = Math.min(10, h * 0.18);
@@ -881,7 +887,7 @@
     g.add(title);
     if (o.sub) g.add(txt({ x: o.x + 12, y: o.y + 46, text: o.sub, fs: 11, fill: o.subFill, w: o.w - 24, lh: 1.5 }));
     if (o.status) {
-      /* Bottom-right — the top-right corner belongs to the kind eyebrow. */
+      /* Bottom-right \u2014 the top-right corner belongs to the kind eyebrow. */
       var pw = o.status.length * 7 + 14, py = o.y + o.h - 25;
       g.add(rect({ x: o.x + o.w - pw - 12, y: py, w: pw, h: 17, fill: o.statusBg, stroke: o.statusFg, sw: 1, r: 2 }));
       g.add(txt({ x: o.x + o.w - pw - 12, y: py + 4, text: o.status, fs: 9.5, ls: 1.1, fill: o.statusFg, bold: true, w: pw, align: 'center' }));
@@ -900,7 +906,7 @@
     this.stage.add(this.layer);
     this.appeared = null;
     this.fit();
-    /* Retained on the instance — an unreferenced ResizeObserver can be collected. */
+    /* Retained on the instance \u2014 an unreferenced ResizeObserver can be collected. */
     this.ro = new ResizeObserver(function () { self.fit(); });
     this.ro.observe(this.el);
     Bench.all.push(this);
@@ -934,19 +940,19 @@
   }
 
   /* =================================================================
-     01 — the provisioning lifecycle
+     01 \u2014 the provisioning lifecycle
      ================================================================= */
 
   var LIFE = [
     {
       show: ['pod', 'pvc'], hi: 'pvc', pvc: 'PENDING',
       tag: 'Pending', cls: 'warn',
-      body: 'You wrote a <b>claim</b>, not a disk — and it is <b>its own object</b>, not a field inside the pod. It says how much and how it will be mounted, never where it lives or what it costs. Nothing exists in Azure yet, and the pod will not start.'
+      body: 'You wrote a <b>claim</b>, not a disk \u2014 and it is <b>its own object</b>, not a field inside the pod. It says how much and how it will be mounted, never where it lives or what it costs. Nothing exists in Azure yet, and the pod will not start.'
     },
     {
       show: ['pod', 'pvc', 'sc'], hi: 'sc', pvc: 'PENDING',
       tag: 'Matching', cls: 'warn',
-      body: 'The claim names a <b>StorageClass</b>. That is the whole binding decision: the class picks the driver, the SKU, the reclaim policy and when to bind. Omit the field and you silently get the cluster default — on AKS, <b>StandardSSD_LRS</b>.'
+      body: 'The claim names a <b>StorageClass</b>. That is the whole binding decision: the class picks the driver, the SKU, the reclaim policy and when to bind. Omit the field and you silently get the cluster default \u2014 on AKS, <b>StandardSSD_LRS</b>.'
     },
     {
       show: ['pod', 'pvc', 'sc', 'csi'], hi: 'csi', pvc: 'PENDING',
@@ -956,62 +962,62 @@
     {
       show: ['pod', 'pvc', 'sc', 'csi', 'disk', 'lrs'], hi: 'disk', pvc: 'PENDING',
       tag: 'Created', cls: 'info',
-      body: 'Azure creates a real <b>managed disk</b> inside one availability zone. LRS means three synchronous replicas — all three of them in <b>that same zone</b>. This is the moment the blast radius is decided, and nothing later in the lifecycle changes it.'
+      body: 'Azure creates a real <b>managed disk</b> inside one availability zone. LRS means three synchronous replicas \u2014 all three of them in <b>that same zone</b>. This is the moment the blast radius is decided, and nothing later in the lifecycle changes it.'
     },
     {
       show: ['pod', 'pvc', 'sc', 'csi', 'disk', 'lrs', 'pv'], hi: 'pv', pvc: 'PENDING',
       tag: 'PV created', cls: 'info',
-      body: 'Only now does a <b>PersistentVolume</b> appear — created by the control plane, after Azure confirmed the disk. The PV is a cluster-scoped receipt holding the disk\'s resource ID, its capacity, and a nodeAffinity pinning it to zone&nbsp;1.'
+      body: 'Only now does a <b>PersistentVolume</b> appear \u2014 created by the control plane, after Azure confirmed the disk. The PV is a cluster-scoped receipt holding the disk\'s resource ID, its capacity, and a nodeAffinity pinning it to zone&nbsp;1.'
     },
     {
       show: ['pod', 'pvc', 'sc', 'csi', 'disk', 'lrs', 'pv', 'bind'], hi: 'bind', pvc: 'BOUND',
       tag: 'Bound', cls: 'ok',
-      body: 'Claim and volume <b>bind</b> — one to one, exclusive, permanent. No second PVC can attach to this PV even if it sits idle. The binding is what the pod was waiting on.'
+      body: 'Claim and volume <b>bind</b> \u2014 one to one, exclusive, permanent. No second PVC can attach to this PV even if it sits idle. The binding is what the pod was waiting on.'
     },
     {
       show: ['pod', 'pvc', 'sc', 'csi', 'disk', 'lrs', 'pv', 'bind', 'mount', 'zone'], hi: 'zone', pvc: 'BOUND',
       tag: 'Scheduled', cls: 'ok',
-      body: 'The pod finally mounts the volume — it never owned the claim, it only referenced it by <code>claimName</code>. But the PV\'s nodeAffinity has now made the pod <b>zonal</b>: the scheduler can only ever place it in zone&nbsp;1. A three-zone cluster does not help a workload holding one LRS disk.'
+      body: 'The pod finally mounts the volume \u2014 it never owned the claim, it only referenced it by <code>claimName</code>. But the PV\'s nodeAffinity has now made the pod <b>zonal</b>: the scheduler can only ever place it in zone&nbsp;1. A three-zone cluster does not help a workload holding one LRS disk.'
     },
     {
       show: ['pvc', 'sc', 'csi', 'disk', 'lrs', 'pv', 'bind', 'reclaim'], hi: 'reclaim', pvc: 'TERMINATING',
       tag: 'Delete', cls: 'bad',
-      body: 'The workload had to go first — the <code>pvc-protection</code> finalizer holds a claim in <code>Terminating</code> for as long as any pod still mounts it. Deleting the <b>Deployment</b> alone does nothing to storage; the claim outlives it. Only deleting the <b>PVC</b> fires <code>reclaimPolicy</code>. On <b>Delete</b>, the default here, the PV object and the Azure disk are both destroyed — no soft-delete, no recycle bin. On <b>Retain</b>, the disk survives as an orphan you can rebind by hand.'
+      body: 'The workload had to go first \u2014 the <code>pvc-protection</code> finalizer holds a claim in <code>Terminating</code> for as long as any pod still mounts it. Deleting the <b>Deployment</b> alone does nothing to storage; the claim outlives it. Only deleting the <b>PVC</b> fires <code>reclaimPolicy</code>. On <b>Delete</b>, the default here, the PV object and the Azure disk are both destroyed \u2014 no soft-delete, no recycle bin. On <b>Retain</b>, the disk survives as an orphan you can rebind by hand.'
     }
   ];
 
-  /* Static provisioning — the storage exists first and a human describes it.
+  /* Static provisioning \u2014 the storage exists first and a human describes it.
      Same stage, reversed causality. */
   var STATIC = [
     {
       show: ['disk'], hi: 'disk', pv: null,
       tag: 'Out of band', cls: 'info',
-      body: 'Nothing here is Kubernetes yet. Someone already created the storage — an Azure disk from the portal, an NFS export, an iSCSI LUN, a filer volume. It has an identity of its own, and it will keep existing no matter what the cluster does.'
+      body: 'Nothing here is Kubernetes yet. Someone already created the storage \u2014 an Azure disk from the portal, an NFS export, an iSCSI LUN, a filer volume. It has an identity of its own, and it will keep existing no matter what the cluster does.'
     },
     {
       show: ['disk', 'admin', 'pv'], hi: 'pv', pv: 'AVAILABLE',
       tag: 'Hand-written', cls: 'info',
-      body: 'An admin writes the <b>PersistentVolume</b> by hand — no provisioner, no StorageClass. The PV is just a description of storage that already exists: its capacity, its access modes, and a backend handle (<code>volumeHandle</code> for CSI, <code>server</code> + <code>path</code> for NFS). Its status is <b>Available</b>: real, and unclaimed.'
+      body: 'An admin writes the <b>PersistentVolume</b> by hand \u2014 no provisioner, no StorageClass. The PV is just a description of storage that already exists: its capacity, its access modes, and a backend handle (<code>volumeHandle</code> for CSI, <code>server</code> + <code>path</code> for NFS). Its status is <b>Available</b>: real, and unclaimed.'
     },
     {
       show: ['disk', 'admin', 'pv', 'pvc'], hi: 'pvc', pv: 'AVAILABLE',
       tag: 'Pending', cls: 'warn',
-      body: 'Now the claim. The critical field is <code>storageClassName: ""</code> — an <b>explicit empty string</b>. Omit the field entirely and you do not get static binding; you get the cluster\'s <b>default StorageClass</b>, which cheerfully provisions a brand-new disk and ignores the PV you prepared.'
+      body: 'Now the claim. The critical field is <code>storageClassName: ""</code> \u2014 an <b>explicit empty string</b>. Omit the field entirely and you do not get static binding; you get the cluster\'s <b>default StorageClass</b>, which cheerfully provisions a brand-new disk and ignores the PV you prepared.'
     },
     {
       show: ['disk', 'admin', 'pv', 'pvc', 'bind'], hi: 'bind', pv: 'BOUND',
       tag: 'Matched', cls: 'ok',
-      body: 'The control plane plays matchmaker instead of manufacturer. It looks for an <b>Available</b> PV whose capacity is at least the request, whose access modes are a superset of the ask, and whose labels satisfy any <code>selector</code>. First adequate match wins — <b>capacity is a floor, not a target</b>, so a 5Gi claim will happily bind a 500Gi volume and waste the rest.'
+      body: 'The control plane plays matchmaker instead of manufacturer. It looks for an <b>Available</b> PV whose capacity is at least the request, whose access modes are a superset of the ask, and whose labels satisfy any <code>selector</code>. First adequate match wins \u2014 <b>capacity is a floor, not a target</b>, so a 5Gi claim will happily bind a 500Gi volume and waste the rest.'
     },
     {
       show: ['disk', 'admin', 'pv', 'pvc', 'bind', 'pod', 'mount'], hi: 'mount', pv: 'BOUND',
       tag: 'Running', cls: 'ok',
-      body: 'From here it is identical to dynamic. The pod names the claim, mounts it, and runs. Everything downstream of the bind — access modes, zone affinity if the PV declares it, the multi-attach rules — behaves exactly the same way, because the pod cannot tell how the volume came to exist.'
+      body: 'From here it is identical to dynamic. The pod names the claim, mounts it, and runs. Everything downstream of the bind \u2014 access modes, zone affinity if the PV declares it, the multi-attach rules \u2014 behaves exactly the same way, because the pod cannot tell how the volume came to exist.'
     },
     {
       show: ['disk', 'admin', 'pv', 'pvc', 'bind', 'released'], hi: 'released', pv: 'RELEASED',
       tag: 'Released', cls: 'warn',
-      body: 'The pod goes first — <code>pvc-protection</code> keeps the claim alive while anything mounts it. Then the PV goes to <b>Released</b>, <em>not</em> back to Available. It still carries a <code>claimRef</code> pointing at the claim that no longer exists, and <b>no new PVC will ever bind to it</b> in that state. This is the single most common static-provisioning surprise. An admin has to clear <code>claimRef</code> to recycle it. The upside: your data is untouched, because a hand-written PV defaults to <code>Retain</code>.'
+      body: 'The pod goes first \u2014 <code>pvc-protection</code> keeps the claim alive while anything mounts it. Then the PV goes to <b>Released</b>, <em>not</em> back to Available. It still carries a <code>claimRef</code> pointing at the claim that no longer exists, and <b>no new PVC will ever bind to it</b> in that state. This is the single most common static-provisioning surprise. An admin has to clear <code>claimRef</code> to recycle it. The upside: your data is untouched, because a hand-written PV defaults to <code>Retain</code>.'
     }
   ];
 
@@ -1039,7 +1045,7 @@
       var dg = new Konva.Group({ name: 'disk' });
       dg.add(cylinder({ x: 650, y: 198, w: 110, h: 92, fill: t.surface, top: t.petrolSoft, stroke: t.petrol }));
       dg.add(txt({ x: 530, y: 130, text: 'created outside Kubernetes', fs: 11, fill: t.text, w: 350, align: 'center', bold: true }));
-      dg.add(txt({ x: 530, y: 150, text: 'Azure disk · NFS export · iSCSI LUN · hostPath', fs: 9.5, fill: t.faint, w: 350, align: 'center' }));
+      dg.add(txt({ x: 530, y: 150, text: 'Azure disk \u00B7 NFS export \u00B7 iSCSI LUN \u00B7 hostPath', fs: 9.5, fill: t.faint, w: 350, align: 'center' }));
       dg.add(txt({ x: 530, y: 302, text: 'survives the cluster entirely', fs: 9.5, fill: t.petrol, w: 350, align: 'center' }));
       layer.add(dg);
     }
@@ -1068,7 +1074,7 @@
       var pvCol = st.pv === 'RELEASED' ? t.amber : (st.pv === 'BOUND' ? t.sage : t.petrol);
       layer.add(box({
         key: 'pv', x: 256, y: 200, w: 182, h: 88, hi: hi('pv') || hi('released'),
-        kind: 'CLUSTER-SCOPED', title: 'PersistentVolume', sub: released ? 'claimRef still set' : 'hand-written · Retain',
+        kind: 'CLUSTER-SCOPED', title: 'PersistentVolume', sub: released ? 'claimRef still set' : 'hand-written \u00B7 Retain',
         fill: t.surface, stroke: hi('pv') || hi('released') ? pvCol : t.line,
         titleFill: t.text, subFill: released ? t.amber : t.dim, kindFill: t.faint,
         status: st.pv, statusFg: pvCol,
@@ -1078,12 +1084,12 @@
 
     if (has('admin')) layer.add(box({
       key: 'admin', x: 44, y: 312, w: 176, h: 76, hi: hi('admin'),
-      kind: 'HUMAN · NOT A CONTROLLER', title: 'Platform admin', sub: 'writes the PV by hand',
+      kind: 'HUMAN \u00B7 NOT A CONTROLLER', title: 'Platform admin', sub: 'writes the PV by hand',
       fill: t.surface2, stroke: t.line,
       titleFill: t.text, subFill: t.dim, kindFill: t.faint
     }));
 
-    /* admin authors the PV — elbow up into the PV box */
+    /* admin authors the PV \u2014 elbow up into the PV box */
     if (has('admin')) {
       var ag = new Konva.Group({ name: 'admin' });
       ag.add(arrow({ pts: [222, 350, 347, 350, 347, 292], stroke: t.line, dash: [5, 4] }));
@@ -1094,7 +1100,7 @@
     if (has('pv')) {
       var rg = new Konva.Group({ name: 'pv' });
       rg.add(arrow({ pts: [648, 244, 442, 244], stroke: t.petrol }));
-      rg.add(txt({ x: 452, y: 224, text: 'volumeHandle — describes it', fs: 9.5, fill: t.faint }));
+      rg.add(txt({ x: 452, y: 224, text: 'volumeHandle \u2014 describes it', fs: 9.5, fill: t.faint }));
       layer.add(rg);
     }
     if (has('bind')) {
@@ -1126,7 +1132,7 @@
 
     if (has('pod')) layer.add(box({
       key: 'pod', x: 44, y: 96, w: 176, h: 76,
-      kind: 'WORKLOAD', title: 'Pod', sub: has('mount') ? 'running · zone 1' : 'unschedulable',
+      kind: 'WORKLOAD', title: 'Pod', sub: has('mount') ? 'running \u00B7 zone 1' : 'unschedulable',
       fill: t.surface, stroke: has('mount') ? t.sage : t.line,
       titleFill: t.text, subFill: has('mount') ? t.sage : t.faint, kindFill: t.faint
     }));
@@ -1135,7 +1141,7 @@
       var term = st.pvc === 'TERMINATING', bound = st.pvc === 'BOUND';
       layer.add(box({
         key: 'pvc', x: 44, y: 200, w: 176, h: 88, hi: hi('pvc'),
-        kind: 'NAMESPACED', title: 'PersistentVolumeClaim', sub: '30Gi · ReadWriteOnce',
+        kind: 'NAMESPACED', title: 'PersistentVolumeClaim', sub: '30Gi \u00B7 ReadWriteOnce',
         fill: t.surface, stroke: term ? t.rust : (hi('pvc') ? t.petrol : t.line),
         titleFill: t.text, subFill: t.dim, kindFill: t.faint,
         status: st.pvc,
@@ -1155,23 +1161,23 @@
       var gone = has('reclaim');
       layer.add(box({
         key: 'pv', x: 256, y: 200, w: 182, h: 88, hi: hi('pv'),
-        kind: 'CLUSTER-SCOPED', title: 'PersistentVolume', sub: gone ? 'deleted with the claim' : 'pvc-8f3a… · zone 1',
+        kind: 'CLUSTER-SCOPED', title: 'PersistentVolume', sub: gone ? 'deleted with the claim' : 'pvc-8f3a\u2026 \u00B7 zone 1',
         fill: t.surface, stroke: gone ? t.rust : (hi('pv') ? t.petrol : t.line), dash: gone ? [5, 3] : null,
         titleFill: gone ? t.rust : t.text, subFill: gone ? t.rust : t.dim, kindFill: t.faint
       }));
     }
 
-    /* pod → pvc */
+    /* pod \u2192 pvc */
     if (has('pvc')) {
       layer.add(arrow({ pts: [132, 172, 132, 198], stroke: t.line }));
       layer.add(txt({ x: 140, y: 176, text: 'claimName', fs: 9.5, fill: t.faint }));
     }
-    /* pvc → storageclass */
+    /* pvc \u2192 storageclass */
     if (has('sc')) {
       layer.add(arrow({ key: 'sc', pts: [132, 288, 132, 310], stroke: hi('sc') ? t.petrol : t.line }));
       layer.add(txt({ x: 140, y: 291, text: 'storageClassName', fs: 9.5, fill: t.faint }));
     }
-    /* storageclass → azure */
+    /* storageclass \u2192 azure */
     if (has('csi')) {
       var g = new Konva.Group({ name: 'csi' });
       g.add(arrow({ pts: [220, 350, 498, 350], stroke: hi('csi') ? t.petrol : t.line, dash: [6, 4] }));
@@ -1187,27 +1193,27 @@
         fill: dead ? t.rustSoft : t.surface, top: dead ? t.rustSoft : t.petrolSoft,
         stroke: dead ? t.rust : t.petrol
       }));
-      dg.add(txt({ x: 504, y: 230, text: dead ? 'DISK DESTROYED' : 'managed disk\n30 GiB · StandardSSD', fs: 9.5, fill: dead ? t.rust : t.dim, w: 132, align: 'center', bold: dead }));
+      dg.add(txt({ x: 504, y: 230, text: dead ? 'DISK DESTROYED' : 'managed disk\n30 GiB \u00B7 StandardSSD', fs: 9.5, fill: dead ? t.rust : t.dim, w: 132, align: 'center', bold: dead }));
       layer.add(dg);
     }
     /* the three LRS replicas, all inside zone 1 */
     if (has('lrs')) {
       var lg = new Konva.Group({ name: 'lrs' });
       var dead2 = has('reclaim');
-      lg.add(txt({ x: 504, y: 288, text: 'LRS · 3 copies · 1 zone', fs: 9, fill: dead2 ? t.rust : t.faint, w: 132, align: 'center' }));
+      lg.add(txt({ x: 504, y: 288, text: 'LRS \u00B7 3 copies \u00B7 1 zone', fs: 9, fill: dead2 ? t.rust : t.faint, w: 132, align: 'center' }));
       for (var i = 0; i < 3; i++) {
         lg.add(rect({ x: 526 + i * 30, y: 306, w: 22, h: 22, fill: dead2 ? t.rustSoft : t.sageSoft, stroke: dead2 ? t.rust : t.sage, sw: 1 }));
       }
       layer.add(lg);
     }
-    /* disk → pv */
+    /* disk \u2192 pv */
     if (has('pv')) {
       var pg = new Konva.Group({ name: 'pv' });
       pg.add(arrow({ pts: [524, 244, 440, 244], stroke: hi('pv') ? t.petrol : t.line }));
       pg.add(txt({ x: 444, y: 226, text: 'creates PV', fs: 9.5, fill: t.faint }));
       layer.add(pg);
     }
-    /* pvc ↔ pv */
+    /* pvc \u2194 pv */
     if (has('bind')) {
       var bg = new Konva.Group({ name: 'bind' });
       bg.add(arrow({ pts: [222, 258, 254, 258], stroke: t.sage, both: true, sw: 2 }));
@@ -1218,7 +1224,7 @@
     if (has('zone')) {
       var zg = new Konva.Group({ name: 'zone' });
       zg.add(arrow({ pts: [222, 134, 498, 134], stroke: hi('zone') ? t.amber : t.line, dash: [4, 4] }));
-      zg.add(txt({ x: 236, y: 114, text: 'nodeAffinity → zone 1', fs: 10, fill: hi('zone') ? t.amber : t.dim, bold: hi('zone') }));
+      zg.add(txt({ x: 236, y: 114, text: 'nodeAffinity \u2192 zone 1', fs: 10, fill: hi('zone') ? t.amber : t.dim, bold: hi('zone') }));
       layer.add(zg);
     }
   }
@@ -1272,7 +1278,7 @@
   };
 
   /* =================================================================
-     02 — access modes
+     02 \u2014 access modes
      ================================================================= */
 
   var COLS = [
@@ -1301,7 +1307,7 @@
           layer.add(new Konva.Line({ points: [x + 112, 104 + f * 14, x + 174, 104 + f * 14], stroke: t.petrol, strokeWidth: 1, listening: false }));
         }
       }
-      layer.add(txt({ x: x + 14, y: 152, text: c.glyph === 'disk' ? 'one VM attachment' : 'SMB share · many mounts', fs: 9.5, fill: t.faint, w: w - 28, align: 'center' }));
+      layer.add(txt({ x: x + 14, y: 152, text: c.glyph === 'disk' ? 'one VM attachment' : 'SMB share \u00B7 many mounts', fs: 9.5, fill: t.faint, w: w - 28, align: 'center' }));
 
       /* three node slots */
       ['node-1', 'node-2', 'node-3'].forEach(function (nd, ni) {
@@ -1316,7 +1322,7 @@
         }));
         layer.add(txt({ x: x + 24, y: ny + 10, text: nd, fs: 11, fill: live ? t.text : (blocked ? t.rust : t.faint) }));
         var label = live
-          ? count + (count === 1 ? ' pod · ' : ' pods · ') + (c.key === 'rox' ? 'read-only' : 'read-write')
+          ? count + (count === 1 ? ' pod \u00B7 ' : ' pods \u00B7 ') + (c.key === 'rox' ? 'read-only' : 'read-write')
           : (blocked ? 'cannot attach' : 'no mount');
         layer.add(txt({ x: x + 14, y: ny + 10, text: label + '   ', fs: 10, fill: live ? (c.key === 'rox' ? t.amber : t.sage) : (blocked ? t.rust : t.faint), w: w - 28, align: 'right' }));
       });
@@ -1342,17 +1348,17 @@
       modesText(
         'The disk is already attached to <b>' + modeState.rwoNode + '</b>, so the pod on <b>' + nd +
         '</b> stays <code>ContainerCreating</code> with a <code>Multi-Attach error</code>. ' +
-        'The file share took both pods without complaint. <b>This is hardware, not policy</b> — a managed disk is one VM attachment, and no field in the PVC changes that.',
+        'The file share took both pods without complaint. <b>This is hardware, not policy</b> \u2014 a managed disk is one VM attachment, and no field in the PVC changes that.',
         'bad', 'Multi-attach'
       );
     } else if (Object.keys(modeState.rwo).length === 1 && modeState.rwo[nd] === 2) {
       modesText(
-        'A second pod landed on the <b>same</b> node and mounted the disk fine. <code>ReadWriteOnce</code> means one <b>node</b>, not one pod — a detail that surprises people. If you truly need one pod, the mode is <code>ReadWriteOncePod</code>.',
+        'A second pod landed on the <b>same</b> node and mounted the disk fine. <code>ReadWriteOnce</code> means one <b>node</b>, not one pod \u2014 a detail that surprises people. If you truly need one pod, the mode is <code>ReadWriteOncePod</code>.',
         'ok', 'Same node'
       );
     } else {
       modesText(
-        'All three volumes accepted a pod on <b>' + nd + '</b>. Nothing is proven yet — the difference only shows when you schedule onto a <b>different</b> node. Try one.',
+        'All three volumes accepted a pod on <b>' + nd + '</b>. Nothing is proven yet \u2014 the difference only shows when you schedule onto a <b>different</b> node. Try one.',
         'info', 'Attached'
       );
     }
@@ -1368,13 +1374,13 @@
   };
 
   /* =================================================================
-     03 — blast radius
+     03 \u2014 blast radius
      ================================================================= */
 
   var BANDS = [
-    { key: 'lrs', sku: 'StandardSSD_LRS', cls: 'managed-csi · the default', copies: [1, 1, 1], zones: [0, 0, 0], paired: false },
-    { key: 'zrs', sku: 'Premium_ZRS', cls: 'custom class — opt in', copies: [1, 1, 1], zones: [0, 1, 2], paired: false },
-    { key: 'grs', sku: 'Standard_GRS', cls: 'azurefile · standard only', copies: [1, 1], zones: [0, 0], paired: true }
+    { key: 'lrs', sku: 'StandardSSD_LRS', cls: 'managed-csi \u00B7 the default', copies: [1, 1, 1], zones: [0, 0, 0], paired: false },
+    { key: 'zrs', sku: 'Premium_ZRS', cls: 'custom class \u2014 opt in', copies: [1, 1, 1], zones: [0, 1, 2], paired: false },
+    { key: 'grs', sku: 'Standard_GRS', cls: 'azurefile \u00B7 standard only', copies: [1, 1], zones: [0, 0], paired: true }
   ];
   var drState = { zones: {}, region: false, diskLoss: false };
 
@@ -1388,7 +1394,7 @@
   }
 
   function buildDR(layer, t) {
-    layer.add(txt({ x: 235, y: 18, text: 'AZURE REGION · PRIMARY', fs: 10, ls: 1.5, fill: drState.region ? t.rust : t.petrol, bold: true }));
+    layer.add(txt({ x: 235, y: 18, text: 'AZURE REGION \u00B7 PRIMARY', fs: 10, ls: 1.5, fill: drState.region ? t.rust : t.petrol, bold: true }));
     layer.add(txt({ x: 725, y: 18, text: 'PAIRED REGION', fs: 10, ls: 1.5, fill: t.faint, bold: true }));
     layer.add(rect({ x: 235, y: 34, w: 470, h: 350, fill: 'transparent', stroke: drState.region ? t.rust : t.petrol, sw: 1, dash: [5, 4] }));
     layer.add(rect({ x: 725, y: 34, w: 195, h: 350, fill: 'transparent', stroke: t.faint, sw: 1, dash: [5, 4] }));
@@ -1396,7 +1402,7 @@
     [0, 1, 2].forEach(function (z) {
       var zx = 245 + z * 154, down = drState.zones[z] || drState.region;
       layer.add(rect({ x: zx, y: 44, w: 148, h: 330, fill: down ? t.rustSoft : 'transparent', stroke: down ? t.rust : t.line, sw: 1, dash: down ? null : [3, 3] }));
-      layer.add(txt({ x: zx, y: 52, text: down ? 'ZONE ' + (z + 1) + ' — DOWN' : 'ZONE ' + (z + 1), fs: 9.5, ls: 1.2, fill: down ? t.rust : t.faint, bold: true, w: 148, align: 'center' }));
+      layer.add(txt({ x: zx, y: 52, text: down ? 'ZONE ' + (z + 1) + ' \u2014 DOWN' : 'ZONE ' + (z + 1), fs: 9.5, ls: 1.2, fill: down ? t.rust : t.faint, bold: true, w: 148, align: 'center' }));
     });
 
     BANDS.forEach(function (b, bi) {
@@ -1449,22 +1455,22 @@
   document.getElementById('dr-disk').onclick = function () {
     drState.diskLoss = true; drBench.render();
     readout('read-dr', 'ok', 'Absorbed',
-      'One replica gone. The volume is internally <b>degraded</b> while Azure rebuilds the third copy, but it never stopped serving and your pod saw nothing. <b>This is the failure LRS was designed for</b> and it handles it well — a dead drive or a dead rack is invisible to you. It is also the entire extent of the protection.');
+      'One replica gone. The volume is internally <b>degraded</b> while Azure rebuilds the third copy, but it never stopped serving and your pod saw nothing. <b>This is the failure LRS was designed for</b> and it handles it well \u2014 a dead drive or a dead rack is invisible to you. It is also the entire extent of the protection.');
   };
   document.getElementById('dr-zone').onclick = function () {
     drState.zones[0] = true; drBench.render();
     readout('read-dr', 'bad', 'Zone loss',
-      '<b>The LRS disk is gone</b> — all three of its replicas were in zone 1, so triple redundancy bought nothing. The <b>ZRS</b> disk lost one of three and kept serving, because its replicas were spread across zones by the SKU. The file share fails over to its paired copy. Note what this costs: ZRS is a <b>custom StorageClass you have to write</b>, and it is not what <code>default</code> gives you.');
+      '<b>The LRS disk is gone</b> \u2014 all three of its replicas were in zone 1, so triple redundancy bought nothing. The <b>ZRS</b> disk lost one of three and kept serving, because its replicas were spread across zones by the SKU. The file share fails over to its paired copy. Note what this costs: ZRS is a <b>custom StorageClass you have to write</b>, and it is not what <code>default</code> gives you.');
   };
   document.getElementById('dr-region').onclick = function () {
     drState.region = true; drState.zones = { 0: true, 1: true, 2: true }; drBench.render();
     readout('read-dr', 'bad', 'Region loss',
-      '<b>Both managed disks are unrecoverable.</b> A managed disk is a regional resource — there is no geo-replication flag, ZRS included. Only the GRS file share has anything left, and even that is an <b>asynchronous</b> copy with minutes of RPO, requiring a manual account-level failover. Surviving this with disks means a backup product — Azure Backup for AKS, or Velero exporting snapshots to another region — not a storage setting.');
+      '<b>Both managed disks are unrecoverable.</b> A managed disk is a regional resource \u2014 there is no geo-replication flag, ZRS included. Only the GRS file share has anything left, and even that is an <b>asynchronous</b> copy with minutes of RPO, requiring a manual account-level failover. Surviving this with disks means a backup product \u2014 Azure Backup for AKS, or Velero exporting snapshots to another region \u2014 not a storage setting.');
   };
   document.getElementById('dr-reset').onclick = function () {
     drState = { zones: {}, region: false, diskLoss: false }; drBench.render();
     readout('read-dr', 'info', 'Steady state',
-      'Three volumes, three redundancy SKUs, one region. Inject a failure and watch which replicas survive — and which storage class you would have had to write yourself to get there.');
+      'Three volumes, three redundancy SKUs, one region. Inject a failure and watch which replicas survive \u2014 and which storage class you would have had to write yourself to get there.');
   };
 
   /* ---------- boot ---------- */
@@ -1478,3 +1484,5 @@
   });
 })();
 </script>
+</body>
+</html>
