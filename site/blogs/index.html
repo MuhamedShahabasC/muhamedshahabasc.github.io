@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogs | Muhamed Shahabas C</title>
+    <meta
+      name="description"
+      content="Technical notes and practical explainers about software systems, Kubernetes, cloud infrastructure, and production engineering by Muhamed Shahabas C."
+    />
+    <meta name="author" content="Muhamed Shahabas C" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href="https://shahabas.me/blogs/" />
+    <link rel="icon" type="image/webp" href="../assets/images/shahabas.webp" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Blogs | Muhamed Shahabas C" />
+    <meta
+      property="og:description"
+      content="Practical explainers about software systems, cloud infrastructure, and production engineering."
+    />
+    <meta property="og:url" content="https://shahabas.me/blogs/" />
+    <meta property="og:site_name" content="Muhamed Shahabas C" />
+    <meta property="og:image" content="https://shahabas.me/assets/images/shahabas.webp" />
+    <meta property="og:image:alt" content="Portrait of Muhamed Shahabas C" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blogs | Muhamed Shahabas C" />
+    <meta
+      name="twitter:description"
+      content="Practical explainers about software systems, cloud infrastructure, and production engineering."
+    />
+    <meta name="twitter:image" content="https://shahabas.me/assets/images/shahabas.webp" />
+
+    <link rel="stylesheet" href="../assets/css/static.css" />
+    <link rel="stylesheet" href="../assets/css/blog-header.css" />
+    <link rel="stylesheet" href="../assets/css/blog-index.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": "https://shahabas.me/blogs/#blog",
+        "url": "https://shahabas.me/blogs/",
+        "name": "Muhamed Shahabas C — Blogs",
+        "description": "Technical notes and practical explainers about software systems and infrastructure.",
+        "author": {
+          "@type": "Person",
+          "@id": "https://shahabas.me/#person",
+          "name": "Muhamed Shahabas C"
+        },
+        "blogPost": [
+          {
+            "@type": "BlogPosting",
+            "@id": "https://shahabas.me/blogs/pvc-explain.html#article",
+            "url": "https://shahabas.me/blogs/pvc-explain.html",
+            "headline": "Persistent Volumes on Azure",
+            "datePublished": "2026-07-27"
+          }
+        ]
+      }
+    </script>
+    <script src="../assets/js/app.js" defer></script>
+    <script src="../assets/vendor/alpine-3.15.12.min.js" defer></script>
+  </head>
+  <body x-data="siteShell" :class="{ 'dark-theme': dark }">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="header" :class="{ 'scroll-header': scrolled }">
+      <nav class="nav container" aria-label="Primary navigation">
+        <a href="../" class="nav__logo">Muhamed Shahabas C</a>
+        <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="menuOpen = false">
+          <ul class="nav__list">
+            <li class="nav__item"><a href="../#home" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a></li>
+            <li class="nav__item"><a href="../#about" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#user"></use></svg> About</a></li>
+            <li class="nav__item"><a href="../#skills" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Skills</a></li>
+            <li class="nav__item"><a href="../#services" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#briefcase"></use></svg> Services</a></li>
+            <li class="nav__item"><a href="../#portfolio" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#image"></use></svg> Portfolio</a></li>
+            <li class="nav__item"><a href="../#contact" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#message"></use></svg> Contact</a></li>
+          </ul>
+          <button type="button" class="nav__close" @click="menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
+        </div>
+        <button type="button" class="nav__toggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
+      </nav>
+    </header>
+
+    <main id="main-content" class="shell">
+      <header class="blog-intro">
+        <p class="eyebrow">Notes from the field</p>
+        <h1>Blogs</h1>
+        <p class="intro">
+          Practical explainers about software systems, infrastructure, and the details that matter in production.
+        </p>
+      </header>
+
+      <a class="blog-card" href="pvc-explain.html">
+        <div>
+          <span class="number">001 · Kubernetes · Azure</span>
+          <h2>Persistent Volumes on Azure</h2>
+          <p class="summary">
+            An interactive guide to claims, storage classes, managed disks, access modes, and failure boundaries on AKS.
+          </p>
+        </div>
+        <span class="arrow" aria-hidden="true"><svg class="icon"><use href="../assets/icons.svg#arrow-right"></use></svg></span>
+      </a>
+    </main>
+
+    <button type="button" class="theme-toggle" @click="toggleTheme" :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'">
+      <svg class="icon" x-show="!dark"><use href="../assets/icons.svg#moon"></use></svg>
+      <svg class="icon" x-show="dark" x-cloak><use href="../assets/icons.svg#sun"></use></svg>
+    </button>
+  </body>
+</html>
