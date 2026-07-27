@@ -8,6 +8,7 @@
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
   :root {
+    color-scheme: light;
     --header-height: 3rem;
     --paper:      hsl(230, 60%, 99%);
     --surface:    #FFFFFF;
@@ -38,68 +39,6 @@
     --small-font-size: .875rem;
     --font-medium: 500;
     --z-fixed: 100;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper:     hsl(230, 28%, 12%);
-      --surface:   hsl(230, 28%, 16%);
-      --surface-2: hsl(230, 25%, 20%);
-      --text:      hsl(230, 20%, 95%);
-      --text-2:    hsl(230, 8%, 75%);
-      --text-3:    hsl(230, 8%, 65%);
-      --border:    hsl(230, 20%, 25%);
-      --border-2:  hsl(230, 20%, 32%);
-      --petrol:    hsl(230, 70%, 65%);
-      --petrol-2:  hsl(230, 45%, 22%);
-      --rust:      #DB7754;
-      --rust-2:    #38201A;
-      --amber:     #DDA43C;
-      --amber-2:   #35291441;
-      --sage:      #7DB06D;
-      --sage-2:    #1E2E1C;
-      --grid:      rgba(228, 234, 230, .05);
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --paper:     hsl(230, 28%, 12%);
-    --surface:   hsl(230, 28%, 16%);
-    --surface-2: hsl(230, 25%, 20%);
-    --text:      hsl(230, 20%, 95%);
-    --text-2:    hsl(230, 8%, 75%);
-    --text-3:    hsl(230, 8%, 65%);
-    --border:    hsl(230, 20%, 25%);
-    --border-2:  hsl(230, 20%, 32%);
-    --petrol:    hsl(230, 70%, 65%);
-    --petrol-2:  hsl(230, 45%, 22%);
-    --rust:      #DB7754;
-    --rust-2:    #38201A;
-    --amber:     #DDA43C;
-    --amber-2:   #352914;
-    --sage:      #7DB06D;
-    --sage-2:    #1E2E1C;
-    --grid:      rgba(228, 234, 230, .05);
-  }
-
-  :root[data-theme="light"] {
-    --paper:     hsl(230, 60%, 99%);
-    --surface:   #FFFFFF;
-    --surface-2: hsl(230, 70%, 97%);
-    --text:      hsl(230, 20%, 15%);
-    --text-2:    hsl(230, 8%, 45%);
-    --text-3:    hsl(230, 8%, 65%);
-    --border:    hsl(230, 20%, 90%);
-    --border-2:  hsl(230, 20%, 84%);
-    --petrol:    hsl(230, 70%, 55%);
-    --petrol-2:  hsl(230, 70%, 94%);
-    --rust:      #A8442A;
-    --rust-2:    #F3DED7;
-    --amber:     #B5791A;
-    --amber-2:   #F6E9CF;
-    --sage:      #47713F;
-    --sage-2:    #DCE9D6;
-    --grid:      rgba(19, 28, 36, .055);
   }
 
   * { box-sizing: border-box; }
@@ -861,7 +800,7 @@
   var MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, monospace';
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* ---------- design tokens, read live so both themes work ---------- */
+  /* ---------- design tokens ---------- */
 
   function T() {
     var cs = getComputedStyle(document.documentElement);
@@ -1528,23 +1467,11 @@
       'Three volumes, three redundancy SKUs, one region. Inject a failure and watch which replicas survive — and which storage class you would have had to write yourself to get there.');
   };
 
-  /* ---------- boot + theme reactivity ---------- */
-
-  function renderAll() {
-    lifeBench.render();
-    modeBench.render();
-    drBench.render();
-  }
+  /* ---------- boot ---------- */
 
   drawLife();
   document.getElementById('m-reset').onclick();
   document.getElementById('dr-reset').onclick();
-
-  var themeObserver = new MutationObserver(renderAll);
-  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  window.__pvThemeObserver = themeObserver;
-  var mq = window.matchMedia('(prefers-color-scheme: dark)');
-  if (mq.addEventListener) mq.addEventListener('change', renderAll);
 
   window.addEventListener('resize', function () {
     Bench.all.forEach(function (b) { b.fit(); });
