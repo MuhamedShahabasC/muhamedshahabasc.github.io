@@ -2,24 +2,26 @@
 
 ## Project
 
-- Personal portfolio published through GitHub Pages.
-- The editable React/Vite application lives in `src/`.
-- The repository-root `index.html` and `assets/` are generated deployment output.
+- Static personal portfolio deployed to Netlify.
+- Editable site source lives in `site/`.
+- `dist/` is generated deployment output and is not committed.
+- The site uses semantic HTML, Alpine.js for page state, and Lit for isolated web components.
 
 ## Commands
 
-Run commands from `src/`:
+Run commands from the repository root:
 
-- Install dependencies: `npm ci`
-- Start development: `npm run dev`
-- Lint: `npm run lint`
-- Build: `npm run build`
+- Build: `scripts/build.sh`
+- Verify: `scripts/verify.sh`
+- Preview: `python3 -m http.server 4174 --directory dist`
 
 ## Working Rules
 
-- Edit application source under `src/src/` and blog source under `src/public/blogs/`; do not hand-edit generated root assets.
-- Keep changes focused and follow the existing React and CSS style.
-- Run `npm run lint` and `npm run build` before declaring a code change complete.
+- Edit source only under `site/`; never hand-edit `dist/`.
+- Use relative internal URLs so the site remains path-prefix-safe.
+- Keep primary content in HTML. Use Alpine for page state and Lit only for isolated enhancements.
+- Preserve the shared theme contract: `localStorage["theme"]`, `light`/`dark`, `body.dark-theme`, and `themechange`.
+- Run `scripts/verify.sh` and browser-check responsive light/dark behavior before declaring a change complete.
 - Never commit `.env` or expose credentials in code, logs, documentation, or responses.
 - Do not push, deploy, or publish unless the user explicitly requests it.
 

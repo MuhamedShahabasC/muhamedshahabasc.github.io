@@ -12,6 +12,8 @@ node_modules
 dist
 dist-ssr
 *.local
+netlify-drop/
+netlify-drop.zip
 
 # Editor directories and files
 .vscode/*

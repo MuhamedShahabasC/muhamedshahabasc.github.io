@@ -1,0 +1,112 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-400.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-600.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+[x-cloak] {
+  display: none !important;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home__social .icon,
+.footer__social .icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.nav__icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+button.nav__toggle,
+button.nav__close,
+button.theme-toggle {
+  background: transparent;
+  padding: 0;
+}
+
+.nav__close,
+.nav__toggle {
+  color: var(--title-color);
+}
+
+.service-trigger {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 0.75rem;
+  left: 0.75rem;
+  transform: translateY(-200%);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--title-color);
+  color: var(--container-color);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 3px;
+}
+
+site-dialog:not(:defined) {
+  display: none;
+}
+
+.work__card[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

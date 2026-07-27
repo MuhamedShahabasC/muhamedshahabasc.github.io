@@ -7,16 +7,15 @@ description: Builds and updates this portfolio's static blog landing page and st
 
 ## Architecture
 
-- React/Vite portfolio source: `src/src/`.
-- Static blog source: `src/public/blogs/`.
-- Generated GitHub Pages output: repository-root `blogs/`.
-- Edit source only. Run `npm run build` from `src/` to regenerate root output.
-- Blog pages use static HTML/CSS/JS, Poppins, Unicons, shared `header.css`/`header.js`, and the existing pinned Konva version when needed.
+- Static source: `site/`; blog source: `site/blogs/`.
+- Generated Netlify output: `dist/`.
+- Edit source only, then run `scripts/verify.sh`.
+- Pages use semantic HTML, local Poppins and SVG assets, Alpine.js for shared state, and the vendored Konva version when needed.
 
 ## Required patterns
 
-- Copy the header and theme-toggle markup from the existing blog pages.
-- Load `/blogs/header.css` and `/blogs/header.js`.
+- Copy the header and theme-toggle markup from an existing blog page.
+- Load relative shared assets from `../assets/`; never use root-absolute internal URLs.
 - Desktop header stays fixed at the top; mobile header stays fixed at the bottom with the 3x2 menu.
 - Match the home theme contract exactly:
   - preference key: `localStorage["theme"]`
@@ -29,31 +28,22 @@ description: Builds and updates this portfolio's static blog landing page and st
 
 ## Add a post
 
-1. Create `src/public/blogs/<slug>.html` from the existing article shell.
+1. Create `site/blogs/<slug>.html` from the existing article shell.
 2. Use a valid document with `doctype`, `lang`, UTF-8 meta, and viewport meta.
-3. Add the shared header and theme toggle; keep page-specific styles scoped.
-4. Keep punctuation encoding-safe for charsetless static servers:
+3. Add unique description, canonical, Open Graph, Twitter, and `BlogPosting` JSON-LD metadata.
+4. Add the shared header and theme toggle; keep page-specific styles scoped.
+5. Keep punctuation encoding-safe for charsetless static servers:
    - HTML text: numeric entities such as `&#8212;`
    - JavaScript strings: Unicode escapes such as `\u2014`
-5. Add one card/link to `src/public/blogs/index.html`.
-6. Run the build; never manually duplicate edits into root `blogs/`.
+6. Add one card/link and matching JSON-LD entry to `site/blogs/index.html`.
+7. Add the canonical route to `site/sitemap.xml`.
 
 ## Validation
-
-From `src/`:
-
-```sh
-npm run build
-npm run lint
-```
 
 From the repository root:
 
 ```sh
-git diff --check
-cmp src/public/blogs/index.html blogs/index.html
-cmp src/public/blogs/header.css blogs/header.css
-cmp src/public/blogs/header.js blogs/header.js
+scripts/verify.sh
 ```
 
 Browser-check `/blogs/` and every new article with a cache-busting query:
