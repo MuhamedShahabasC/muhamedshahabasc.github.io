@@ -5,19 +5,29 @@
 .qualification__tabs {
   display: flex;
   justify-content: center;
+  gap: 0.75rem;
   margin-bottom: var(--mb-2);
 }
 
 .qualification__button {
   font-size: var(--h3-font-size);
   font-weight: var(--font-medium);
-  color: gray;
-  margin: 0 var(--mb-1);
+  color: var(--text-color);
+  background-color: var(--container-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.25rem;
   cursor: pointer;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .qualification__button:hover {
-  color: var(--title-color-dark);
+  color: var(--title-color);
+  border-color: var(--title-color);
 }
 
 .qualification__icon {
@@ -26,7 +36,15 @@
 }
 
 .qualification__active {
-  color: var(--title-color);
+  color: #fff;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.qualification__active:hover {
+  color: #fff;
+  border-color: var(--primary-color);
 }
 
 .qualification__sections {
@@ -105,9 +123,8 @@
   }
 
   .qualification__button {
-    margin: 0 var(--mb-0-5);
     font-size: var(--small-font-size);
-    padding: 0.5rem 0.75rem;
+    padding: 0.625rem 0.875rem;
   }
 
   .qualification__icon {
@@ -137,7 +154,6 @@
   }
 
   .qualification__button {
-    margin: 0 var(--mb-0-5);
     font-size: var(--small-font-size);
   }
 
