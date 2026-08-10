@@ -7,7 +7,7 @@ dist_dir="$repo_dir/dist"
 
 "$repo_dir/scripts/build.sh"
 
-for route in index.html blogs/index.html blogs/pvc-explain.html robots.txt sitemap.xml; do
+for route in index.html blogs/index.html blogs/pvc-explain.html favicon.png favicon.ico robots.txt sitemap.xml; do
   test -f "$dist_dir/$route"
 done
 
@@ -30,6 +30,7 @@ for page in index.html blogs/index.html blogs/pvc-explain.html; do
   rg -q 'property="og:title"' "$file"
   rg -q 'name="twitter:card"' "$file"
   rg -q 'application/ld\+json' "$file"
+  rg -q 'rel="icon"[^>]+href="(\.\./)?favicon\.png"' "$file"
 done
 
 xmllint --noout "$dist_dir/sitemap.xml"
