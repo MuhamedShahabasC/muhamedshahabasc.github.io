@@ -1,0 +1,913 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stateless MCP 2026-07-28 Explained | Muhamed Shahabas C</title>
+<meta name="description" content="An interactive mental model for stateless MCP in the 2026-07-28 specification: self-describing requests, explicit handles, MRTR, routing, and caching.">
+<meta name="author" content="Muhamed Shahabas C">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://shahabas.me/blogs/stateless-mcp-explainer.html">
+<link rel="icon" type="image/png" sizes="96x96" href="../favicon.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stateless MCP: A Mental Model for the 2026-07-28 Spec">
+<meta property="og:description" content="Understand stateless MCP through an interactive teller analogy, request flows, replica failures, explicit handles, and Multi Round-Trip Requests.">
+<meta property="og:url" content="https://shahabas.me/blogs/stateless-mcp-explainer.html">
+<meta property="og:site_name" content="Muhamed Shahabas C">
+<meta property="og:image" content="https://shahabas.me/assets/images/shahabas.webp">
+<meta property="og:image:alt" content="Portrait of Muhamed Shahabas C">
+<meta property="article:published_time" content="2026-08-12T16:07:17+05:30">
+<meta property="article:author" content="Muhamed Shahabas C">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stateless MCP: A Mental Model for the 2026-07-28 Spec">
+<meta name="twitter:description" content="An interactive guide to stateless MCP, explicit handles, MRTR, routing, and caching in the 2026-07-28 specification.">
+<meta name="twitter:image" content="https://shahabas.me/assets/images/shahabas.webp">
+<link rel="stylesheet" href="../assets/css/static.css">
+<link rel="stylesheet" href="../assets/css/blog-header.css">
+<link rel="stylesheet" href="../assets/css/blog-index.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://shahabas.me/blogs/stateless-mcp-explainer.html#article",
+  "url": "https://shahabas.me/blogs/stateless-mcp-explainer.html",
+  "mainEntityOfPage": "https://shahabas.me/blogs/stateless-mcp-explainer.html",
+  "headline": "Stateless MCP: A Mental Model for the 2026-07-28 Spec",
+  "description": "An interactive mental model for stateless MCP, self-describing requests, explicit handles, Multi Round-Trip Requests, routing, and caching.",
+  "datePublished": "2026-08-12T16:07:17+05:30",
+  "dateModified": "2026-08-12T16:07:17+05:30",
+  "image": "https://shahabas.me/assets/images/shahabas.webp",
+  "author": {
+    "@type": "Person",
+    "@id": "https://shahabas.me/#person",
+    "name": "Muhamed Shahabas C",
+    "url": "https://shahabas.me/"
+  },
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://shahabas.me/#person",
+    "name": "Muhamed Shahabas C"
+  },
+  "keywords": ["Model Context Protocol", "MCP", "stateless MCP", "MRTR", "distributed systems"]
+}
+</script>
+<script src="../assets/js/app.js" defer></script>
+<script src="../assets/vendor/alpine-3.15.12.min.js" defer></script>
+<style>
+  .mcp-article { --bg:var(--body-color); --fg:var(--title-color); --accent:var(--primary-color);
+          --accent2:#a8442a; --muted:var(--text-color); --card:var(--container-color);
+          --line:var(--border-color); --ok:#2f7d3f; --bad:#b03a2e; --warn:#a97117;
+          --okbg:#e7f2e9; --badbg:#f7e6e3; --warnbg:#f7efdc; --infobg:hsl(230,70%,95%);
+          max-width:900px; margin:0 auto; padding:9rem 1.25rem 5rem; color:var(--fg);
+          font-size:16px; line-height:1.62; }
+  body.dark-theme .mcp-article { --accent2:#db7754; --ok:#6fbf7d; --bad:#e08578; --warn:#d9ae5f;
+          --okbg:#1c2f21; --badbg:#33211e; --warnbg:#322a18; --infobg:hsl(230,45%,22%); }
+
+  .mcp-article .kicker { margin:0 0 0.75rem; color:var(--accent); font-size:0.72rem;
+          font-weight:600; letter-spacing:0.12em; text-transform:uppercase; }
+  .mcp-article h1 { font-size:clamp(2.35rem,7vw,4.2rem); line-height:1.08; letter-spacing:-0.025em;
+          margin:0 0 0.75rem; text-wrap:balance; }
+  .mcp-article .article-meta { margin:0 0 2rem; color:var(--muted); font-size:0.88rem; }
+  .mcp-primer { margin:0 0 2.2rem; padding:0 0 2.2rem; border-bottom:1px solid var(--line); }
+  .mcp-primer h2 { margin-top:0; }
+  .mcp-article h2 { font-size:clamp(1.35rem,3vw,1.75rem); line-height:1.25;
+          margin:2.8rem 0 0.75rem; letter-spacing:-0.01em; text-wrap:balance; }
+  .mcp-article h3 { margin:2rem 0 0.7rem; color:var(--fg); }
+  .mcp-article p { margin:0 0 0.9rem; }
+  .mcp-article code { font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; font-size:0.86em;
+         background:var(--card); padding:0.08em 0.35em; border-radius:3px; }
+  .mcp-article a { color:var(--accent); text-decoration:underline; text-underline-offset:0.18em; }
+  .banner { font-size:1.15rem; padding:1rem 1.2rem; background:var(--card);
+            border-left:4px solid var(--accent); border-radius:8px; margin-bottom:1.6rem; }
+  .stage-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--bg); }
+  .bench { margin:1.2rem 0 1.8rem; }
+  .readout { min-height:4.6rem; font-size:0.95rem; padding:0.7rem 0.9rem; background:var(--card);
+             border-radius:0 0 8px 8px; border:1px solid var(--line); border-top:none; }
+  .tag { display:inline-block; font-size:0.7rem; font-weight:700; letter-spacing:0.05em;
+         text-transform:uppercase; padding:0.1rem 0.5rem; border-radius:999px; margin-right:0.55rem;
+         vertical-align:0.08em; }
+  .tag.ok { color:var(--ok); background:var(--okbg); }
+  .tag.bad { color:var(--bad); background:var(--badbg); }
+  .tag.warn { color:var(--warn); background:var(--warnbg); }
+  .tag.info { color:var(--accent); background:var(--infobg); }
+  .controls { display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; margin-top:0.6rem; }
+  .controls .count { color:var(--muted); font-size:0.85rem; margin-left:auto;
+                     font-variant-numeric:tabular-nums; }
+  .mcp-article button { font:inherit; font-size:0.9rem; color:var(--fg); background:var(--card);
+           border:1px solid var(--line); border-radius:6px; padding:0.35rem 0.85rem; cursor:pointer; }
+  .mcp-article button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  .mcp-article button:disabled { opacity:0.45; cursor:default; }
+  .mcp-article button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .modebar { display:flex; gap:0; margin-bottom:0.6rem; border:1px solid var(--line);
+             border-radius:8px; overflow:hidden; width:fit-content; }
+  .modebar button { border:none; border-radius:0; padding:0.4rem 1rem; }
+  .modebar button.active-hs { background:var(--accent2); color:#fff; font-weight:600; }
+  .modebar button.active-sl { background:var(--accent); color:#fff; font-weight:600; }
+  .mcp-article table { border-collapse:collapse; width:100%; font-size:0.92rem; margin:1rem 0 1.4rem; }
+  .mcp-article th, .mcp-article td { text-align:left; padding:0.5rem 0.7rem; border-bottom:1px solid var(--line); vertical-align:top; }
+  .mcp-article th { font-size:0.72rem; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); }
+  .tablewrap { overflow-x:auto; }
+  .cast { background:var(--card); border-radius:8px; padding:0.9rem 1.1rem; margin:1rem 0 1.4rem;
+          font-size:0.95rem; }
+  .envelope { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:1rem;
+              margin:1.2rem 0 1.6rem; }
+  @media (max-width:640px){ .envelope { grid-template-columns:1fr; } }
+  .envelope pre { margin:0; background:var(--card); border:1px solid var(--line); border-radius:8px;
+                  padding:0.9rem 1rem; font-size:0.78rem; line-height:1.5; overflow-x:auto;
+                  font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace; }
+  .envelope .k { color:var(--accent); }
+  .envelope .h { color:var(--accent2); }
+  .envelope ul { margin:0; padding-left:1.1rem; font-size:0.88rem; }
+  .envelope li { margin-bottom:0.55rem; }
+  .breaks { border:1px solid var(--line); border-left:4px solid var(--accent2);
+            border-radius:8px; padding:1rem 1.2rem; background:var(--card); }
+  .breaks p { margin:0 0 0.7rem; } .breaks p:last-child { margin:0; }
+  .mcp-article dl { margin:0.8rem 0; }
+  .mcp-article dt { font-weight:600; margin-top:0.8rem; scroll-margin-top:6rem; }
+  .mcp-article dd { margin:0.1rem 0 0 0; color:var(--fg); font-size:0.94rem; }
+  .mcp-article dd em.ex { color:var(--muted); }
+  .qs li { margin-bottom:0.7rem; }
+  .note { font-size:0.85rem; color:var(--muted); }
+  ul.sources { font-size:0.9rem; } ul.sources li { margin-bottom:0.35rem; }
+  .mcp-article details { margin:0.4rem 0 1rem; }
+  .mcp-article summary { cursor:pointer; color:var(--muted); font-size:0.9rem; }
+  @media (max-width:768px) {
+    .mcp-article { padding:3.5rem 0.9rem 5rem; }
+    .mcp-article h1 { font-size:clamp(2.25rem,12vw,3.35rem); }
+    .mcp-article dt { scroll-margin-top:1rem; }
+  }
+</style>
+
+</head>
+<body x-data="siteShell" :class="{ 'dark-theme': dark }">
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="header" :class="{ 'scroll-header': scrolled }">
+  <nav class="nav container" aria-label="Primary navigation">
+    <a href="../" class="nav__logo">Muhamed Shahabas C</a>
+    <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="if (menuOpen) { $refs.menuToggle.focus(); menuOpen = false }">
+      <ul class="nav__list">
+        <li class="nav__item"><a href="../#home" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a></li>
+        <li class="nav__item"><a href="../#about" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#user"></use></svg> About</a></li>
+        <li class="nav__item"><a href="../#skills" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Skills</a></li>
+        <li class="nav__item"><a href="../#services" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#briefcase"></use></svg> Services</a></li>
+        <li class="nav__item"><a href="../#portfolio" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#image"></use></svg> Portfolio</a></li>
+        <li class="nav__item"><a href="../#contact" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#message"></use></svg> Contact</a></li>
+      </ul>
+      <button type="button" class="nav__close" @click="$refs.menuToggle.focus(); menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
+    </div>
+    <button type="button" class="nav__toggle" x-ref="menuToggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
+  </nav>
+</header>
+
+<main id="main-content">
+<article class="mcp-article">
+<p class="kicker">Model Context Protocol &#183; Interactive explainer</p>
+<h1>Stateless MCP &#8212; the 2026-07-28 spec</h1>
+<p class="article-meta">By Muhamed Shahabas C &#183; <time datetime="2026-08-12">August 12, 2026</time></p>
+
+<section class="mcp-primer" aria-labelledby="what-is-mcp">
+  <h2 id="what-is-mcp">What is MCP?</h2>
+  <p><b>Model Context Protocol</b> is an open protocol that gives AI applications a common way to
+  connect to external tools and data. The <b>host</b> is the AI application; an <b>MCP client</b>
+  inside it speaks the protocol; an <b>MCP server</b> exposes capabilities such as tools,
+  resources, and prompts.</p>
+  <p>MCP standardizes the messages between those parts. It does not prescribe the model, the user
+  interface, or the server's business logic. Step through the diagram to see each boundary.</p>
+
+  <div class="bench">
+    <div class="stage-wrap"><div id="d0" role="img" aria-label="Diagram of a host application, MCP client, and MCP server" aria-describedby="d0-readout"></div></div>
+    <div class="readout" id="d0-readout" aria-live="polite"></div>
+    <div class="controls">
+      <button id="d0-prev">&larr; Back</button>
+      <button id="d0-next" class="primary">Next step &rarr;</button>
+      <button id="d0-play">Play all</button>
+      <button id="d0-reset">Reset</button>
+      <span class="count" id="d0-count"></span>
+    </div>
+  </div>
+</section>
+
+<div class="banner">
+  <b>Mental model:</b> handshake-era MCP is sitting down with a <b>personal banker</b> who
+  remembers you for the whole meeting. 2026-07-28 MCP is a <b>drive-through teller</b>: every
+  slip you submit carries your full ID and your request, so <i>any teller at any window</i> can
+  serve it &#8212; and continuity, when you need it, is a claim ticket you copy onto your next slip.
+</div>
+
+<div class="cast">
+  <b>Running example, used everywhere below:</b> <b>Nimbus</b> is an AI agent (the MCP client).
+  <b>Cartwheel</b> is a document-tools MCP server exposing a <code>search_docs</code> tool, running
+  as three replicas behind a load balancer. <b>Priya</b> is Nimbus's human user. The one call we
+  trace: <code>search_docs(query="Q3 report")</code>. All names and values are fictional.
+</div>
+
+<div class="tablewrap">
+<table>
+  <tr><th>Real thing</th><th>In the bank</th></tr>
+  <tr><td><code>initialize</code> handshake + negotiated session <span class="note">(old)</span></td>
+      <td>Sitting down with a personal banker; introductions before any business</td></tr>
+  <tr><td><code>Mcp-Session-Id</code> header <span class="note">(old)</span></td>
+      <td>"My banker knows me" &#8212; you must keep returning to the same desk</td></tr>
+  <tr><td><code>_meta</code> protocol version + client info + capabilities, on every request</td>
+      <td>Every slip carries your ID and which forms you understand</td></tr>
+  <tr><td><code>server/discover</code></td>
+      <td>The branch pamphlet: services offered, languages spoken</td></tr>
+  <tr><td>Server-minted <b>handle</b> passed as a tool argument</td>
+      <td>A claim ticket number you copy onto your next slip</td></tr>
+  <tr><td><b>MRTR</b>: <code>resultType:"input_required"</code> &#8594; retry with <code>inputResponses</code></td>
+      <td>Your slip comes back with a sticky note "need one more thing"; you resubmit it with the answer attached</td></tr>
+  <tr><td><code>subscriptions/listen</code></td>
+      <td>One announcements board you choose to stand near</td></tr>
+</table>
+</div>
+
+<h2>1 &#183; The handshake era &#8212; the personal banker</h2>
+<p><b>What.</b> Before 2026-07-28, every MCP conversation opened with ceremony: Nimbus sent
+<code>initialize</code> (protocol version, capabilities, client info), Cartwheel answered with its
+own capabilities and &#8212; over Streamable HTTP &#8212; usually minted a session (<code>Mcp-Session-Id</code>
+header), then Nimbus confirmed with <code>notifications/initialized</code>. Only then could the
+first real request flow, and every later request replayed that session header.</p>
+<p><b>Why it existed.</b> MCP began as a bidirectional, stateful protocol: the server could call
+the <i>client</i> back mid-conversation (sampling &#8212; "run this through your LLM", roots, elicitation).
+That needs a live, remembered channel &#8212; a banker who knows you.</p>
+<p><b>Where it breaks.</b> The session pins Nimbus to one Cartwheel replica. Load balancers need
+sticky routing; a replica restart loses every session it held; list results could vary
+per-connection, so nothing was cacheable. Removing this wall was one of the most-requested changes
+in MCP's history &#8212; it's the headline of the 2026-07-28 release.</p>
+
+<h2>2 &#183; One call, two eras</h2>
+<p>The same <code>search_docs</code> call, on the old wire and the new. Toggle the era and step through.</p>
+
+<div class="bench">
+  <div class="modebar" id="d1modes" role="group" aria-label="Protocol era">
+    <button id="d1-hs" class="active-hs" aria-pressed="true">Handshake era (2025)</button>
+    <button id="d1-sl" aria-pressed="false">Stateless era (2026-07-28)</button>
+  </div>
+  <div class="stage-wrap"><div id="d1" role="img" aria-label="Sequence diagram comparing stateful and stateless MCP requests" aria-describedby="d1-readout"></div></div>
+  <div class="readout" id="d1-readout" aria-live="polite"></div>
+  <div class="controls">
+    <button id="d1-prev">&larr; Back</button>
+    <button id="d1-next" class="primary">Next step &rarr;</button>
+    <button id="d1-play">Play all</button>
+    <button id="d1-reset">Reset</button>
+    <span class="count" id="d1-count"></span>
+  </div>
+</div>
+
+<p><b>What.</b> In the stateless era there is no handshake and no session. Each request is
+self-describing: its <code>_meta</code> carries
+<code>io.modelcontextprotocol/protocolVersion</code>, <code>clientCapabilities</code>, and
+(recommended) <code>clientInfo</code>; each result carries the server's identity back in
+<code>_meta</code>. If Cartwheel doesn't speak the requested version, it answers with
+<code>UnsupportedProtocolVersionError</code> (code <code>-32022</code>) instead of half-working.</p>
+<p><b>Why.</b> A slip that carries everything can be served by any teller: any replica behind a
+plain load balancer can answer any request, with no shared session store. Two new required HTTP
+headers &#8212; <code>Mcp-Method</code> and <code>Mcp-Name</code> &#8212; let gateways route and meter
+without opening the JSON body at all.</p>
+<p><b>Where it breaks.</b> Every request repeats those <code>_meta</code> bytes &#8212; the price of
+self-description. And a client that wants to pick a version <i>before</i> sending real traffic
+should read the pamphlet first: <code>server/discover</code>, a mandatory-to-implement RPC that
+advertises the server's supported versions, capabilities, and identity (it also doubles as a
+compatibility probe on stdio).</p>
+
+<h3>The slip itself</h3>
+<div class="envelope">
+<pre><span class="h">POST /mcp</span>
+<span class="h">Mcp-Method: tools/call</span>
+<span class="h">Mcp-Name: search_docs</span>
+
+{ "jsonrpc": "2.0", "id": 7,
+  "method": "tools/call",
+  "params": {
+    "name": "search_docs",
+    "arguments": { "query": "Q3 report" },
+    "_meta": {
+      <span class="k">"io.modelcontextprotocol/protocolVersion"</span>: "2026-07-28",
+      <span class="k">"io.modelcontextprotocol/clientInfo"</span>: { "name": "nimbus" },
+      <span class="k">"io.modelcontextprotocol/clientCapabilities"</span>: { }
+    }
+  }
+}</pre>
+<ul>
+  <li><b>Headers</b> name the method and tool so infrastructure can route/rate-limit without parsing the body.</li>
+  <li><b><code>_meta</code></b> is the ID card: version + capabilities on every request &#8212; the introductions that used to happen once at <code>initialize</code>.</li>
+  <li>No <code>Mcp-Session-Id</code> anywhere. There is nothing to pin.</li>
+  <li>The reply carries <code>resultType</code> (see 5) and the server's <code>_meta</code> serverInfo.</li>
+</ul>
+</div>
+
+<h2>3 &#183; The replica game &#8212; why statelessness is the point</h2>
+<p>This is the payoff. Kill the replica that's serving Nimbus and see what each era does.
+In stateful mode the session pins Nimbus to one teller's desk; in stateless mode any teller reads
+the slip.</p>
+
+<div class="bench">
+  <div class="modebar" id="d2modes" role="group" aria-label="Protocol mode">
+    <button id="d2-hs" class="active-hs" aria-pressed="true">Stateful (2025)</button>
+    <button id="d2-sl" aria-pressed="false">Stateless (2026-07-28)</button>
+  </div>
+  <div class="stage-wrap"><div id="d2" role="img" aria-label="Diagram comparing replica failure in stateful and stateless MCP" aria-describedby="d2-readout"></div></div>
+  <div class="readout" id="d2-readout" aria-live="polite"></div>
+  <div class="controls">
+    <button id="d2-call" class="primary">Call search_docs</button>
+    <button id="d2-kill">Kill the busy replica</button>
+    <button id="d2-reset">Reset</button>
+  </div>
+</div>
+
+<h2>4 &#183; Claim tickets, not memory</h2>
+<p><b>What.</b> Real work still needs continuity &#8212; paging through search results, a multi-step
+upload. Without sessions, Cartwheel mints an explicit <b>handle</b> and returns it in the tool
+result: <code>search_docs</code> answers page one plus <code>cursor: "cur_7f3a"</code>. Nimbus
+passes <code>cursor="cur_7f3a"</code> as an ordinary argument on the next call. The claim ticket
+is the continuity.</p>
+<p><b>Why.</b> State becomes visible, transferable, and shardable: the ticket names it, and any
+replica that can look the ticket up can serve the next request. Contrast the session, which was
+invisible state trapped in one process's memory.</p>
+<p><b>Where it breaks.</b> The burden moves server-side: Cartwheel must store what
+<code>cur_7f3a</code> means somewhere all replicas can reach (a database, a cache), and tickets
+can expire or be revoked. A server that used to stash things on the session object has real
+migration work &#8212; this is the honest cost of the new spec.</p>
+
+<h2>5 &#183; The sticky note &#8212; Multi Round-Trip Requests</h2>
+<p>The old server could <i>call the client</i> mid-request (elicitation: "ask your user something").
+No session, no callback channel &#8212; so 2026-07-28 inverts it: the server returns your slip annotated.</p>
+
+<div class="bench">
+  <div class="stage-wrap"><div id="d3" role="img" aria-label="Sequence diagram for an MCP Multi Round-Trip Request" aria-describedby="d3-readout"></div></div>
+  <div class="readout" id="d3-readout" aria-live="polite"></div>
+  <div class="controls">
+    <button id="d3-prev">&larr; Back</button>
+    <button id="d3-next" class="primary">Next step &rarr;</button>
+    <button id="d3-play">Play all</button>
+    <button id="d3-reset">Reset</button>
+    <span class="count" id="d3-count"></span>
+  </div>
+</div>
+
+<p><b>What.</b> Every result now carries a required <code>resultType</code>:
+<code>"complete"</code> for a real answer, <code>"input_required"</code> for an interim one whose
+<code>inputRequests</code> list what the server still needs, plus an opaque
+<code>requestState</code> token. The client gathers answers and <b>retries the same request</b>
+with <code>inputResponses</code> (and the token) attached. Results from older servers that omit
+<code>resultType</code> must be treated as <code>"complete"</code>.</p>
+<p><b>Why.</b> Every leg stays an ordinary client&#8594;server request &#8212; stateless, load-balancer-safe &#8212;
+yet tools can still pause for human input. This pattern replaces the deprecated server-initiated
+trio (sampling, roots, elicitation-as-server-call).</p>
+<p><b>Where it breaks.</b> A client that ignores <code>resultType</code> will happily present a
+sticky note as a final answer. And the server must encode everything it needs to resume inside
+<code>requestState</code> &#8212; another explicit-state discipline.</p>
+
+<h2>6 &#183; The cleanup &#8212; what else moved</h2>
+<ul>
+  <li><b>Notifications:</b> the HTTP GET stream and <code>resources/subscribe</code> are replaced by
+  <code>subscriptions/listen</code> &#8212; one long-lived POST stream Nimbus opts into per notification
+  type (tools/prompts/resources list changes, resource subscriptions). Request-scoped notifications
+  (progress, log messages) still flow on the request's own response stream.</li>
+  <li><b>No more resumability:</b> SSE event IDs and <code>Last-Event-ID</code> are gone. A broken
+  response stream loses the in-flight request &#8212; re-issue it as a new request with a new ID.</li>
+  <li><b>Removed:</b> <code>ping</code>, <code>logging/setLevel</code> (log level is now per-request
+  <code>_meta</code>), <code>notifications/roots/list_changed</code>.</li>
+  <li><b>Deprecated</b> (&#8805;12-month window, don't adopt in new code): Roots, Sampling, Logging;
+  the old HTTP+SSE transport; Dynamic Client Registration (superseded by Client ID Metadata
+  Documents).</li>
+  <li><b>Caching became first-class:</b> list/read results must carry <code>ttlMs</code> and
+  <code>cacheScope</code>; servers should return <code>tools/list</code> in deterministic order so
+  clients (and LLM prompt caches) can reuse it.</li>
+  <li><b>Tasks</b> (long-running work) moved out of the core into the
+  <code>io.modelcontextprotocol/tasks</code> extension: poll with <code>tasks/get</code>, feed input
+  with <code>tasks/update</code>.</li>
+</ul>
+
+<h2>Where the analogy breaks</h2>
+<div class="breaks">
+  <p><b>Concurrency.</b> A drive-through serves one car at a time; Nimbus can have many slips in
+  flight at once, each independent. The bank queue is a lie &#8212; think "mail room", not "queue".</p>
+  <p><b>The banker could call you.</b> The old era wasn't only ceremony: the live session let the
+  <i>bank</i> phone the <i>customer</i> (sampling, elicitation). Mail can't model incoming calls &#8212;
+  which is exactly why MRTR replaces them with an annotated returned slip.</p>
+  <p><b>Claim tickets aren't the goods.</b> A handle is a key, not the state itself: Cartwheel must
+  keep the state somewhere durable and shared, and may expire the ticket. A real bank vault doesn't
+  forget your deposit after 15 minutes.</p>
+</div>
+
+<h2>Glossary</h2>
+<dl>
+  <dt id="term-mcp">MCP</dt><dd>Model Context Protocol &#8212; standard for exposing tools/resources/prompts to AI agents. <em class="ex">(Nimbus &#8596; Cartwheel speak it.)</em></dd>
+  <dt id="term-json-rpc">JSON-RPC</dt><dd>The request/response message format MCP rides on. <em class="ex">(Every slip is a JSON-RPC call.)</em></dd>
+  <dt id="term-session">session</dt><dd>Old per-connection server memory, pinned via <code>Mcp-Session-Id</code>. Removed in 2026-07-28. <em class="ex">(Nimbus's desk at replica 2.)</em></dd>
+  <dt id="term-handshake">handshake</dt><dd>Old opening exchange: <code>initialize</code> &#8594; response &#8594; <code>notifications/initialized</code>. Removed. <em class="ex">(The introductions.)</em></dd>
+  <dt id="term-streamable-http">Streamable HTTP</dt><dd>MCP's HTTP transport: POST per request, streamed response. <em class="ex">(The teller window.)</em></dd>
+  <dt id="term-sse">SSE</dt><dd>Server-Sent Events &#8212; how responses stream over HTTP; the older HTTP+SSE transport is deprecated.</dd>
+  <dt id="term-meta">_meta</dt><dd>Per-message metadata block; now carries protocol version, capabilities, identity. <em class="ex">(Nimbus's ID card on each slip.)</em></dd>
+  <dt id="term-capabilities">capabilities</dt><dd>What features each side supports; now declared per-request, plus an <code>extensions</code> field.</dd>
+  <dt id="term-server-discover">server/discover</dt><dd>Mandatory RPC advertising a server's versions, capabilities, identity. <em class="ex">(Cartwheel's pamphlet.)</em></dd>
+  <dt id="term-handle">handle</dt><dd>Server-minted token for cross-call state, passed as a normal tool argument. <em class="ex">(cur_7f3a, the claim ticket.)</em></dd>
+  <dt id="term-mrtr">MRTR</dt><dd>Multi Round-Trip Requests &#8212; server returns "input_required"; client retries with answers attached. <em class="ex">(The sticky note.)</em></dd>
+  <dt id="term-resulttype">resultType</dt><dd>Required field on every result: <code>"complete"</code> or <code>"input_required"</code>; missing means complete.</dd>
+  <dt id="term-requeststate">requestState</dt><dd>Opaque token letting the server resume a retried request without remembering it. <em class="ex">(st_84c1 on Priya's slip.)</em></dd>
+  <dt id="term-subscriptions-listen">subscriptions/listen</dt><dd>Single long-lived stream for opted-in change notifications; replaces the GET stream. <em class="ex">(The announcements board.)</em></dd>
+  <dt id="term-sampling">sampling</dt><dd>Deprecated server&#8594;client "run this through your LLM" request; migrate to direct LLM APIs.</dd>
+  <dt id="term-elicitation">elicitation</dt><dd>Server asking the user for input; now expressed through MRTR instead of a server-initiated call. <em class="ex">(Folder scope question to Priya.)</em></dd>
+</dl>
+
+<h2>Check yourself</h2>
+<ol class="qs">
+  <li>The Cartwheel replica serving Nimbus restarts mid-run. In bank terms, what happens in each
+  era &#8212; and what does Nimbus have to do next in each?</li>
+  <li><code>search_docs</code> has 300 results and Nimbus wants them three pages at a time, with no
+  sessions anywhere. Using the analogy, how does Cartwheel remember where Nimbus left off?</li>
+  <li>Mid-call, Cartwheel needs Priya to choose between <code>finance/</code> and all folders &#8212; but
+  it can't call Nimbus. Describe the wire exchange, in slips and sticky notes.</li>
+</ol>
+
+<h2>Sources</h2>
+<ul class="sources">
+  <li><a href="https://modelcontextprotocol.io/specification/2026-07-28/changelog">MCP 2026-07-28 &#8212; Key Changes (official changelog)</a></li>
+  <li><a href="https://modelcontextprotocol.io/specification/2026-07-28">MCP 2026-07-28 specification</a></li>
+  <li><a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">The 2026-07-28 Specification &#8212; MCP blog</a></li>
+  <li><a href="https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28/">Beta SDKs for the 2026-07-28 release &#8212; MCP blog</a></li>
+  <li><a href="https://github.com/modelcontextprotocol/python-sdk/releases">MCP Python SDK releases (v2 supports 2026-07-28)</a></li>
+  <li><a href="https://dev.to/krlz/mcp-went-stateless-what-the-2026-07-28-spec-actually-changes-273k">MCP Went Stateless &#8212; spec analysis (dev.to)</a></li>
+</ul>
+<p class="note">Facts verified against the changelog and release announcements above, August 2026.
+Nimbus, Cartwheel, and Priya are fictional.</p>
+
+</article>
+</main>
+
+<button type="button" class="theme-toggle" @click="toggleTheme" :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'">
+  <svg class="icon" x-show="!dark"><use href="../assets/icons.svg#moon"></use></svg>
+  <svg class="icon" x-show="dark" x-cloak><use href="../assets/icons.svg#sun"></use></svg>
+</button>
+
+<script src="../assets/vendor/konva-10.3.0.min.js"></script>
+<script>
+/* teach-me bench boilerplate \u2014 spliced into the explainer after konva.min.js,
+   in its own script tag (never write a literal script tag in this file \u2014
+   it lands inside HTML). Provides:
+     theme(['--fg','--accent'])            -> {fg, accent} read fresh from CSS vars
+     new Bench(containerId, W, H, build)   -> responsive, theme-reactive stage
+     readout(id, cls, tag, html)           -> tagged narration panel
+     wireStepper(bench, getSteps, ids)     -> Back/Next/Play/Reset + counter wiring
+   Conventions: build(layer) reads bench.step (current step object) and any
+   experiment state it closes over; every revealable Konva.Group gets a name:
+   matching a `show` key. */
+(function () {
+  'use strict';
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  window.theme = function (names) {
+    var cs = getComputedStyle(document.querySelector('.mcp-article')), out = {};
+    names.forEach(function (n) { out[n.replace(/^--/, '')] = cs.getPropertyValue(n).trim(); });
+    return out;
+  };
+
+  function Bench(id, W, H, build) {
+    var self = this;
+    this.el = document.getElementById(id);
+    this.W = W; this.H = H; this.build = build;
+    this.step = null;
+    this.stage = new Konva.Stage({ container: id, width: W, height: H });
+    this.layer = new Konva.Layer();
+    this.stage.add(this.layer);
+    this.fit();
+    /* retained on the instance \u2014 an unreferenced ResizeObserver can be collected */
+    this.ro = new ResizeObserver(function () { self.fit(); });
+    this.ro.observe(this.el);
+    Bench.all.push(this);
+  }
+  Bench.all = [];
+  Bench.prototype.fit = function () {
+    var cw = this.el.clientWidth || this.W;
+    var s = Math.min(1, cw / this.W);
+    this.stage.scale({ x: s, y: s });
+    this.stage.size({ width: this.W * s, height: this.H * s });
+  };
+  Bench.prototype.render = function (appeared) {
+    this.layer.destroyChildren();
+    this.build(this.layer);
+    this.layer.draw();
+    if (appeared && appeared.length && !RM.matches) {
+      var layer = this.layer;
+      appeared.forEach(function (key) {
+        layer.find('.' + key).forEach(function (n) {
+          var t = n.opacity();
+          n.opacity(0);
+          n.to({ opacity: t, duration: 0.34, easing: Konva.Easings.EaseOut });
+        });
+      });
+    }
+  };
+  window.Bench = Bench;
+
+  window.readout = function (id, cls, tag, html) {
+    document.getElementById(id).innerHTML =
+      '<span class="tag ' + cls + '">' + tag + '</span>' + html;
+  };
+
+  /* getSteps is a function (not an array) so a mode toggle can swap step sets.
+     ids = {prev, next, reset, readout, count, play} \u2014 element ids. */
+  window.wireStepper = function (bench, getSteps, ids) {
+    var i = 0, shown = [], timer = null;
+    function draw() {
+      var steps = getSteps(), s = steps[i];
+      var appeared = (s.show || []).filter(function (k) { return shown.indexOf(k) < 0; });
+      shown = (s.show || []).slice();
+      bench.step = s;
+      bench.render(appeared);
+      readout(ids.readout, s.cls, s.tag, s.body);
+      document.getElementById(ids.count).textContent = 'step ' + (i + 1) + ' / ' + steps.length;
+      document.getElementById(ids.prev).disabled = i === 0;
+      document.getElementById(ids.next).disabled = i === steps.length - 1;
+    }
+    function go(n) { i = Math.max(0, Math.min(getSteps().length - 1, n)); draw(); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    document.getElementById(ids.prev).onclick = function () { stop(); go(i - 1); };
+    document.getElementById(ids.next).onclick = function () { stop(); go(i + 1); };
+    document.getElementById(ids.reset).onclick = function () { stop(); shown = []; go(0); };
+    document.getElementById(ids.play).onclick = function () {
+      stop();
+      if (i === getSteps().length - 1) { shown = []; go(0); }
+      timer = setInterval(function () {
+        if (i >= getSteps().length - 1) stop(); else go(i + 1);
+      }, 2600);
+    };
+    draw();
+    return { go: go, redraw: draw, stop: stop, reset: function () { stop(); shown = []; go(0); } };
+  };
+
+  /* Re-render canvases when the shared site theme changes. */
+  function renderAll() { Bench.all.forEach(function (b) { b.render(); }); }
+  window.addEventListener('themechange', renderAll);
+  window.addEventListener('resize', function () { Bench.all.forEach(function (b) { b.fit(); }); });
+})();
+</script>
+<script>
+(function () {
+  'use strict';
+  var T = function () {
+    return theme(['--fg','--muted','--card','--accent','--accent2','--ok','--bad','--warn','--bg','--line']);
+  };
+
+  /* ---------- shared drawing helpers ---------- */
+  function actorBox(layer, name, x, w, H, C, sub) {
+    var g = new Konva.Group({ name: 'actors' });
+    g.add(new Konva.Rect({ x: x - w/2, y: 12, width: w, height: 42, fill: C.card,
+      stroke: C.line, cornerRadius: 8 }));
+    g.add(new Konva.Text({ x: x - w/2, y: 18, width: w, align: 'center',
+      text: name, fontSize: 15, fontStyle: 'bold', fill: C.fg }));
+    g.add(new Konva.Text({ x: x - w/2, y: 36, width: w, align: 'center',
+      text: sub, fontSize: 11, fill: C.muted }));
+    g.add(new Konva.Line({ points: [x, 58, x, H - 12], stroke: C.line, dash: [4, 4] }));
+    layer.add(g);
+  }
+  function msg(layer, key, x1, x2, y, label, color, C, opts) {
+    opts = opts || {};
+    var g = new Konva.Group({ name: key });
+    g.add(new Konva.Arrow({ points: [x1, y, x2, y], stroke: color, fill: color,
+      strokeWidth: 2, pointerLength: 9, pointerWidth: 8, dash: opts.dashed ? [6, 4] : undefined }));
+    var lx = Math.min(x1, x2), lw = Math.abs(x2 - x1);
+    g.add(new Konva.Text({ x: lx, y: opts.labelY === undefined ? y - 20 : opts.labelY,
+      width: lw, align: 'center', text: label,
+      fontSize: 12.5, fontFamily: 'ui-monospace, Menlo, monospace', fill: C.fg }));
+    layer.add(g);
+    return g;
+  }
+  function note(layer, key, x, y, w, text, color, C) {
+    var g = new Konva.Group({ name: key });
+    var t = new Konva.Text({ x: x + 12, y: y + 9, width: w - 24, text: text,
+      fontSize: 12.5, lineHeight: 1.4, fill: C.fg });
+    g.add(new Konva.Rect({ x: x, y: y, width: w, height: t.height() + 18, fill: C.card,
+      stroke: color, cornerRadius: 6 }));
+    g.add(t);
+    layer.add(g);
+    return g;
+  }
+  function slugify(t) { return t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''); }
+  function makeTip(bench, C) {
+    var tip = new Konva.Label({ visible: false, listening: false });
+    tip.add(new Konva.Tag({ fill: C.fg, cornerRadius: 4 }));
+    tip.add(new Konva.Text({ text: '', fill: C.bg, padding: 6, fontSize: 12.5 }));
+    bench.layer.add(tip);
+    return function wire(shape, term, def) {
+      shape.on('mouseenter', function () {
+        tip.getText().text(term + ': ' + def);
+        var p = shape.getClientRect({ relativeTo: bench.layer });
+        tip.position({ x: p.x, y: Math.max(2, p.y - 34) });
+        tip.visible(true); tip.moveToTop(); bench.layer.draw();
+        bench.stage.container().style.cursor = 'pointer';
+      });
+      shape.on('mouseleave', function () {
+        tip.visible(false); bench.layer.draw();
+        bench.stage.container().style.cursor = 'default';
+      });
+      shape.on('click tap', function () {
+        var el = document.getElementById('term-' + slugify(term));
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      });
+    };
+  }
+
+  /* =========================================================
+     D0 \u2014 MCP in four steps
+     ========================================================= */
+  var D0W = 860, D0H = 300;
+  var D0_STEPS = [
+    { show: ['actors'], tag: 'The parts', cls: 'info',
+      body: 'The <b>host application</b> is where the user and model work. It manages an <b>MCP client</b>, which speaks to an <b>MCP server</b> that owns useful capabilities.' },
+    { show: ['actors','h2c'], tag: 'Inside the host', cls: 'info',
+      body: 'The host decides it needs outside context or an action. Its MCP client is the connector that turns that intent into protocol messages for one server.' },
+    { show: ['actors','h2c','c2s'], tag: 'Standard request', cls: 'info',
+      body: 'The client sends a JSON-RPC request such as <code>tools/call</code> or <code>resources/read</code>. MCP defines this shared wire format, so hosts and servers do not need a custom integration for every pairing.' },
+    { show: ['actors','h2c','c2s','s2c','c2h'], tag: 'Capability returned', cls: 'ok',
+      body: 'The server runs its own logic and returns structured content or a tool result. The client passes that result back to the host, where the model or user can use it.' }
+  ];
+  function conceptBox(layer, key, x, title, sub, color, C) {
+    var g = new Konva.Group({ name: key });
+    g.add(new Konva.Rect({ x:x - 105, y:72, width:210, height:104, fill:C.card,
+      stroke:color, strokeWidth:2, cornerRadius:10 }));
+    g.add(new Konva.Text({ x:x - 90, y:96, width:180, align:'center', text:title,
+      fontSize:16, fontStyle:'bold', fill:C.fg }));
+    g.add(new Konva.Text({ x:x - 90, y:124, width:180, align:'center', text:sub,
+      fontSize:11.5, lineHeight:1.35, fill:C.muted }));
+    layer.add(g);
+  }
+  function conceptFlow(layer, key, x1, x2, y, label, labelY, color, C) {
+    var g = new Konva.Group({ name:key });
+    var lx = Math.min(x1, x2), lw = Math.abs(x2 - x1);
+    g.add(new Konva.Arrow({ points:[x1, y, x2, y], stroke:color, fill:color,
+      strokeWidth:2.5, pointerLength:9, pointerWidth:8 }));
+    g.add(new Konva.Text({ x:lx, y:labelY, width:lw, align:'center', text:label,
+      fontSize:11, lineHeight:1.15, fill:C.fg }));
+    layer.add(g);
+  }
+  var d0 = new Bench('d0', D0W, D0H, function (layer) {
+    var C = T(), s = d0.step; if (!s) return;
+    var shown = s.show || [];
+    function has(k) { return shown.indexOf(k) >= 0; }
+    conceptBox(layer, 'actors', 125, 'Host application', 'user + model + interface', C.accent, C);
+    conceptBox(layer, 'actors', 430, 'MCP client', 'connector managed by the host', C.accent, C);
+    conceptBox(layer, 'actors', 735, 'MCP server', 'tools + resources + prompts', C.accent2, C);
+    if (has('h2c')) conceptFlow(layer, 'h2c', 230, 325, 112, 'intent', 86, C.accent, C);
+    if (has('c2s')) conceptFlow(layer, 'c2s', 535, 630, 112, 'JSON-RPC request', 80, C.accent, C);
+    if (has('s2c')) conceptFlow(layer, 's2c', 630, 535, 145, 'structured result', 154, C.ok, C);
+    if (has('c2h')) conceptFlow(layer, 'c2h', 325, 230, 145, 'context or action result', 154, C.ok, C);
+  });
+  wireStepper(d0, function () { return D0_STEPS; },
+    { prev:'d0-prev', next:'d0-next', reset:'d0-reset', play:'d0-play',
+      readout:'d0-readout', count:'d0-count' });
+
+  /* =========================================================
+     D1 \u2014 one call, two eras (mode toggle stepper)
+     ========================================================= */
+  var NX = 150, CX = 700, D1W = 860, D1H = 370;
+
+  var D1_HS = [
+    { show: ['actors'], tag: 'Goal', cls: 'info',
+      body: 'Nimbus wants <code>search_docs(query="Q3 report")</code> from Cartwheel. On the 2025 wire, business cannot start until the introductions are done.' },
+    { show: ['actors','m1'], tag: 'Handshake', cls: 'info',
+      body: 'Nimbus sends <b>initialize</b>: protocol version, its capabilities, who it is. The personal-banker meeting begins.' },
+    { show: ['actors','m1','m2'], tag: 'Pinned', cls: 'warn',
+      body: 'Cartwheel answers with its capabilities and mints a session: <code>Mcp-Session-Id: 9f2e</code>. Nimbus now has a desk \u2014 and must keep coming back to it.' },
+    { show: ['actors','m1','m2','m3'], tag: 'Ceremony', cls: 'info',
+      body: 'Nimbus confirms with <b>notifications/initialized</b>. Three messages so far; still no business.' },
+    { show: ['actors','m1','m2','m3','m4'], tag: 'The call', cls: 'info',
+      body: 'Finally: <b>tools/call search_docs</b>, carrying the <code>Mcp-Session-Id: 9f2e</code> header. The load balancer must route this to the <i>same replica</i> that holds session 9f2e.' },
+    { show: ['actors','m1','m2','m3','m4','m5'], tag: 'Answered', cls: 'ok',
+      body: 'Result: 3 documents. It worked \u2014 after a full handshake and with a session to babysit from now on.' },
+    { show: ['actors','m1','m2','m3','m4','m5','warnnote'], tag: 'The catch', cls: 'warn',
+      body: 'Every future request must replay <code>9f2e</code>, and only one replica understands it. Sticky routing, lost sessions on restart, per-connection list results. This is the wall the 2026 spec removes \u2014 try it in the replica game below.' }
+  ];
+  var D1_SL = [
+    { show: ['actors'], tag: 'Goal', cls: 'info',
+      body: 'Same goal: <code>search_docs(query="Q3 report")</code>. On the 2026-07-28 wire there is no handshake to perform \u2014 the first message <i>is</i> the business.' },
+    { show: ['actors','m1'], tag: 'The slip', cls: 'info',
+      body: 'One POST: <b>tools/call</b> whose <code>_meta</code> carries the protocol version, client capabilities, and client info \u2014 plus <code>Mcp-Method</code> / <code>Mcp-Name</code> headers so gateways can route without reading the body. Everything the teller needs is on the slip.' },
+    { show: ['actors','m1','m2'], tag: 'Answered', cls: 'ok',
+      body: 'Result: 3 documents, <code>resultType: "complete"</code>, and Cartwheel identifies itself in the result\u2019s <code>_meta</code>. One round trip, no session minted, nothing to babysit.' },
+    { show: ['actors','m1','m2','slnote'], tag: 'Version safety', cls: 'info',
+      body: 'If Cartwheel didn\u2019t speak 2026-07-28 it would answer <code>UnsupportedProtocolVersionError</code> (<code>-32022</code>). A cautious Nimbus reads the pamphlet first: <b>server/discover</b> lists supported versions and capabilities up front.' }
+  ];
+
+  var d1mode = 'hs';
+  var d1 = new Bench('d1', D1W, D1H, function (layer) {
+    var C = T(), s = d1.step; if (!s) return;
+    var era = d1mode === 'hs' ? C.accent2 : C.accent;
+    var shown = s.show || [];
+    function has(k) { return shown.indexOf(k) >= 0; }
+    actorBox(layer, 'Nimbus', NX, 190, D1H, C, 'AI agent (client)');
+    actorBox(layer, 'Cartwheel', CX, 190, D1H, C, 'MCP tool server');
+    var wire = makeTip(d1, C);
+    if (d1mode === 'hs') {
+      if (has('m1')) msg(layer, 'm1', NX, CX, 115, 'initialize {protocolVersion, capabilities, clientInfo}', era, C);
+      if (has('m2')) {
+        var m2 = msg(layer, 'm2', CX, NX, 158, 'capabilities + Mcp-Session-Id: 9f2e', era, C);
+        wire(m2, 'session', 'server memory pinned to one connection');
+      }
+      if (has('m3')) msg(layer, 'm3', NX, CX, 200, 'notifications/initialized', era, C);
+      if (has('m4')) msg(layer, 'm4', NX, CX, 243, 'tools/call search_docs  (Mcp-Session-Id: 9f2e)', era, C);
+      if (has('m5')) msg(layer, 'm5', CX, NX, 286, 'result: 3 documents', C.ok, C);
+      if (has('warnnote')) note(layer, 'warnnote', NX + 60, 300, 440,
+        'Session 9f2e lives in ONE replica\u2019s memory. Restart it and the desk is gone.', C.warn, C);
+    } else {
+      if (has('m1')) {
+        var m1 = msg(layer, 'm1', NX, CX, 130,
+          'tools/call search_docs  {_meta: version + capabilities + clientInfo}', era, C);
+        wire(m1, '_meta', 'the ID card every request carries');
+      }
+      if (has('m2')) msg(layer, 'm2', CX, NX, 180, 'resultType: "complete" \u00b7 3 documents \u00b7 _meta: serverInfo', C.ok, C);
+      if (has('slnote')) {
+        var n = note(layer, 'slnote', NX + 60, 215, 440,
+          'Version mismatch? \u2192 UnsupportedProtocolVersionError (-32022). Probe first with server/discover.', era, C);
+        wire(n, 'server/discover', 'the pamphlet: versions + capabilities up front');
+      }
+    }
+  });
+  var d1api = wireStepper(d1, function () { return d1mode === 'hs' ? D1_HS : D1_SL; },
+    { prev: 'd1-prev', next: 'd1-next', reset: 'd1-reset', play: 'd1-play',
+      readout: 'd1-readout', count: 'd1-count' });
+  function d1SetMode(m) {
+    d1mode = m;
+    document.getElementById('d1-hs').className = m === 'hs' ? 'active-hs' : '';
+    document.getElementById('d1-sl').className = m === 'sl' ? 'active-sl' : '';
+    document.getElementById('d1-hs').setAttribute('aria-pressed', m === 'hs');
+    document.getElementById('d1-sl').setAttribute('aria-pressed', m === 'sl');
+    d1api.reset();
+  }
+  document.getElementById('d1-hs').onclick = function () { d1SetMode('hs'); };
+  document.getElementById('d1-sl').onclick = function () { d1SetMode('sl'); };
+
+  /* =========================================================
+     D2 \u2014 the replica game (experiment bench)
+     ========================================================= */
+  var D2W = 860, D2H = 390;
+  var d2state;
+  function d2Reset() {
+    d2state = { mode: (d2state ? d2state.mode : 'hs'), pinned: null, dead: {}, last: null,
+      msg: { cls: 'info', tag: 'Ready',
+        body: 'Cartwheel runs as three replicas behind a load balancer. <b>Call the tool</b>, then <b>kill the busy replica</b>, then call again \u2014 and compare the two modes.' } };
+  }
+  d2Reset();
+  var R_Y = { 1: 34, 2: 152, 3: 270 };
+  function aliveReplicas() {
+    return [2, 1, 3].filter(function (r) { return !d2state.dead[r]; });
+  }
+  var d2 = new Bench('d2', D2W, D2H, function (layer) {
+    var C = T();
+    var era = d2state.mode === 'hs' ? C.accent2 : C.accent;
+    var wire = makeTip(d2, C);
+    // Nimbus
+    layer.add(new Konva.Rect({ x: 30, y: 155, width: 150, height: 80, fill: C.card, stroke: C.line, cornerRadius: 8 }));
+    layer.add(new Konva.Text({ x: 30, y: 178, width: 150, align: 'center', text: 'Nimbus', fontSize: 15, fontStyle: 'bold', fill: C.fg }));
+    layer.add(new Konva.Text({ x: 30, y: 198, width: 150, align: 'center', text: 'AI agent (client)', fontSize: 11, fill: C.muted }));
+    // LB
+    layer.add(new Konva.Rect({ x: 270, y: 155, width: 130, height: 80, fill: C.card, stroke: C.muted, cornerRadius: 8 }));
+    layer.add(new Konva.Text({ x: 270, y: 172, width: 130, align: 'center', text: 'Load', fontSize: 14, fontStyle: 'bold', fill: C.fg }));
+    layer.add(new Konva.Text({ x: 270, y: 190, width: 130, align: 'center', text: 'balancer', fontSize: 14, fontStyle: 'bold', fill: C.fg }));
+    layer.add(new Konva.Text({ x: 270, y: 212, width: 130, align: 'center',
+      text: d2state.mode === 'hs' ? 'sticky routing' : 'any replica', fontSize: 11, fill: C.muted }));
+    // replicas
+    [1, 2, 3].forEach(function (r) {
+      var y = R_Y[r], dead = !!d2state.dead[r];
+      layer.add(new Konva.Rect({ x: 560, y: y, width: 260, height: 92, fill: C.card,
+        stroke: dead ? C.bad : C.line, cornerRadius: 8, opacity: dead ? 0.55 : 1 }));
+      layer.add(new Konva.Text({ x: 575, y: y + 14, text: 'Cartwheel replica ' + r,
+        fontSize: 14, fontStyle: 'bold', fill: C.fg, opacity: dead ? 0.55 : 1 }));
+      if (dead) {
+        layer.add(new Konva.Text({ x: 575, y: y + 40, text: '\u2715 dead', fontSize: 14, fontStyle: 'bold', fill: C.bad }));
+      } else if (d2state.mode === 'hs' && d2state.pinned === r) {
+        var badge = new Konva.Group();
+        badge.add(new Konva.Rect({ x: 575, y: y + 38, width: 150, height: 26, fill: C.card, stroke: C.accent2, cornerRadius: 13 }));
+        badge.add(new Konva.Text({ x: 575, y: y + 44, width: 150, align: 'center', text: 'session 9f2e', fontSize: 12.5, fontFamily: 'ui-monospace, Menlo, monospace', fill: C.accent2 }));
+        layer.add(badge);
+        wire(badge, 'session', 'server memory pinned to one connection');
+      } else {
+        layer.add(new Konva.Text({ x: 575, y: y + 42, text: d2state.mode === 'hs' ? 'no session here' : 'stateless \u2014 reads the slip', fontSize: 11.5, fill: C.muted }));
+      }
+    });
+    // arrows for last call
+    if (d2state.last) {
+      var ok = !d2state.lastFailed;
+      var col = ok ? era : C.bad;
+      layer.add(new Konva.Arrow({ points: [180, 195, 268, 195], stroke: col, fill: col, strokeWidth: 2.5, pointerLength: 9, pointerWidth: 8 }));
+      var ty = R_Y[d2state.last] + 46;
+      layer.add(new Konva.Arrow({ points: [400, 195, 556, ty], stroke: col, fill: col, strokeWidth: 2.5, pointerLength: 9, pointerWidth: 8, dash: ok ? undefined : [6, 4] }));
+      if (!ok) layer.add(new Konva.Text({ x: 405, y: (195 + ty) / 2 - 24, text: 'session 9f2e unknown', fontSize: 12, fontFamily: 'ui-monospace, Menlo, monospace', fill: C.bad }));
+    }
+  });
+  function d2Draw() {
+    d2.render();
+    readout('d2-readout', d2state.msg.cls, d2state.msg.tag, d2state.msg.body);
+  }
+  document.getElementById('d2-call').onclick = function () {
+    var alive = aliveReplicas();
+    if (!alive.length) {
+      d2state.last = null;
+      d2state.msg = { cls: 'bad', tag: 'Outage', body: 'Every replica is dead. No protocol survives that \u2014 reset the bench.' };
+      return d2Draw();
+    }
+    if (d2state.mode === 'hs') {
+      if (d2state.pinned === null) {
+        d2state.pinned = alive[0]; d2state.last = d2state.pinned; d2state.lastFailed = false;
+        d2state.msg = { cls: 'warn', tag: 'Handshake', body: 'Fresh handshake: replica ' + d2state.pinned + ' minted <code>Mcp-Session-Id: 9f2e</code> and answered. Nimbus is now <b>pinned</b> to that desk \u2014 the load balancer must send every later request there.' };
+      } else if (d2state.dead[d2state.pinned]) {
+        d2state.last = d2state.pinned; d2state.lastFailed = true;
+        var goneR = d2state.pinned;
+        d2state.pinned = null;
+        d2state.msg = { cls: 'bad', tag: 'Session lost', body: 'The request carries <code>9f2e</code>, but replica ' + goneR + ' \u2014 the only teller who knew that session \u2014 is gone. <b>Error: session not found.</b> Nimbus must start a whole new handshake (press Call again).' };
+      } else {
+        d2state.last = d2state.pinned; d2state.lastFailed = false;
+        d2state.msg = { cls: 'ok', tag: 'Served', body: 'Sticky routing sent the call back to replica ' + d2state.pinned + ', the one holding session <code>9f2e</code>. Works \u2014 as long as that desk stays open.' };
+      }
+    } else {
+      var pick = alive[(d2state.rr = ((d2state.rr || 0) + 1)) % alive.length];
+      d2state.last = pick; d2state.lastFailed = false;
+      d2state.msg = { cls: 'ok', tag: 'Served', body: 'The slip is self-describing (<code>_meta</code> version + capabilities), so the load balancer handed it to <b>any</b> live teller \u2014 replica ' + pick + ' this time. No pinning, nothing to lose.' };
+    }
+    d2Draw();
+  };
+  document.getElementById('d2-kill').onclick = function () {
+    var victim = d2state.last && !d2state.dead[d2state.last] ? d2state.last
+               : aliveReplicas()[0];
+    if (!victim) {
+      d2state.msg = { cls: 'bad', tag: 'Outage', body: 'Nothing left to kill.' };
+      return d2Draw();
+    }
+    d2state.dead[victim] = true;
+    if (d2state.mode === 'hs' && d2state.pinned === victim) {
+      d2state.msg = { cls: 'warn', tag: 'Replica down', body: 'Replica ' + victim + ' just died \u2014 and session <code>9f2e</code> lived only in its memory. The session died with it. Now <b>call the tool again</b> and watch.' };
+    } else {
+      d2state.msg = { cls: 'warn', tag: 'Replica down', body: 'Replica ' + victim + ' died. In stateless mode no request depends on it \u2014 <b>call again</b> and the load balancer simply picks another teller.' };
+    }
+    d2Draw();
+  };
+  document.getElementById('d2-reset').onclick = function () { var m = d2state.mode; d2Reset(); d2state.mode = m; d2Draw(); };
+  function d2SetMode(m) {
+    d2Reset(); d2state.mode = m;
+    document.getElementById('d2-hs').className = m === 'hs' ? 'active-hs' : '';
+    document.getElementById('d2-sl').className = m === 'sl' ? 'active-sl' : '';
+    document.getElementById('d2-hs').setAttribute('aria-pressed', m === 'hs');
+    document.getElementById('d2-sl').setAttribute('aria-pressed', m === 'sl');
+    d2Draw();
+  }
+  document.getElementById('d2-hs').onclick = function () { d2SetMode('hs'); };
+  document.getElementById('d2-sl').onclick = function () { d2SetMode('sl'); };
+  d2Draw();
+
+  /* =========================================================
+     D3 \u2014 MRTR lifecycle stepper
+     ========================================================= */
+  var PX = 120, NX3 = 400, CX3 = 720, D3H = 380;
+  var D3_STEPS = [
+    { show: ['actors'], tag: 'Setup', cls: 'info',
+      body: 'Priya asks Nimbus for the Q3 report. Nimbus calls Cartwheel \u2014 but Cartwheel will need one more decision from Priya, and it has <b>no way to call anyone</b>: there is no session, no back-channel.' },
+    { show: ['actors','m1'], tag: 'The call', cls: 'info',
+      body: '<code>tools/call search_docs {query: "Q3 report"}</code>, self-describing <code>_meta</code> as always. Cartwheel realises the query is ambiguous: search <code>finance/</code> only, or all folders?' },
+    { show: ['actors','m1','m2'], tag: 'Sticky note', cls: 'warn',
+      body: 'Cartwheel returns the slip annotated: <code>resultType: "input_required"</code>, an <code>inputRequests</code> entry asking for the folder scope, and an opaque <code>requestState: "st_84c1"</code> token. This is <b>not an answer</b> \u2014 it\u2019s a request for more input, delivered as an ordinary response.' },
+    { show: ['actors','m1','m2','m3'], tag: 'Out of band', cls: 'info',
+      body: 'Nimbus asks Priya however it likes \u2014 a UI prompt, a chat message. Priya picks <code>finance/</code>. The protocol doesn\u2019t care how this happens; it only defines the retry.' },
+    { show: ['actors','m1','m2','m3','m4'], tag: 'The retry', cls: 'info',
+      body: 'Nimbus re-sends the <b>same</b> <code>tools/call</code> \u2014 same arguments \u2014 now with <code>inputResponses: ["finance/"]</code> and the <code>st_84c1</code> token attached. The token lets <b>any replica</b> reconstruct where the request left off; no server memory needed.' },
+    { show: ['actors','m1','m2','m3','m4','m5'], tag: 'Complete', cls: 'ok',
+      body: '<code>resultType: "complete"</code> \u2014 3 documents from <code>finance/</code>. Every leg of this exchange was a plain client\u2192server request. The load balancer never noticed anything special.' },
+    { show: ['actors','m1','m2','m3','m4','m5','oldnote'], tag: 'What it replaced', cls: 'info',
+      body: 'On the old wire Cartwheel would have opened a <b>server-initiated</b> <code>elicitation/create</code> back over the live session. No session, no server-initiated anything \u2014 MRTR is how sampling/roots/elicitation-style needs are expressed now (and those three old features are formally deprecated).' }
+  ];
+  var d3 = new Bench('d3', 860, D3H, function (layer) {
+    var C = T(), s = d3.step; if (!s) return;
+    var shown = s.show || [];
+    function has(k) { return shown.indexOf(k) >= 0; }
+    actorBox(layer, 'Priya', PX, 150, D3H, C, 'human user');
+    actorBox(layer, 'Nimbus', NX3, 160, D3H, C, 'AI agent (client)');
+    actorBox(layer, 'Cartwheel', CX3, 170, D3H, C, 'MCP tool server');
+    var wire = makeTip(d3, C);
+    if (has('m1')) msg(layer, 'm1', NX3, CX3, 118, 'tools/call search_docs {query:"Q3 report"}', C.accent, C);
+    if (has('m2')) {
+      var m2 = msg(layer, 'm2', CX3, NX3, 162,
+        '"input_required" \u00b7 inputRequests: folder scope? \u00b7 requestState: st_84c1',
+        C.warn, C, { labelY: 126 });
+      wire(m2, 'MRTR', 'server returns "need more"; client retries with answers');
+    }
+    if (has('m3')) {
+      msg(layer, 'm3', NX3, PX, 210, 'finance/ or all folders?', C.muted, C, { dashed: true });
+      msg(layer, 'm3', PX, NX3, 252, '"finance/"', C.muted, C, { dashed: true });
+    }
+    if (has('m4')) {
+      var m4 = msg(layer, 'm4', NX3, CX3, 296,
+        'retry tools/call + inputResponses:["finance/"] + st_84c1',
+        C.accent, C, { labelY: 260 });
+      wire(m4, 'requestState', 'opaque token so any replica can resume the retry');
+    }
+    if (has('m5')) msg(layer, 'm5', CX3, NX3, 338, '"complete" \u00b7 3 documents', C.ok, C);
+    if (has('oldnote')) note(layer, 'oldnote', PX - 60, 300, 300,
+      'Old wire: Cartwheel would call Nimbus (elicitation/create) over the session. Gone.', C.muted, C);
+  });
+  wireStepper(d3, function () { return D3_STEPS; },
+    { prev: 'd3-prev', next: 'd3-next', reset: 'd3-reset', play: 'd3-play',
+      readout: 'd3-readout', count: 'd3-count' });
+})();
+</script>
+</body>
+</html>

@@ -119,6 +119,10 @@ a {
   outline: none;
 }
 
+.blog-card + .blog-card {
+  margin-top: 1.25rem;
+}
+
 .number {
   display: block;
   margin-bottom: 1rem;
