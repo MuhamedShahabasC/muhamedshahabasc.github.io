@@ -7,7 +7,7 @@ dist_dir="$repo_dir/dist"
 
 "$repo_dir/scripts/build.sh"
 
-for route in index.html blogs/index.html blogs/pvc-explain.html blogs/stateless-mcp-explainer.html favicon.png favicon.ico robots.txt sitemap.xml; do
+for route in index.html blogs/index.html blogs/kubernetes-persistent-volumes-azure-aks.html blogs/stateless-mcp-2026-spec-explained.html favicon.png favicon.ico robots.txt sitemap.xml; do
   test -f "$dist_dir/$route"
 done
 
@@ -22,7 +22,7 @@ if rg -n -i '\b(react|vite|npm)\b' "$repo_dir/site" \
   exit 1
 fi
 
-for page in index.html blogs/index.html blogs/pvc-explain.html blogs/stateless-mcp-explainer.html; do
+for page in index.html blogs/index.html blogs/kubernetes-persistent-volumes-azure-aks.html blogs/stateless-mcp-2026-spec-explained.html; do
   file="$dist_dir/$page"
   rg -q '<title>[^<]+</title>' "$file"
   rg -q 'name="description"' "$file"
