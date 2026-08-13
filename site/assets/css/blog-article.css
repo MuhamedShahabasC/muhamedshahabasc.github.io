@@ -35,7 +35,6 @@ body {
   margin: 0;
   background:
     linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 80px,
-    radial-gradient(circle at 100% 0, var(--blue-soft), transparent 34rem),
     var(--paper);
   color: var(--ink);
   font: 400 16px/1.68 var(--font-sans);
