@@ -18,22 +18,6 @@
   height: 1.15rem;
 }
 
-.nav__icon {
-  width: 1.2rem;
-  height: 1.2rem;
-}
-
-button.nav__toggle,
-button.nav__close {
-  background: transparent;
-  padding: 0;
-}
-
-.nav__close,
-.nav__toggle {
-  color: var(--title-color);
-}
-
 .service-trigger {
   appearance: none;
   border: 0;

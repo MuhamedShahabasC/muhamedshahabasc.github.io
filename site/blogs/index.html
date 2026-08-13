@@ -75,16 +75,14 @@
     <header class="header" :class="{ 'scroll-header': scrolled }">
       <nav class="nav container" aria-label="Primary navigation">
         <a href="../" class="nav__logo" aria-label="Muhamed Shahabas C, home"><span>MSC</span><small>shahabas.me</small></a>
-        <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="if (menuOpen) { $refs.menuToggle.focus(); menuOpen = false }">
+        <div class="nav__menu">
           <ul class="nav__list">
-            <li class="nav__item"><a href="../#top" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a></li>
-            <li class="nav__item"><a href="../#about" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#user"></use></svg> About</a></li>
-            <li class="nav__item"><a href="../#work" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#briefcase"></use></svg> Work</a></li>
-            <li class="nav__item"><a href="../#notes" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Field notes</a></li>
+            <li class="nav__item"><a href="../#top" class="nav__link">Home</a></li>
+            <li class="nav__item"><a href="../#about" class="nav__link">About</a></li>
+            <li class="nav__item"><a href="../#work" class="nav__link">Work</a></li>
+            <li class="nav__item"><a href="../#notes" class="nav__link">Field notes</a></li>
           </ul>
-          <button type="button" class="nav__close" @click="$refs.menuToggle.focus(); menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
         </div>
-        <button type="button" class="nav__toggle" x-ref="menuToggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
       </nav>
     </header>
 
