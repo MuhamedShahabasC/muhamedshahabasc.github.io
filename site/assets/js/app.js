@@ -1,6 +1,5 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("siteShell", () => ({
-    dark: localStorage.getItem("theme") === "dark",
     menuOpen: false,
     mobile: window.matchMedia("(max-width: 768px)").matches,
     activeSection: "home",
@@ -8,7 +7,8 @@ document.addEventListener("alpine:init", () => {
     showScrollUp: false,
 
     init() {
-      this.applyTheme();
+      localStorage.removeItem("theme");
+      document.body.classList.remove("dark-theme");
       this.updateScroll();
 
       const mobileQuery = window.matchMedia("(max-width: 768px)");
@@ -41,20 +41,5 @@ document.addEventListener("alpine:init", () => {
       this.showScrollUp = window.scrollY >= 560;
     },
 
-    applyTheme() {
-      document.body.classList.toggle("dark-theme", this.dark);
-      document.documentElement.style.colorScheme = this.dark ? "dark" : "light";
-      window.dispatchEvent(
-        new CustomEvent("themechange", {
-          detail: { theme: this.dark ? "dark" : "light" },
-        }),
-      );
-    },
-
-    toggleTheme() {
-      this.dark = !this.dark;
-      localStorage.setItem("theme", this.dark ? "dark" : "light");
-      this.applyTheme();
-    },
   }));
 });

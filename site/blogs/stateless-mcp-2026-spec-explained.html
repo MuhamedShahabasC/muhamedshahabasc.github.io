@@ -17,14 +17,15 @@
 <meta property="og:image" content="https://shahabas.me/assets/images/shahabas.webp">
 <meta property="og:image:alt" content="Portrait of Muhamed Shahabas C">
 <meta property="article:published_time" content="2026-08-12T16:07:17+05:30">
+<meta property="article:modified_time" content="2026-08-13T22:01:26+05:30">
 <meta property="article:author" content="Muhamed Shahabas C">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Stateless MCP: A Mental Model for the 2026-07-28 Spec">
 <meta name="twitter:description" content="An interactive guide to stateless MCP, explicit handles, MRTR, routing, and caching in the 2026-07-28 specification.">
 <meta name="twitter:image" content="https://shahabas.me/assets/images/shahabas.webp">
+<link rel="stylesheet" href="../assets/css/site-tokens.css">
 <link rel="stylesheet" href="../assets/css/static.css">
 <link rel="stylesheet" href="../assets/css/blog-header.css">
-<link rel="stylesheet" href="../assets/css/blog-index.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -35,7 +36,7 @@
   "headline": "Stateless MCP: A Mental Model for the 2026-07-28 Spec",
   "description": "An interactive mental model for stateless MCP, self-describing requests, explicit handles, Multi Round-Trip Requests, routing, and caching.",
   "datePublished": "2026-08-12T16:07:17+05:30",
-  "dateModified": "2026-08-12T17:18:08+05:30",
+  "dateModified": "2026-08-13T22:01:26+05:30",
   "image": "https://shahabas.me/assets/images/shahabas.webp",
   "author": {
     "@type": "Person",
@@ -51,7 +52,7 @@
   "keywords": ["Model Context Protocol", "MCP", "stateless MCP", "MRTR", "distributed systems"]
 }
 </script>
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=light-only" defer></script>
 <script src="../assets/vendor/alpine-3.15.12.min.js" defer></script>
 <style>
   .mcp-article { --bg:var(--body-color); --fg:var(--title-color); --accent:var(--primary-color);
@@ -60,9 +61,6 @@
           --okbg:#e7f2e9; --badbg:#f7e6e3; --warnbg:#f7efdc; --infobg:hsl(230,70%,95%);
           max-width:900px; margin:0 auto; padding:9rem 1.25rem 5rem; color:var(--fg);
           font-size:16px; line-height:1.62; }
-  body.dark-theme .mcp-article { --accent2:#db7754; --ok:#6fbf7d; --bad:#e08578; --warn:#d9ae5f;
-          --okbg:#1c2f21; --badbg:#33211e; --warnbg:#322a18; --infobg:hsl(230,45%,22%); }
-
   .mcp-article .kicker { margin:0 0 0.75rem; color:var(--accent); font-size:0.72rem;
           font-weight:600; letter-spacing:0.12em; text-transform:uppercase; }
   .mcp-article h1 { font-size:clamp(2.35rem,7vw,4.2rem); line-height:1.08; letter-spacing:-0.025em;
@@ -137,13 +135,15 @@
     .mcp-article dt { scroll-margin-top:1rem; }
   }
 </style>
+<link rel="stylesheet" href="../assets/css/blog-article.css">
+<link rel="stylesheet" href="../assets/css/blog-footer.css">
 
 </head>
-<body x-data="siteShell" :class="{ 'dark-theme': dark }">
+<body x-data="siteShell">
 <a class="skip-link" href="#main-content">Skip to content</a>
 <header class="header" :class="{ 'scroll-header': scrolled }">
   <nav class="nav container" aria-label="Primary navigation">
-    <a href="../" class="nav__logo">Muhamed Shahabas C</a>
+    <a href="../" class="nav__logo" aria-label="Muhamed Shahabas C, home"><span>MSC</span><small>shahabas.me</small></a>
     <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="if (menuOpen) { $refs.menuToggle.focus(); menuOpen = false }">
       <ul class="nav__list">
         <li class="nav__item"><a href="../#top" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a></li>
@@ -434,18 +434,18 @@ Nimbus, Cartwheel, and Priya are fictional.</p>
 </article>
 </main>
 
-<button type="button" class="theme-toggle" @click="toggleTheme" :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'">
-  <svg class="icon" x-show="!dark"><use href="../assets/icons.svg#moon"></use></svg>
-  <svg class="icon" x-show="dark" x-cloak><use href="../assets/icons.svg#sun"></use></svg>
-</button>
+<footer class="blog-footer">
+  <div><strong>Keep exploring the system.</strong><p>More field notes on software platforms, protocols, infrastructure, and production engineering.</p></div>
+  <nav aria-label="Article footer navigation"><a href="./">All field notes</a><a href="../#work">Work</a><a href="../#about">About</a><a href="https://medium.com/@muhamedshahabasc" target="_blank" rel="noopener noreferrer">Medium &#8599;</a></nav>
+</footer>
 
 <script src="../assets/vendor/konva-10.3.0.min.js"></script>
 <script>
 /* teach-me bench boilerplate \u2014 spliced into the explainer after konva.min.js,
    in its own script tag (never write a literal script tag in this file \u2014
    it lands inside HTML). Provides:
-     theme(['--fg','--accent'])            -> {fg, accent} read fresh from CSS vars
-     new Bench(containerId, W, H, build)   -> responsive, theme-reactive stage
+     readTokens(['--fg','--accent'])       -> {fg, accent} read fresh from CSS vars
+     new Bench(containerId, W, H, build)   -> responsive stage
      readout(id, cls, tag, html)           -> tagged narration panel
      wireStepper(bench, getSteps, ids)     -> Back/Next/Play/Reset + counter wiring
    Conventions: build(layer) reads bench.step (current step object) and any
@@ -455,7 +455,7 @@ Nimbus, Cartwheel, and Priya are fictional.</p>
   'use strict';
   var RM = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  window.theme = function (names) {
+  window.readTokens = function (names) {
     var cs = getComputedStyle(document.querySelector('.mcp-article')), out = {};
     names.forEach(function (n) { out[n.replace(/^--/, '')] = cs.getPropertyValue(n).trim(); });
     return out;
@@ -535,9 +535,6 @@ Nimbus, Cartwheel, and Priya are fictional.</p>
     return { go: go, redraw: draw, stop: stop, reset: function () { stop(); shown = []; go(0); } };
   };
 
-  /* Re-render canvases when the shared site theme changes. */
-  function renderAll() { Bench.all.forEach(function (b) { b.render(); }); }
-  window.addEventListener('themechange', renderAll);
   window.addEventListener('resize', function () { Bench.all.forEach(function (b) { b.fit(); }); });
 })();
 </script>
@@ -545,7 +542,7 @@ Nimbus, Cartwheel, and Priya are fictional.</p>
 (function () {
   'use strict';
   var T = function () {
-    return theme(['--fg','--muted','--card','--accent','--accent2','--ok','--bad','--warn','--bg','--line']);
+    return readTokens(['--fg','--muted','--card','--accent','--accent2','--ok','--bad','--warn','--bg','--line']);
   };
 
   /* ---------- shared drawing helpers ---------- */
