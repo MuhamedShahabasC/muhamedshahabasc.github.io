@@ -468,22 +468,16 @@
     <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="menuOpen = false">
       <ul class="nav__list">
         <li class="nav__item">
-          <a href="../#home" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a>
+          <a href="../#top" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a>
         </li>
         <li class="nav__item">
           <a href="../#about" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#user"></use></svg> About</a>
         </li>
         <li class="nav__item">
-          <a href="../#skills" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Skills</a>
+          <a href="../#work" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#briefcase"></use></svg> Work</a>
         </li>
         <li class="nav__item">
-          <a href="../#services" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#briefcase"></use></svg> Services</a>
-        </li>
-        <li class="nav__item">
-          <a href="../#portfolio" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#image"></use></svg> Portfolio</a>
-        </li>
-        <li class="nav__item">
-          <a href="../#contact" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#message"></use></svg> Contact</a>
+          <a href="../#notes" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Field notes</a>
         </li>
       </ul>
       <button type="button" class="nav__close" @click="menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>

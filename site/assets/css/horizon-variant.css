@@ -1,0 +1,73 @@
+:root {
+  --packet-sky: #82a8df;
+  --packet-paper: #ede7d9;
+  --packet-ink: #0d192b;
+  --packet-yellow: #f4de4a;
+  --packet-coral: #d15a43;
+  --packet-mint: #9dcfc5;
+  --packet-blue: #526f9f;
+}
+
+.hero-stage, .hero { background: var(--packet-sky); }
+.topology-world { inset: 0; overflow: hidden; pointer-events: none; position: absolute; }
+.coordinate-field {
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 calc(8.333% - 1px), rgb(255 255 255 / 14%) calc(8.333% - 1px) 8.333%),
+    repeating-linear-gradient(0deg, transparent 0 89px, rgb(255 255 255 / 9%) 89px 90px);
+  inset: 72px 0 0;
+  position: absolute;
+  transform: translateY(calc(var(--depth) * -8px));
+}
+.dependency-arcs { inset: 0; position: absolute; transform: translateY(calc(var(--depth) * -14px)) rotate(calc(var(--depth) * 2deg)); }
+.dependency-arcs i { border: 2px solid rgb(237 231 217 / 46%); border-radius: 50%; position: absolute; }
+.dependency-arcs i:first-child { height: 36vw; right: -3vw; top: 12%; width: 36vw; }
+.dependency-arcs i:last-child { height: 18vw; right: 36vw; top: 38%; width: 18vw; }
+.region-clusters { bottom: 19%; display: flex; gap: 1.4vw; height: 35%; position: absolute; right: 4%; transform: translateY(calc(var(--depth) * -24px)); width: 55%; }
+.region-clusters i { align-self: end; background: rgb(82 111 159 / 40%); border: 2px solid rgb(13 25 43 / 30%); clip-path: polygon(0 18%, 18% 18%, 18% 0, 76% 0, 76% 11%, 100% 11%, 100% 100%, 0 100%); height: 62%; width: 31%; }
+.region-clusters i:nth-child(2) { height: 96%; }.region-clusters i:nth-child(3) { height: 76%; }
+.backbone { border: 3px solid var(--packet-ink); height: 17px; position: absolute; right: -6%; transform-origin: right; width: 62%; z-index: 3; }
+.backbone-one { background: var(--packet-paper); bottom: 31%; transform: translateX(calc(var(--depth) * -55px)) rotate(7deg); }
+.backbone-two { background: var(--packet-coral); bottom: 20%; transform: translateX(calc(var(--depth) * 38px)) rotate(-5deg); width: 53%; }
+.mesh { display: flex; gap: 1.2vw; position: absolute; z-index: 4; }
+.mesh::before { background: var(--packet-ink); content: ""; height: 2px; left: 5%; position: absolute; right: 5%; top: 50%; }
+.mesh i { align-items: end; background: var(--packet-paper); border: 2px solid var(--packet-ink); box-shadow: inset 0 0 0 7px rgb(157 207 197 / 35%); display: flex; flex: 1; min-height: 70px; min-width: 0; padding: .7rem; position: relative; }
+.mesh span { display: grid; gap: .28rem; }
+.mesh b { font: 600 .52rem/1 ui-monospace, monospace; letter-spacing: .1em; white-space: nowrap; }
+.mesh small { color: rgb(13 25 43 / 68%); font: 500 .42rem/1 ui-monospace, monospace; letter-spacing: .04em; white-space: nowrap; }
+.mesh-upper { right: 7%; top: 25%; transform: translateY(calc(var(--depth) * -65px)); width: 31%; }
+.mesh-upper i:nth-child(2) { transform: translateY(-34px); }.mesh-upper i:nth-child(3) { transform: translateY(18px); }
+.mesh-lower { bottom: 19%; right: 13%; transform: translateY(calc(var(--depth) * -82px)); width: 45%; }
+.mesh-lower i:nth-child(2) { min-height: 120px; }.mesh-lower i:nth-child(3) { min-height: 92px; }.mesh-lower i:nth-child(4) { min-height: 54px; }
+.packets { inset: 0; position: absolute; z-index: 6; }
+.packets i { background: var(--packet-yellow); border: 2px solid var(--packet-ink); height: 15px; position: absolute; width: 28px; }
+.packets i:first-child { bottom: 34%; right: calc(38% - var(--depth) * 230px); transform: rotate(7deg); }
+.packets i:nth-child(2) { background: var(--packet-coral); bottom: 23%; right: calc(24% + var(--depth) * 170px); transform: rotate(-5deg); }
+.packets i:nth-child(3) { background: var(--packet-mint); bottom: 42%; right: calc(8% + var(--depth) * 110px); }
+.trace-plane { bottom: 17%; height: 26%; position: absolute; right: 3%; transform: translateY(calc(var(--depth) * -95px)); width: 48%; z-index: 4; }
+.trace-plane b { color: rgb(237 231 217 / 18%); font: 600 clamp(5rem, 12vw, 12rem)/1 ui-monospace, monospace; position: absolute; right: 0; top: -70%; }
+.trace-plane i { background: var(--packet-mint); height: 4px; position: absolute; right: 5%; width: calc(13% + var(--depth) * 18%); }
+.trace-plane i:first-of-type { top: 18%; }.trace-plane i:nth-of-type(2) { right: 25%; top: 48%; }.trace-plane i:nth-of-type(3) { right: 46%; top: 77%; }
+.gateway { align-items: end; background: var(--packet-ink); bottom: 0; clip-path: polygon(0 42%, 12% 42%, 12% 18%, 28% 18%, 28% 49%, 45% 49%, 45% 7%, 64% 7%, 64% 34%, 82% 34%, 82% 19%, 100% 19%, 100% 100%, 0 100%); display: flex; gap: 3%; height: 25%; justify-content: end; padding: 0 5% 3%; position: absolute; right: -3%; transform: translateY(calc(var(--depth) * -86px)) scale(calc(1 + var(--depth) * .04)); transform-origin: bottom; width: 55%; z-index: 7; }
+.gateway i { border: 2px solid var(--packet-mint); height: 12px; width: 10%; }
+@media (max-width: 850px) {
+  .region-clusters { right: -20%; width: 95%; }
+  .mesh-upper { right: -5%; width: 48%; }
+  .mesh-lower { right: -16%; width: 75%; }
+  .gateway { width: 75%; }
+}
+
+@media (max-width: 560px) {
+  .dependency-arcs i:last-child, .region-clusters i:nth-child(3), .mesh-lower, .trace-plane { display: none; }
+  .dependency-arcs i:first-child { height: 72vw; right: -14vw; top: 37%; width: 72vw; }
+  .region-clusters { bottom: 15%; height: 25%; right: -15%; width: 80%; }
+  .mesh-upper { right: 2%; top: 68%; transform: translateY(calc(var(--depth) * -35px)); width: 60%; }
+  .mesh i { min-height: 56px; }
+  .mesh small { display: none; }
+  .backbone { width: 90%; }
+  .gateway { height: 17%; transform: translateY(calc(var(--depth) * -42px)); width: 90%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coordinate-field, .dependency-arcs, .region-clusters, .mesh, .trace-plane, .gateway { transform: none; }
+  .backbone-one { transform: rotate(7deg); }.backbone-two { transform: rotate(-5deg); }
+}

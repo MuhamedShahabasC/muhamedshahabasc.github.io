@@ -11,6 +11,9 @@ for route in index.html blogs/index.html blogs/kubernetes-persistent-volumes-azu
   test -f "$dist_dir/$route"
 done
 
+test ! -e "$dist_dir/legacy"
+test ! -e "$dist_dir/previews"
+
 if find "$dist_dir" -name '.env' -o -name '.env.*' | grep -q .; then
   echo "Verification failed: environment file found in dist." >&2
   exit 1
@@ -32,6 +35,15 @@ for page in index.html blogs/index.html blogs/kubernetes-persistent-volumes-azur
   rg -q 'application/ld\+json' "$file"
   rg -q 'rel="icon"[^>]+href="(\.\./)?favicon\.png"' "$file"
 done
+
+rg -q '<link rel="canonical" href="https://shahabas.me/"' "$dist_dir/index.html"
+rg -q '"@type": "ProfilePage"' "$dist_dir/index.html"
+rg -q '"jobTitle": "Software Development Engineer"' "$dist_dir/index.html"
+
+if rg -n 'href="\.\./#(home|skills|services|portfolio|contact)"' "$dist_dir/blogs" --glob '*.html'; then
+  echo "Verification failed: blog navigation references a retired home-page section." >&2
+  exit 1
+fi
 
 xmllint --noout "$dist_dir/sitemap.xml"
 
