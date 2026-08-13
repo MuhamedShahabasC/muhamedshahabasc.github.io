@@ -1,7 +1,5 @@
 document.addEventListener("alpine:init", () => {
   Alpine.data("siteShell", () => ({
-    menuOpen: false,
-    mobile: window.matchMedia("(max-width: 768px)").matches,
     activeSection: "home",
     scrolled: false,
     showScrollUp: false,
@@ -10,12 +8,6 @@ document.addEventListener("alpine:init", () => {
       localStorage.removeItem("theme");
       document.body.classList.remove("dark-theme");
       this.updateScroll();
-
-      const mobileQuery = window.matchMedia("(max-width: 768px)");
-      mobileQuery.addEventListener("change", (event) => {
-        this.mobile = event.matches;
-        if (!this.mobile) this.menuOpen = false;
-      });
 
       window.addEventListener("scroll", () => this.updateScroll(), {
         passive: true,

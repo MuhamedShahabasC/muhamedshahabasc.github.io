@@ -19,7 +19,7 @@ description: Builds and updates this portfolio's static blog landing page and st
 - Load relative shared assets from `../assets/`; never use root-absolute internal URLs.
 - Load shared CSS in this order: `site-tokens.css`, `static.css`, `blog-header.css`, then `blog-article.css` for articles or `blog-index.css` for the listing, followed by `blog-footer.css`.
 - Use the shared color, type, spacing, border, focus, button, workbench, and footer primitives. Keep inline or page-specific CSS limited to article content and diagram geometry; do not redefine the site palette or shell.
-- Desktop header stays fixed at the top; mobile header stays fixed at the bottom with a two-column menu and an explicit Home link.
+- Desktop header stays fixed at the top with the full navigation. Mobile keeps a compact top header with only the logo linking home; do not add a sticky bottom bar or mobile menu.
 - The site is light-only. Do not add a theme toggle, dark-mode styles, theme persistence, or `themechange` behavior.
 - Konva experiences use the shared workbench markup and classes: `.bench`, `.bench-stage` or `.stage-wrap`, `.step-readout` or `.readout`, and `.bench-bar` or `.controls`. Use `.primary`, `.danger`, and shared mode-button states instead of inventing button styles.
 - Canvas colors must be read from shared CSS custom properties on every render. Do not hard-code light-only backgrounds, text, borders, or status colors.
@@ -50,7 +50,7 @@ Browser-check `/blogs/` and every new article with a cache-busting query:
 
 - Desktop `1440x900` and mobile `390x844`.
 - Light theme only; no theme toggle or dark-mode state is present.
-- Header, toggle, and mobile menu remain visible and do not overlap.
+- Desktop navigation and the compact mobile home header remain visible and do not overlap content.
 - `scrollWidth === clientWidth`.
 - Header links have `text-decoration-line: none`.
 - No mojibake matching `â|Ã|Â|�`.

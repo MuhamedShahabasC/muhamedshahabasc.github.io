@@ -48,6 +48,10 @@ for page in blogs/index.html blogs/kubernetes-persistent-volumes-azure-aks.html 
     echo "Verification failed: blog theme toggle or dark-mode state found in $page." >&2
     exit 1
   fi
+  if rg -n 'nav__toggle|nav__close|show-menu|menuOpen' "$file"; then
+    echo "Verification failed: retired mobile blog navigation found in $page." >&2
+    exit 1
+  fi
 done
 for page in blogs/kubernetes-persistent-volumes-azure-aks.html blogs/stateless-mcp-2026-spec-explained.html; do
   file="$dist_dir/$page"

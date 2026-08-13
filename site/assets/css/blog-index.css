@@ -84,7 +84,7 @@ a { color: inherit; text-decoration: none; }
 .arrow { display: grid; width: 48px; height: 48px; place-items: center; border: 1px solid var(--ink); background: var(--yellow); color: #101827; }
 
 @media (max-width: 768px) {
-  .shell { width: min(100% - 2rem, 1120px); padding: 4rem 0 5rem; }
+  .shell { width: min(100% - 2rem, 1120px); padding: calc(var(--blog-header-height) + 2.5rem) 0 5rem; }
   .blog-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3.5rem; }
   .blog-intro .eyebrow { grid-column: auto; }
   .blog-intro h1 { font-size: clamp(4.2rem, 25vw, 7rem); }

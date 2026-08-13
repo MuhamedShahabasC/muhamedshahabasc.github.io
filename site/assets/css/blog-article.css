@@ -142,7 +142,7 @@ pre, code { border-radius: 0 !important; }
 .article-notes { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--text-color-light); font: 400 0.7rem/1.8 var(--font-mono); }
 @media (max-width: 768px) {
   .wrap, .mcp-article { width: min(100% - 2rem, 1000px); padding-bottom: 5rem; }
-  .masthead, .mcp-article { padding-top: 4rem; }
+  .masthead, .mcp-article { padding-top: calc(var(--blog-header-height) + 2.5rem); }
   .masthead h1, .mcp-article > h1 { font-size: clamp(3rem, 15vw, 5rem); }
   .counter, .controls .count { width: 100%; margin: 0.25rem 0 0; }
 }
