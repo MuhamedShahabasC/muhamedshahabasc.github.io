@@ -17,11 +17,13 @@
 <meta property="og:image" content="https://shahabas.me/assets/images/shahabas.webp">
 <meta property="og:image:alt" content="Portrait of Muhamed Shahabas C">
 <meta property="article:published_time" content="2026-07-27T15:01:02+05:30">
+<meta property="article:modified_time" content="2026-08-13T22:01:26+05:30">
 <meta property="article:author" content="Muhamed Shahabas C">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Persistent Volumes on Azure">
 <meta name="twitter:description" content="An interactive guide to claims, storage classes, managed disks, access modes, and failure boundaries on AKS.">
 <meta name="twitter:image" content="https://shahabas.me/assets/images/shahabas.webp">
+<link rel="stylesheet" href="../assets/css/site-tokens.css">
 <link rel="stylesheet" href="../assets/css/static.css">
 <link rel="stylesheet" href="../assets/css/blog-header.css">
 <script type="application/ld+json">
@@ -34,7 +36,7 @@
   "headline": "Persistent Volumes on Azure",
   "description": "An interactive guide to Kubernetes persistent storage and failure boundaries on Azure Kubernetes Service.",
   "datePublished": "2026-07-27T15:01:02+05:30",
-  "dateModified": "2026-08-12T17:18:08+05:30",
+  "dateModified": "2026-08-13T22:01:26+05:30",
   "image": "https://shahabas.me/assets/images/shahabas.webp",
   "author": {
     "@type": "Person",
@@ -50,7 +52,7 @@
   "keywords": ["Kubernetes", "Azure", "AKS", "PersistentVolume", "PersistentVolumeClaim", "StorageClass"]
 }
 </script>
-<script src="../assets/js/app.js" defer></script>
+<script src="../assets/js/app.js?v=light-only" defer></script>
 <script src="../assets/vendor/alpine-3.15.12.min.js" defer></script>
 
 <style>
@@ -81,44 +83,10 @@
     --body-color: var(--paper);
     --container-color: var(--surface);
     --title-color: var(--text);
-    --title-color-dark: var(--text);
     --text-color: var(--text-2);
     --border-color: var(--border);
     --shadow-sm: 0 2px 8px hsla(230, 70%, 15%, 0.08);
-    --shadow-md: 0 4px 16px hsla(230, 70%, 15%, 0.12);
-    --small-font-size: .875rem;
-    --font-medium: 500;
     --z-fixed: 100;
-    --z-tooltip: 10;
-  }
-
-  body.dark-theme {
-    color-scheme: dark;
-    --paper:     hsl(230, 28%, 12%);
-    --surface:   hsl(230, 28%, 16%);
-    --surface-2: hsl(230, 25%, 20%);
-    --text:      hsl(230, 20%, 95%);
-    --text-2:    hsl(230, 8%, 75%);
-    --text-3:    hsl(230, 8%, 65%);
-    --border:    hsl(230, 20%, 25%);
-    --border-2:  hsl(230, 20%, 32%);
-    --petrol:    hsl(230, 70%, 65%);
-    --petrol-2:  hsl(230, 45%, 22%);
-    --rust:      #DB7754;
-    --rust-2:    #38201A;
-    --amber:     #DDA43C;
-    --amber-2:   #352914;
-    --sage:      #7DB06D;
-    --sage-2:    #1E2E1C;
-    --grid:      rgba(228, 234, 230, .05);
-    --body-color: var(--paper);
-    --container-color: var(--surface);
-    --title-color: var(--text);
-    --title-color-dark: var(--text);
-    --text-color: var(--text-2);
-    --border-color: var(--border);
-    --shadow-sm: 0 2px 8px hsla(0, 0%, 0%, 0.3);
-    --shadow-md: 0 4px 16px hsla(0, 0%, 0%, 0.4);
   }
 
   * { box-sizing: border-box; }
@@ -458,14 +426,16 @@
     * { transition-duration: .01ms !important; }
   }
 </style>
+<link rel="stylesheet" href="../assets/css/blog-article.css">
+<link rel="stylesheet" href="../assets/css/blog-footer.css">
 </head>
-<body x-data="siteShell" :class="{ 'dark-theme': dark }">
+<body x-data="siteShell">
 
 <a class="skip-link" href="#article-content">Skip to article</a>
 <header class="header" :class="{ 'scroll-header': scrolled }">
   <nav class="nav container" aria-label="Primary navigation">
-    <a href="../" class="nav__logo">Muhamed Shahabas C</a>
-    <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="menuOpen = false">
+    <a href="../" class="nav__logo" aria-label="Muhamed Shahabas C, home"><span>MSC</span><small>shahabas.me</small></a>
+    <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="if (menuOpen) { $refs.menuToggle.focus(); menuOpen = false }">
       <ul class="nav__list">
         <li class="nav__item">
           <a href="../#top" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a>
@@ -480,9 +450,9 @@
           <a href="../#notes" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Field notes</a>
         </li>
       </ul>
-      <button type="button" class="nav__close" @click="menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
+      <button type="button" class="nav__close" @click="$refs.menuToggle.focus(); menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
     </div>
-    <button type="button" class="nav__toggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
+    <button type="button" class="nav__toggle" x-ref="menuToggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
   </nav>
 </header>
 
@@ -858,7 +828,7 @@
     </div>
   </section>
 
-  <footer>
+  <footer class="article-notes">
     Diagrams drawn with Konva 10.3.0 (MIT), served locally &#8212; the page loads nothing from the network.<br>
     Storage-class names, default SKUs and redundancy behaviour reflect standard AKS defaults
     and change over time; confirm against <code>kubectl get sc</code> on your own cluster
@@ -867,10 +837,10 @@
 
 </main>
 
-<button class="theme-toggle" type="button" @click="toggleTheme" :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'">
-  <svg class="icon" x-show="!dark"><use href="../assets/icons.svg#moon"></use></svg>
-  <svg class="icon" x-show="dark" x-cloak><use href="../assets/icons.svg#sun"></use></svg>
-</button>
+<footer class="blog-footer">
+  <div><strong>Keep exploring the system.</strong><p>More field notes on software platforms, protocols, infrastructure, and production engineering.</p></div>
+  <nav aria-label="Article footer navigation"><a href="./">All field notes</a><a href="../#work">Work</a><a href="../#about">About</a><a href="https://medium.com/@muhamedshahabasc" target="_blank" rel="noopener noreferrer">Medium &#8599;</a></nav>
+</footer>
 
 <script src="../assets/vendor/konva-10.3.0.min.js"></script>
 
@@ -884,7 +854,7 @@
   /* ---------- design tokens ---------- */
 
   function T() {
-    var cs = getComputedStyle(document.documentElement);
+    var cs = getComputedStyle(document.body);
     function g(n) { return cs.getPropertyValue(n).trim(); }
     return {
       text: g('--text'), dim: g('--text-2'), faint: g('--text-3'),
@@ -970,7 +940,7 @@
     return g;
   }
 
-  /* ---------- bench: stage + responsive scaling + theme rebuild ---------- */
+  /* ---------- bench: stage + responsive scaling ---------- */
 
   function Bench(id, W, H, build) {
     var self = this;
@@ -1553,12 +1523,6 @@
   drawLife();
   document.getElementById('m-reset').onclick();
   document.getElementById('dr-reset').onclick();
-
-  window.addEventListener('themechange', function () {
-    lifeBench.render();
-    modeBench.render();
-    drBench.render();
-  });
 
   window.addEventListener('resize', function () {
     Bench.all.forEach(function (b) { b.fit(); });

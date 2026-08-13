@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-400.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Poppins";
+  src: url("../fonts/poppins-600.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --site-ink: #101827;
+  --site-paper: #f2e9da;
+  --site-paper-raised: #fbf7ee;
+  --site-paper-muted: #e8ddcb;
+  --site-rust: #c85c45;
+  --site-rust-soft: #f0d6cc;
+  --site-blue: #5277b7;
+  --site-blue-soft: #d9e3f4;
+  --site-yellow: #e7d85b;
+  --site-yellow-soft: #f4edb2;
+  --site-sage: #47713f;
+  --site-sage-soft: #dce9d6;
+  --site-amber: #9a6819;
+  --site-amber-soft: #f3e4c4;
+  --ink: var(--site-ink);
+  --paper: var(--site-paper);
+  --paper-raised: var(--site-paper-raised);
+  --paper-muted: var(--site-paper-muted);
+  --rust: var(--site-rust);
+  --rust-soft: var(--site-rust-soft);
+  --blue: var(--site-blue);
+  --blue-soft: var(--site-blue-soft);
+  --yellow: var(--site-yellow);
+  --yellow-soft: var(--site-yellow-soft);
+  --sage: var(--site-sage);
+  --sage-soft: var(--site-sage-soft);
+  --amber: var(--site-amber);
+  --amber-soft: var(--site-amber-soft);
+  --line: rgb(16 24 39 / 22%);
+  --line-strong: rgb(16 24 39 / 48%);
+  --grid: rgb(16 24 39 / 7%);
+  --shadow-sm: 0 6px 20px rgb(16 24 39 / 8%);
+  --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Compatibility aliases used by article diagrams and the shared shell. */
+  --header-height: 4.5rem;
+  --body-color: var(--paper);
+  --container-color: var(--paper-raised);
+  --title-color: var(--ink);
+  --text-color: rgb(16 24 39 / 72%);
+  --text-color-light: rgb(16 24 39 / 54%);
+  --border-color: var(--line);
+  --primary-color: var(--blue);
+  --z-fixed: 100;
+}

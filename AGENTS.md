@@ -30,11 +30,11 @@ Run commands from the repository root:
 - Do not add React, Vite, npm, a package manager, or another build framework.
 - Use relative internal URLs so the site remains path-prefix-safe.
 - Keep primary content in HTML. Use Alpine for page state and Lit only for isolated enhancements.
-- Preserve the shared theme contract: `localStorage["theme"]`, `light`/`dark`, `body.dark-theme`, and `themechange`.
+- The public site is light-only. Do not add a theme toggle, persist a theme preference, or introduce dark-theme branches.
 - Keep the home, blog index, and article header, color tokens, and responsive behavior consistent.
 - Public pages require a unique title and description, canonical URL, Open Graph and Twitter metadata, and appropriate JSON-LD.
 - Update `site/sitemap.xml` and `site/robots.txt` when public routes or the canonical domain change.
-- Run `scripts/verify.sh`, then browser-check affected pages at desktop and mobile sizes in light and dark modes.
+- Run `scripts/verify.sh`, then browser-check affected pages at desktop and mobile sizes in the light theme.
 - Confirm there are no console errors, horizontal overflow, broken interactions, or mojibake.
 - Never commit `.env` or expose credentials in code, logs, documentation, or responses.
 - Do not push, deploy, or publish unless the user explicitly requests it.

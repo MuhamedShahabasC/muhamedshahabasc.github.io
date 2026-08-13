@@ -31,9 +31,11 @@
     />
     <meta name="twitter:image" content="https://shahabas.me/assets/images/shahabas.webp" />
 
+    <link rel="stylesheet" href="../assets/css/site-tokens.css" />
     <link rel="stylesheet" href="../assets/css/static.css" />
     <link rel="stylesheet" href="../assets/css/blog-header.css" />
     <link rel="stylesheet" href="../assets/css/blog-index.css" />
+    <link rel="stylesheet" href="../assets/css/blog-footer.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -65,24 +67,24 @@
         ]
       }
     </script>
-    <script src="../assets/js/app.js" defer></script>
+    <script src="../assets/js/app.js?v=light-only" defer></script>
     <script src="../assets/vendor/alpine-3.15.12.min.js" defer></script>
   </head>
-  <body x-data="siteShell" :class="{ 'dark-theme': dark }">
+  <body x-data="siteShell">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="header" :class="{ 'scroll-header': scrolled }">
       <nav class="nav container" aria-label="Primary navigation">
-        <a href="../" class="nav__logo">Muhamed Shahabas C</a>
-        <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="menuOpen = false">
+        <a href="../" class="nav__logo" aria-label="Muhamed Shahabas C, home"><span>MSC</span><small>shahabas.me</small></a>
+        <div class="nav__menu" :class="{ 'show-menu': menuOpen }" :inert="mobile && !menuOpen" :aria-hidden="mobile && !menuOpen" @keydown.escape.window="if (menuOpen) { $refs.menuToggle.focus(); menuOpen = false }">
           <ul class="nav__list">
             <li class="nav__item"><a href="../#top" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#home"></use></svg> Home</a></li>
             <li class="nav__item"><a href="../#about" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#user"></use></svg> About</a></li>
             <li class="nav__item"><a href="../#work" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#briefcase"></use></svg> Work</a></li>
             <li class="nav__item"><a href="../#notes" class="nav__link"><svg class="icon nav__icon"><use href="../assets/icons.svg#file"></use></svg> Field notes</a></li>
           </ul>
-          <button type="button" class="nav__close" @click="menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
+          <button type="button" class="nav__close" @click="$refs.menuToggle.focus(); menuOpen = false" aria-label="Close navigation"><svg class="icon"><use href="../assets/icons.svg#close"></use></svg></button>
         </div>
-        <button type="button" class="nav__toggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
+        <button type="button" class="nav__toggle" x-ref="menuToggle" @click="menuOpen = true" aria-label="Open navigation" :aria-expanded="menuOpen"><svg class="icon"><use href="../assets/icons.svg#apps"></use></svg></button>
       </nav>
     </header>
 
@@ -118,9 +120,13 @@
       </a>
     </main>
 
-    <button type="button" class="theme-toggle" @click="toggleTheme" :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'">
-      <svg class="icon" x-show="!dark"><use href="../assets/icons.svg#moon"></use></svg>
-      <svg class="icon" x-show="dark" x-cloak><use href="../assets/icons.svg#sun"></use></svg>
-    </button>
+    <footer class="blog-footer">
+      <div><strong>Muhamed Shahabas C</strong><p>Software Development Engineer building platforms and the solutions on top of them.</p></div>
+      <nav aria-label="Footer navigation">
+        <a href="../#work">Work</a><a href="../#about">About</a><a href="../">Home</a>
+        <a href="https://medium.com/@muhamedshahabasc" target="_blank" rel="noopener noreferrer">Medium &#8599;</a>
+      </nav>
+    </footer>
+
   </body>
 </html>

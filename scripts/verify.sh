@@ -36,6 +36,26 @@ for page in index.html blogs/index.html blogs/kubernetes-persistent-volumes-azur
   rg -q 'rel="icon"[^>]+href="(\.\./)?favicon\.png"' "$file"
 done
 
+rg -q 'assets/css/site-tokens.css' "$dist_dir/index.html"
+for page in blogs/index.html blogs/kubernetes-persistent-volumes-azure-aks.html blogs/stateless-mcp-2026-spec-explained.html; do
+  file="$dist_dir/$page"
+  rg -q '../assets/css/site-tokens.css' "$file"
+  rg -q '../assets/css/blog-header.css' "$file"
+  rg -q '../assets/css/blog-footer.css' "$file"
+  rg -q 'class="blog-footer"' "$file"
+  rg -Fq '../assets/js/app.js?v=light-only' "$file"
+  if rg -n 'dark-theme|theme-toggle|toggleTheme|themechange' "$file"; then
+    echo "Verification failed: blog theme toggle or dark-mode state found in $page." >&2
+    exit 1
+  fi
+done
+for page in blogs/kubernetes-persistent-volumes-azure-aks.html blogs/stateless-mcp-2026-spec-explained.html; do
+  file="$dist_dir/$page"
+  rg -q '../assets/css/blog-article.css' "$file"
+  rg -q 'property="article:modified_time"' "$file"
+  rg -q '"dateModified"' "$file"
+done
+
 rg -q '<link rel="canonical" href="https://shahabas.me/"' "$dist_dir/index.html"
 rg -q '"@type": "ProfilePage"' "$dist_dir/index.html"
 rg -q '"jobTitle": "Software Development Engineer"' "$dist_dir/index.html"
