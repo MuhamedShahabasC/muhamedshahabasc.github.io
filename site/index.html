@@ -3,27 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Muhamed Shahabas C | Software Developer Engineer</title>
+    <title>Muhamed Shahabas C — Software Development Engineer</title>
     <meta
       name="description"
-      content="Portfolio of Muhamed Shahabas C, a software developer engineer building enterprise SaaS platforms, microservices, cloud infrastructure, and accessible web experiences."
+      content="Muhamed Shahabas C is a Software Development Engineer building enterprise AI platforms and the healthcare solutions that run on top of them."
     />
     <meta name="author" content="Muhamed Shahabas C" />
-    <meta
-      name="keywords"
-      content="Muhamed Shahabas C, software developer engineer, full stack developer, Alpine.js, Lit, Node.js, NestJS, Azure, Kubernetes"
-    />
     <meta name="robots" content="index,follow,max-image-preview:large" />
-    <meta name="theme-color" content="#fdfdff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#161824" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#82a8df" />
     <link rel="canonical" href="https://shahabas.me/" />
     <link rel="icon" type="image/png" sizes="96x96" href="favicon.png" />
 
     <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Muhamed Shahabas C | Software Developer Engineer" />
+    <meta property="og:title" content="Muhamed Shahabas C — Software Development Engineer" />
     <meta
       property="og:description"
-      content="Software developer engineer specializing in enterprise SaaS platforms, microservices, and cloud infrastructure."
+      content="Building enterprise AI platforms and the healthcare solutions that run on top of them—from interface to production."
     />
     <meta property="og:url" content="https://shahabas.me/" />
     <meta property="og:site_name" content="Muhamed Shahabas C" />
@@ -33,35 +28,16 @@
     <meta property="og:image:alt" content="Portrait of Muhamed Shahabas C" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Muhamed Shahabas C | Software Developer Engineer" />
+    <meta name="twitter:title" content="Muhamed Shahabas C — Software Development Engineer" />
     <meta
       name="twitter:description"
-      content="Enterprise SaaS, microservices, cloud infrastructure, and accessible web experiences."
+      content="Building enterprise AI platforms and the healthcare solutions that run on top of them—from interface to production."
     />
     <meta name="twitter:image" content="https://shahabas.me/assets/images/shahabas.webp" />
 
-    <link
-      rel="preload"
-      href="assets/images/shahabas.webp"
-      as="image"
-      type="image/webp"
-      fetchpriority="high"
-    />
-
-    <link rel="stylesheet" href="assets/css/base.css" />
-    <link rel="stylesheet" href="assets/css/layout.css" />
-    <link rel="stylesheet" href="assets/css/header.css" />
-    <link rel="stylesheet" href="assets/css/home.css" />
-    <link rel="stylesheet" href="assets/css/about.css" />
-    <link rel="stylesheet" href="assets/css/skills.css" />
-    <link rel="stylesheet" href="assets/css/services.css" />
-    <link rel="stylesheet" href="assets/css/qualification.css" />
-    <link rel="stylesheet" href="assets/css/work.css" />
-    <link rel="stylesheet" href="assets/css/contact.css" />
-    <link rel="stylesheet" href="assets/css/footer.css" />
-    <link rel="stylesheet" href="assets/css/scrollup.css" />
-    <link rel="stylesheet" href="assets/css/theme-toggle.css" />
-    <link rel="stylesheet" href="assets/css/static.css" />
+    <link rel="preload" href="assets/fonts/poppins-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/css/horizon.css" />
+    <link rel="stylesheet" href="assets/css/horizon-variant.css" />
 
     <script type="application/ld+json">
       {
@@ -79,8 +55,8 @@
             "@type": "ProfilePage",
             "@id": "https://shahabas.me/#profile",
             "url": "https://shahabas.me/",
-            "name": "Muhamed Shahabas C | Software Developer Engineer",
-            "dateModified": "2026-08-11T11:33:35+05:30",
+            "name": "Muhamed Shahabas C — Software Development Engineer",
+            "dateModified": "2026-08-13T21:20:00+05:30",
             "isPartOf": { "@id": "https://shahabas.me/#website" },
             "mainEntity": { "@id": "https://shahabas.me/#person" }
           },
@@ -89,13 +65,13 @@
             "@id": "https://shahabas.me/#person",
             "name": "Muhamed Shahabas C",
             "alternateName": ["Muhamed Shahabas", "Shahabas"],
-            "jobTitle": "Software Developer Engineer",
+            "jobTitle": "Software Development Engineer",
             "url": "https://shahabas.me/",
             "image": "https://shahabas.me/assets/images/shahabas.webp",
             "email": "mailto:muhamedshahabasc@gmail.com",
             "address": {
               "@type": "PostalAddress",
-              "addressLocality": "Bangalore",
+              "addressLocality": "Bengaluru",
               "addressRegion": "Karnataka",
               "addressCountry": "IN"
             },
@@ -105,537 +81,231 @@
               "https://medium.com/@muhamedshahabasc"
             ],
             "knowsAbout": [
-              "Alpine.js",
-              "Lit",
-              "Web Components",
+              "Enterprise AI platforms",
+              "AI agents",
+              "Healthcare technology",
+              "Multi-tenant software",
+              "Python",
+              "FastAPI",
               "TypeScript",
-              "Node.js",
-              "NestJS",
-              "Microservices",
-              "Microsoft Azure",
-              "Kubernetes"
+              "PostgreSQL",
+              "Kubernetes",
+              "Model Context Protocol"
             ]
           }
         ]
       }
     </script>
-
-    <script src="assets/js/app.js" defer></script>
-    <script src="assets/vendor/alpine-3.15.12.min.js" defer></script>
-    <script type="module" src="assets/js/dialog.js"></script>
-    <noscript>
-      <style>
-        .qualification__content,
-        .work__card {
-          display: block !important;
-        }
-      </style>
-    </noscript>
   </head>
-  <body x-data="siteShell" :class="{ 'dark-theme': dark }">
-    <a class="skip-link" href="#main-content">Skip to content</a>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="header" :class="{ 'scroll-header': scrolled }">
-      <nav class="nav container" aria-label="Primary navigation">
-        <a href="#home" class="nav__logo">Muhamed Shahabas C</a>
-
-        <div
-          class="nav__menu"
-          :class="{ 'show-menu': menuOpen }"
-          :inert="mobile && !menuOpen"
-          :aria-hidden="mobile && !menuOpen"
-          @keydown.escape.window="menuOpen = false"
-        >
-          <ul class="nav__list grid">
-            <li class="nav__item">
-              <a
-                href="#home"
-                class="nav__link"
-                :class="{ 'active-link': activeSection === 'home' }"
-                @click="menuOpen = false"
-              >
-                <svg class="icon nav__icon"><use href="assets/icons.svg#home"></use></svg>
-                Home
-              </a>
-            </li>
-            <li class="nav__item">
-              <a
-                href="#about"
-                class="nav__link"
-                :class="{ 'active-link': activeSection === 'about' }"
-                @click="menuOpen = false"
-              >
-                <svg class="icon nav__icon"><use href="assets/icons.svg#user"></use></svg>
-                About
-              </a>
-            </li>
-            <li class="nav__item">
-              <a
-                href="#skills"
-                class="nav__link"
-                :class="{ 'active-link': activeSection === 'skills' }"
-                @click="menuOpen = false"
-              >
-                <svg class="icon nav__icon"><use href="assets/icons.svg#file"></use></svg>
-                Skills
-              </a>
-            </li>
-            <li class="nav__item">
-              <a
-                href="#services"
-                class="nav__link"
-                :class="{ 'active-link': activeSection === 'services' }"
-                @click="menuOpen = false"
-              >
-                <svg class="icon nav__icon"><use href="assets/icons.svg#briefcase"></use></svg>
-                Services
-              </a>
-            </li>
-            <li class="nav__item">
-              <a
-                href="#portfolio"
-                class="nav__link"
-                :class="{ 'active-link': activeSection === 'portfolio' }"
-                @click="menuOpen = false"
-              >
-                <svg class="icon nav__icon"><use href="assets/icons.svg#image"></use></svg>
-                Portfolio
-              </a>
-            </li>
-            <li class="nav__item">
-              <a
-                href="#contact"
-                class="nav__link"
-                :class="{ 'active-link': activeSection === 'contact' }"
-                @click="menuOpen = false"
-              >
-                <svg class="icon nav__icon"><use href="assets/icons.svg#message"></use></svg>
-                Contact
-              </a>
-            </li>
-          </ul>
-
-          <button
-            type="button"
-            class="nav__close"
-            @click="menuOpen = false"
-            aria-label="Close navigation"
-          >
-            <svg class="icon"><use href="assets/icons.svg#close"></use></svg>
-          </button>
-        </div>
-
-        <button
-          type="button"
-          class="nav__toggle"
-          @click="menuOpen = true"
-          aria-label="Open navigation"
-          :aria-expanded="menuOpen"
-        >
-          <svg class="icon"><use href="assets/icons.svg#apps"></use></svg>
-        </button>
+    <header class="masthead">
+      <a class="brand" href="#top" aria-label="Muhamed Shahabas C, home">
+        <span>MSC</span>
+        <small>shahabas.me</small>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#work">Work</a>
+        <a href="#notes">Field notes</a>
+        <a href="#about">About</a>
       </nav>
+      <a class="availability" href="mailto:muhamedshahabasc@gmail.com">
+        <i aria-hidden="true"></i> Open to hard systems
+      </a>
     </header>
 
-    <main id="main-content" class="main">
-      <section class="home section" id="home">
-        <div class="home__container container grid">
-          <div class="home__content grid">
-            <div class="home__social" aria-label="Contact and social links">
-              <a href="mailto:muhamedshahabasc@gmail.com" class="home__social-icon">
-                <svg class="icon"><use href="assets/icons.svg#mail"></use></svg>
-                <span class="home__social-label">muhamedshahabasc@gmail.com</span>
-              </a>
-              <a href="tel:+919495728746" class="home__social-icon">
-                <svg class="icon"><use href="assets/icons.svg#phone"></use></svg>
-                <span class="home__social-label">+91 9495728746</span>
-              </a>
-              <a
-                href="https://medium.com/@muhamedshahabasc"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="home__social-icon"
-              >
-                <svg class="icon"><use href="assets/icons.svg#code"></use></svg>
-                <span class="home__social-label">Medium Blog</span>
-              </a>
-              <a href="blogs/" class="home__social-icon">
-                <svg class="icon"><use href="assets/icons.svg#file"></use></svg>
-                <span class="home__social-label">Blogs</span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/MuhamedShahabasC"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="home__social-icon"
-              >
-                <svg class="icon"><use href="assets/icons.svg#linkedin"></use></svg>
-                <span class="home__social-label">LinkedIn</span>
-              </a>
-              <a
-                href="https://wa.me/919495728746"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="home__social-icon"
-              >
-                <svg class="icon"><use href="assets/icons.svg#message"></use></svg>
-                <span class="home__social-label">WhatsApp</span>
-              </a>
-              <a
-                href="https://github.com/MuhamedShahabasC"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="home__social-icon"
-              >
-                <svg class="icon"><use href="assets/icons.svg#github"></use></svg>
-                <span class="home__social-label">GitHub</span>
-              </a>
-            </div>
-
-            <img
-              src="assets/images/shahabas.webp"
-              alt="Muhamed Shahabas C, software developer engineer"
-              width="1760"
-              height="1758"
-              fetchpriority="high"
-              class="home__img"
-            />
-
-            <div class="home__data">
-              <h1 class="home__title">
-                Muhamed<br />
-                <span class="home__title-line">Shahabas C</span>
-              </h1>
-              <p class="home__subtitle">Software Developer Engineer</p>
-              <p class="home__description">
-                Full-stack developer with 2+ years building enterprise SaaS platforms and
-                microservices in production. Currently developing healthcare workflow automation
-                applications at Autonomize AI, with expertise in TypeScript, Alpine.js, Lit,
-                Node.js, NestJS, and cloud infrastructure. Experienced in RBAC systems, CI/CD
-                pipelines, and rapid feature delivery.
-              </p>
-              <a href="#contact" class="button button--flex">
-                Say Hello
-                <svg class="icon button__icon"><use href="assets/icons.svg#message"></use></svg>
-              </a>
-            </div>
+    <main id="main">
+      <div class="hero-stage">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="sky-lines" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="eyebrow">Muhamed Shahabas C · Software Development Engineer</p>
+          <h1 id="hero-title">I build AI platforms from interface to production.</h1>
+          <p class="lede">
+            Enterprise AI and healthcare systems spanning agentic workflows, secure multi-tenant
+            applications, cloud infrastructure, and production operations.
+          </p>
+          <div class="hero-actions">
+            <a class="action action-primary" href="#work">Explore the work <span>↓</span></a>
+            <a class="action" href="#notes">Read field notes <span>↗</span></a>
           </div>
+        </div>
+
+        <div class="topology-world" aria-hidden="true">
+          <div class="coordinate-field"></div>
+          <div class="dependency-arcs"><i></i><i></i></div>
+          <div class="region-clusters"><i></i><i></i><i></i></div>
+          <div class="backbone backbone-one"></div>
+          <div class="backbone backbone-two"></div>
+          <div class="mesh mesh-upper">
+            <i><span><b>EDGE</b><small>shape intent</small></span></i>
+            <i><span><b>AUTH</b><small>scope policy</small></span></i>
+            <i><span><b>WORK</b><small>persist progress</small></span></i>
+          </div>
+          <div class="mesh mesh-lower">
+            <i><span><b>MODEL</b><small>run capability</small></span></i>
+            <i><span><b>STORE</b><small>hold state</small></span></i>
+            <i><span><b>TRACE</b><small>explain outcome</small></span></i><i></i>
+          </div>
+          <div class="packets"><i></i><i></i><i></i></div>
+          <div class="trace-plane"><b>99.99</b><i></i><i></i><i></i></div>
+          <div class="gateway"><i></i><i></i><i></i><i></i></div>
+        </div>
+
+      </section>
+      </div>
+
+      <div class="proof" aria-label="Technical focus">
+        <span>AI agents</span><i></i><span>Healthcare technology</span><i></i>
+        <span>Multi-tenant SaaS</span><i></i><span>Kubernetes</span><i></i>
+        <span>End-to-end ownership</span>
+      </div>
+
+      <section class="work section" id="work">
+        <header class="section-head">
+          <p class="kicker">What I work on</p>
+          <h2>One system,<br />across every layer.</h2>
+          <p>
+            I work where product, platform, infrastructure, security, and customer operations
+            meet—turning ambiguous requirements into reusable systems and running software.
+          </p>
+        </header>
+
+        <article class="chapter chapter-rust">
+          <p class="chapter-no">01 / Platform</p>
+          <div>
+            <h3>AI that survives the demo</h3>
+            <p class="chapter-lede">
+              I build agents, tools, multi-step workflows, and model orchestration with the
+              durable execution and evaluation needed for real operational use.
+            </p>
+            <dl>
+              <div><dt>Systems</dt><dd>Agents · tools · workflows · human-in-the-loop</dd></div>
+              <div><dt>Quality</dt><dd>Prompt versioning · evaluation · optimization · recovery</dd></div>
+              <div><dt>Tools</dt><dd>Temporal · DSPy · GEPA · MCP · LLMs</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="chapter chapter-blue">
+          <p class="chapter-no">02 / Solutions</p>
+          <div>
+            <h3>Evidence into action</h3>
+            <p class="chapter-lede">
+              I build secure healthcare applications that turn clinical and administrative
+              documents into structured evidence, review workflows, and decision support.
+            </p>
+            <dl>
+              <div><dt>Workflows</dt><dd>Prior authorization · clinical review · claims · care management</dd></div>
+              <div><dt>Trust</dt><dd>Auditability · tenant isolation · access control</dd></div>
+              <div><dt>Methods</dt><dd>OCR · extraction · validation · evidence presentation</dd></div>
+            </dl>
+          </div>
+        </article>
+
+        <article class="chapter chapter-yellow">
+          <p class="chapter-no">03 / Production</p>
+          <div>
+            <h3>Closing the production loop</h3>
+            <p class="chapter-lede">
+              I own the path from strongly typed interfaces and backend services through cloud
+              delivery, Kubernetes operations, runtime diagnosis, and production validation.
+            </p>
+            <dl>
+              <div><dt>Product</dt><dd>TypeScript · shared UI systems · data-heavy workflows</dd></div>
+              <div><dt>Services</dt><dd>Python · FastAPI · PostgreSQL · SDKs · APIs</dd></div>
+              <div><dt>Delivery</dt><dd>Kubernetes · Helm · Argo CD · Azure · CI/CD</dd></div>
+            </dl>
+          </div>
+        </article>
+      </section>
+
+      <section class="notes section" id="notes">
+        <div class="notes-intro">
+          <p class="kicker">Field notes</p>
+          <h2>Practical notes to help others build stronger mental models.</h2>
+        </div>
+        <div class="note-list">
+          <a href="blogs/stateless-mcp-2026-spec-explained.html">
+            <span>002 · Model Context Protocol · Aug 2026</span>
+            <h3>Stateless MCP: the request carries the context</h3>
+            <p>Self-describing requests, explicit handles, routing, and cacheable boundaries.</p>
+            <b aria-hidden="true">↗</b>
+          </a>
+          <a href="blogs/kubernetes-persistent-volumes-azure-aks.html">
+            <span>001 · Kubernetes + Azure · Jul 2026</span>
+            <h3>A claim is a request. A volume is the thing.</h3>
+            <p>Persistent storage on AKS without losing the failure boundaries that matter.</p>
+            <b aria-hidden="true">↗</b>
+          </a>
         </div>
       </section>
 
       <section class="about section" id="about">
-        <h2 class="section__title">About me</h2>
-        <span class="section__subtitle">My introduction</span>
-        <div class="about__container container grid">
+        <div class="portrait-wrap">
           <img
             src="assets/images/shahabas.webp"
-            alt="Portrait of Muhamed Shahabas C"
+            alt="Muhamed Shahabas C"
             width="1760"
             height="1758"
             loading="lazy"
-            class="about__img"
           />
-          <div class="about__data">
-            <div class="about__info grid">
-              <div class="about__box">
-                <svg class="icon about__icon"><use href="assets/icons.svg#check"></use></svg>
-                <h3 class="about__title">Experience</h3>
-                <span class="about__subtitle">2+ Years</span>
-              </div>
-              <div class="about__box">
-                <svg class="icon about__icon"><use href="assets/icons.svg#briefcase"></use></svg>
-                <h3 class="about__title">Completed</h3>
-                <span class="about__subtitle">10+ Projects</span>
-              </div>
-              <div class="about__box">
-                <svg class="icon about__icon"><use href="assets/icons.svg#code"></use></svg>
-                <h3 class="about__title">Technologies</h3>
-                <span class="about__subtitle">15+ Skills</span>
-              </div>
-            </div>
-            <p class="about__description">
-              Software Developer Engineer specializing in enterprise SaaS platforms and
-              microservices architecture. Currently at Autonomize AI, Bangalore, where I architect
-              RBAC systems, develop company-wide SDKs, and implement end-to-end observability using
-              OpenTelemetry. I build scalable solutions with TypeScript, Alpine.js, Lit, Node.js,
-              and NestJS, while managing cloud infrastructure on Azure and AWS. Passionate about
-              delivering production-ready features rapidly through robust CI/CD pipelines and
-              modern development practices.
-            </p>
-            <a
-              href="https://drive.google.com/file/d/1tWK0WmGo5Y097LXnTWll-bXXXvmc4tKH/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="button button--flex"
-            >
-              My resume
-              <svg class="icon button__icon"><use href="assets/icons.svg#file"></use></svg>
-            </a>
-          </div>
+          <span>Software Development Engineer / Bengaluru</span>
         </div>
-      </section>
-
-      <section class="skills section" id="skills">
-        <h2 class="section__title">Skills</h2>
-        <span class="section__subtitle">My technical expertise</span>
-        <div class="skills__container container grid">
-          <article class="skills__content">
-            <h3 class="skills__title">Frontend Technologies</h3>
-            <div class="skills__box">
-              <div class="skills__group">
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Alpine.js</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Lit</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">TypeScript</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Web Components</h3></div>
-              </div>
-              <div class="skills__group">
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">JavaScript</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">HTML &amp; CSS</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">TailwindCSS</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">SASS</h3></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="skills__content">
-            <h3 class="skills__title">Backend &amp; Database</h3>
-            <div class="skills__box">
-              <div class="skills__group">
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Node.js</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">NestJS</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Python</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Microservices</h3></div>
-              </div>
-              <div class="skills__group">
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">MongoDB</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">PostgreSQL</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">MSSQL</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Apache Kafka</h3></div>
-              </div>
-            </div>
-          </article>
-
-          <article class="skills__content">
-            <h3 class="skills__title">Cloud &amp; DevOps</h3>
-            <div class="skills__box">
-              <div class="skills__group">
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Azure Portal</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">AWS</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Docker</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Kubernetes</h3></div>
-              </div>
-              <div class="skills__group">
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">GitHub Actions</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">Azure Pipelines</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">OpenTelemetry</h3></div>
-                <div class="skills__data"><svg class="icon"><use href="assets/icons.svg#check"></use></svg><h3 class="skills__name">nginx</h3></div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="services section" id="services">
-        <h2 class="section__title">Services</h2>
-        <span class="section__subtitle">What I offer</span>
-        <div class="services__container container grid">
-          <article class="services__content">
-            <svg class="icon services__icon"><use href="assets/icons.svg#code"></use></svg>
-            <h3 class="services__title">Full Stack Development</h3>
-            <p class="services__description">
-              End-to-end web application development with modern technologies and production-ready practices.
-            </p>
-            <button type="button" class="services__button service-trigger" data-dialog="full-stack-dialog">
-              Learn More <svg class="icon services__button-icon"><use href="assets/icons.svg#arrow-right"></use></svg>
-            </button>
-          </article>
-          <article class="services__content">
-            <svg class="icon services__icon"><use href="assets/icons.svg#grid"></use></svg>
-            <h3 class="services__title">Frontend Development</h3>
-            <p class="services__description">
-              Fast, accessible, responsive interfaces with semantic HTML, Alpine.js, Lit, and modern design systems.
-            </p>
-            <button type="button" class="services__button service-trigger" data-dialog="frontend-dialog">
-              Learn More <svg class="icon services__button-icon"><use href="assets/icons.svg#arrow-right"></use></svg>
-            </button>
-          </article>
-          <article class="services__content">
-            <svg class="icon services__icon"><use href="assets/icons.svg#server"></use></svg>
-            <h3 class="services__title">Backend Development</h3>
-            <p class="services__description">
-              Scalable server-side solutions with Node.js, databases, and cloud infrastructure.
-            </p>
-            <button type="button" class="services__button service-trigger" data-dialog="backend-dialog">
-              Learn More <svg class="icon services__button-icon"><use href="assets/icons.svg#arrow-right"></use></svg>
-            </button>
-          </article>
-        </div>
-
-        <site-dialog id="full-stack-dialog">
-          <h3 class="services__modal-title">Full Stack Development</h3>
-          <p class="services__modal-description">
-            Enterprise-grade SaaS platform development with microservices architecture, robust RBAC systems,
-            end-to-end observability, and seamless CI/CD integration.
+        <div class="about-copy">
+          <p class="kicker">About</p>
+          <h2>From platform to solutions.</h2>
+          <p class="big-copy">
+            I’m a Software Development Engineer building the platform and the solutions that run
+            on top of it.
           </p>
-          <ul class="services__modal-services grid">
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Enterprise SaaS platforms with multi-tenant architecture and hierarchical RBAC systems.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Microservices with Node.js, NestJS, and TypeScript for scalable backend systems.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Company-wide SDK development with interactive playgrounds and package publishing.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">CI/CD pipelines with GitHub Actions and Azure Pipelines.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">End-to-end observability using OpenTelemetry and custom logging SDKs.</p></li>
-          </ul>
-        </site-dialog>
-
-        <site-dialog id="frontend-dialog">
-          <h3 class="services__modal-title">Frontend Development</h3>
-          <p class="services__modal-description">
-            Progressive, standards-based frontend architecture with Alpine.js, Lit, TypeScript, and semantic HTML.
+          <p>
+            I work across the full path: reusable AI capabilities, secure product experiences,
+            cloud delivery, and production operations. That means understanding the operational
+            problem, extending the platform where needed, and carrying the solution through to a
+            verified deployment.
           </p>
-          <ul class="services__modal-services grid">
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Accessible static-first interfaces enhanced with Alpine.js state.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Reusable Web Components built with Lit and browser-native APIs.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Responsive UI development with SASS, TailwindCSS, and custom design systems.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Real-time features with Socket.io for live updates and collaboration.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Performance optimization, progressive enhancement, and comprehensive browser testing.</p></li>
-          </ul>
-        </site-dialog>
-
-        <site-dialog id="backend-dialog">
-          <h3 class="services__modal-title">Backend Development</h3>
-          <p class="services__modal-description">
-            Enterprise-grade backend systems with microservices architecture, advanced authentication, and cloud infrastructure.
-          </p>
-          <ul class="services__modal-services grid">
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Microservices with Node.js, NestJS, and async patterns.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">MongoDB, PostgreSQL, MSSQL, and Redis data systems.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">RBAC systems with Keycloak and fine-grained API access control.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Enterprise integrations including SharePoint, Azure AD, and payment gateways.</p></li>
-            <li class="services__modal-service"><svg class="icon services__modal-icon"><use href="assets/icons.svg#check"></use></svg><p class="services__modal-info">Apache Kafka and event-driven architecture for distributed systems.</p></li>
-          </ul>
-        </site-dialog>
-      </section>
-
-      <section class="qualification section" x-data="{ tab: 'experience' }">
-        <h2 class="section__title">Qualification</h2>
-        <span class="section__subtitle">My personal journey</span>
-        <div class="qualification__container container">
-          <div class="qualification__tabs work__filters" role="tablist" aria-label="Qualification type">
-            <button id="tab-experience" type="button" class="qualification__button work__item" :class="{ 'active-work': tab === 'experience' }" @click="tab = 'experience'" @keydown.right.prevent="tab = 'education'; $nextTick(() => document.getElementById('tab-education').focus())" role="tab" aria-controls="panel-experience" :aria-selected="tab === 'experience'" :tabindex="tab === 'experience' ? 0 : -1">Experience</button>
-            <button id="tab-education" type="button" class="qualification__button work__item" :class="{ 'active-work': tab === 'education' }" @click="tab = 'education'" @keydown.left.prevent="tab = 'experience'; $nextTick(() => document.getElementById('tab-experience').focus())" role="tab" aria-controls="panel-education" :aria-selected="tab === 'education'" :tabindex="tab === 'education' ? 0 : -1">Education</button>
+          <div class="timeline">
+            <p><span class="timeline-label">Platform</span><span>Build shared AI infrastructure, services, SDKs, and developer workflows.</span></p>
+            <p><span class="timeline-label">Solutions</span><span>Apply those capabilities to healthcare and enterprise operations.</span></p>
+            <p><span class="timeline-label">Ownership</span><span>Deploy, diagnose, and validate the result in production.</span></p>
           </div>
-          <div class="qualification__sections">
-            <div id="panel-experience" class="qualification__content" :class="{ 'qualification__content-active': tab === 'experience' }" role="tabpanel" aria-labelledby="tab-experience">
-              <div class="qualification__data"><div><h3 class="qualification__title">Software Developer Engineer</h3><span class="qualification__subtitle">Autonomize AI, Bangalore</span><div class="qualification__calender">Feb 2024 - Present</div></div><div><span class="qualification__rounder"></span><span class="qualification__line"></span></div></div>
-              <div class="qualification__data"><div></div><div><span class="qualification__rounder"></span><span class="qualification__line"></span></div><div><h3 class="qualification__title">Full Stack Developer</h3><span class="qualification__subtitle">The Capital Hub, Bangalore</span><div class="qualification__calender">Aug 2023 - Feb 2024</div></div></div>
-            </div>
-            <div id="panel-education" class="qualification__content" :class="{ 'qualification__content-active': tab === 'education' }" role="tabpanel" aria-labelledby="tab-education">
-              <div class="qualification__data"><div><h3 class="qualification__title">Bachelor of Computer Applications</h3><span class="qualification__subtitle">Indira Gandhi National Open University</span><div class="qualification__calender">Aug 2024 - Present</div></div><div><span class="qualification__rounder"></span><span class="qualification__line"></span></div></div>
-              <div class="qualification__data"><div></div><div><span class="qualification__rounder"></span><span class="qualification__line"></span></div><div><h3 class="qualification__title">MERN Stack Bootcamp</h3><span class="qualification__subtitle">Brototype, Calicut</span><div class="qualification__calender">Sep 2022 - Aug 2023</div></div></div>
-            </div>
-          </div>
+          <a
+            class="text-link"
+            href="https://drive.google.com/file/d/1tWK0WmGo5Y097LXnTWll-bXXXvmc4tKH/view?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+          >View résumé ↗</a>
         </div>
       </section>
 
-      <section class="work section" id="portfolio" x-data="{ filter: 'all', expanded: false }">
-        <h2 class="section__title">Portfolio</h2>
-        <span class="section__subtitle">Most recent works</span>
-        <div class="work__filters" role="group" aria-label="Filter projects">
-          <button type="button" class="work__item" :class="{ 'active-work': filter === 'all' }" @click="filter = 'all'; expanded = false">all</button>
-          <button type="button" class="work__item" :class="{ 'active-work': filter === 'Full Stack' }" @click="filter = 'Full Stack'; expanded = false">Full Stack</button>
-          <button type="button" class="work__item" :class="{ 'active-work': filter === 'Frontend' }" @click="filter = 'Frontend'; expanded = false">Frontend</button>
-        </div>
-        <div class="work__container container grid">
-          <article class="work__card" data-category="Full Stack" x-show="filter === 'all' || filter === 'Full Stack'">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/hostel-management.webp" alt="Hostel Management System interface" width="400" height="232" loading="lazy" class="work__img" /><span class="work__type-badge">Platform</span></div>
-            <h3 class="work__title">Hostel Management System</h3>
-            <p class="work__description">Comprehensive hostel management platform with student, admin, and staff interfaces, role-based access, room allocation, issue tracking, real-time communication, and payment integration.</p>
-          </article>
-          <article class="work__card" data-category="Full Stack" x-show="filter === 'all' || filter === 'Full Stack'">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/timeless-watches.webp" alt="Timeless Watches e-commerce interface" width="400" height="189" loading="lazy" class="work__img" /><span class="work__type-badge">E-commerce</span></div>
-            <h3 class="work__title">Timeless Watches E-commerce</h3>
-            <p class="work__description">Luxury-watch e-commerce application with separate admin and user interfaces, authentication, order tracking, invoice generation, and PayPal integration.</p>
-          </article>
-          <article class="work__card" data-category="Full Stack" x-show="filter === 'all' || filter === 'Full Stack'">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/neet-platform.jpg" alt="Study materials representing the NEET preparation platform" width="800" height="533" loading="lazy" class="work__img" /><span class="work__type-badge">EdTech</span><span class="work__placeholder-badge">Confidential Project</span></div>
-            <h3 class="work__title">NEET Exam Preparation Platform</h3>
-            <p class="work__description">EdTech platform with a realistic mock-exam environment, course sales, a question-bank marketplace, timed assessments, analytics, and separate admin and student portals.</p>
-          </article>
-          <article class="work__card" data-category="Full Stack" x-show="filter === 'all' || filter === 'Full Stack'">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/bus-booking.jpg" alt="Bus representing the booking platform" width="800" height="533" loading="lazy" class="work__img" /><span class="work__type-badge">Booking</span><span class="work__placeholder-badge">Confidential Project</span></div>
-            <h3 class="work__title">Bus Booking Application</h3>
-            <p class="work__description">Production bus-booking platform with PhonePe integration and multiple vendor APIs for real-time seats, booking management, and dynamic pricing.</p>
-          </article>
-          <article class="work__card" data-category="Full Stack" x-show="filter === 'all' || filter === 'Full Stack'">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/founder-network.jpg" alt="Business meeting representing the entrepreneur network" width="800" height="600" loading="lazy" class="work__img" /><span class="work__type-badge">Social</span><span class="work__placeholder-badge">Confidential Project</span></div>
-            <h3 class="work__title">Entrepreneur-Investor Network</h3>
-            <p class="work__description">Social network connecting entrepreneurs and investors with real-time messaging, connections, posts, notifications, comments, and reactions.</p>
-          </article>
-          <article class="work__card" data-category="Full Stack" x-show="filter === 'all' || filter === 'Full Stack'">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/student-collaboration.jpg" alt="Collaborating students representing the project platform" width="800" height="534" loading="lazy" class="work__img" /><span class="work__type-badge">Social</span><span class="work__placeholder-badge">Confidential Project</span></div>
-            <h3 class="work__title">Student Project Collaboration Platform</h3>
-            <p class="work__description">Student network for sharing ideas and forming project teams through posts, requirements, invitations, reviews, and team-management tools.</p>
-          </article>
-          <article class="work__card" data-category="Frontend" x-show="filter === 'Frontend' || (filter === 'all' && expanded)">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/forex-advisory.jpg" alt="Market chart representing the forex advisory website" width="800" height="533" loading="lazy" class="work__img" /><span class="work__type-badge">Website</span><span class="work__placeholder-badge">Confidential Project</span></div>
-            <h3 class="work__title">Forex Trading Advisory Website</h3>
-            <p class="work__description">Responsive corporate website presenting advisory services, market insights, and client resources with polished motion and optimized performance.</p>
-          </article>
-          <article class="work__card" data-category="Frontend" x-show="filter === 'Frontend' || (filter === 'all' && expanded)">
-            <div class="work__img-wrapper"><img src="assets/images/portfolio/food-delivery.jpg" alt="Prepared food representing the delivery platform" width="800" height="533" loading="lazy" class="work__img" /><span class="work__type-badge">Website</span><span class="work__placeholder-badge">Confidential Project</span></div>
-            <h3 class="work__title">Homemade Food Delivery Platform</h3>
-            <p class="work__description">B2B platform connecting homemade-food providers with offices through menu browsing, ordering, and corporate delivery scheduling.</p>
-          </article>
-        </div>
-        <div class="work__show-more" x-show="filter === 'all'">
-          <button type="button" class="button button--flex work__show-more-btn" @click="expanded = !expanded" x-text="expanded ? 'Show Less' : 'Show More Projects'">Show More Projects</button>
-        </div>
-      </section>
-
-      <section class="contact section" id="contact">
-        <h2 class="section__title">Get in touch</h2>
-        <span class="section__subtitle">Let's connect</span>
-        <div class="contact__container container">
-          <div class="contact__cards">
-            <article class="contact__card"><svg class="icon contact__card-icon"><use href="assets/icons.svg#mail"></use></svg><h3 class="contact__card-title">Email</h3><span class="contact__card-data">muhamedshahabasc@gmail.com</span><a href="mailto:muhamedshahabasc@gmail.com" class="contact__button">Write me <svg class="icon contact__button-icon"><use href="assets/icons.svg#arrow-right"></use></svg></a></article>
-            <article class="contact__card"><svg class="icon contact__card-icon"><use href="assets/icons.svg#phone"></use></svg><h3 class="contact__card-title">Mobile</h3><span class="contact__card-data">+91 9495728746</span><a href="tel:+919495728746" class="contact__button">Call me <svg class="icon contact__button-icon"><use href="assets/icons.svg#arrow-right"></use></svg></a></article>
-            <article class="contact__card"><svg class="icon contact__card-icon"><use href="assets/icons.svg#home"></use></svg><h3 class="contact__card-title">Location</h3><span class="contact__card-data">Bangalore, Karnataka</span><a href="https://maps.app.goo.gl/GcJaPenh7mTaT4Ph6" target="_blank" rel="noopener noreferrer" class="contact__button">Reach me <svg class="icon contact__button-icon"><use href="assets/icons.svg#arrow-right"></use></svg></a></article>
-          </div>
-        </div>
+      <section class="contact section">
+        <p class="kicker">Start a conversation</p>
+        <h2>Have a platform that needs to become simpler, safer, or easier to ship?</h2>
+        <a class="email" href="mailto:muhamedshahabasc@gmail.com">muhamedshahabasc@gmail.com ↗</a>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="footer__container container">
-        <p class="footer__title">Muhamed Shahabas C</p>
-        <ul class="footer__list">
-          <li><a href="#about" class="footer__link">About</a></li>
-          <li><a href="#portfolio" class="footer__link">Portfolio</a></li>
-          <li><a href="blogs/" class="footer__link">Blogs</a></li>
-          <li><a href="#contact" class="footer__link">Contact</a></li>
-        </ul>
-        <div class="footer__social">
-          <a href="mailto:muhamedshahabasc@gmail.com" class="footer__social-icon" aria-label="Email"><svg class="icon"><use href="assets/icons.svg#mail"></use></svg></a>
-          <a href="tel:+919495728746" class="footer__social-icon" aria-label="Phone"><svg class="icon"><use href="assets/icons.svg#phone"></use></svg></a>
-          <a href="https://medium.com/@muhamedshahabasc" target="_blank" rel="noopener noreferrer" class="footer__social-icon" aria-label="Medium"><svg class="icon"><use href="assets/icons.svg#code"></use></svg></a>
-          <a href="https://www.linkedin.com/in/MuhamedShahabasC" target="_blank" rel="noopener noreferrer" class="footer__social-icon" aria-label="LinkedIn"><svg class="icon"><use href="assets/icons.svg#linkedin"></use></svg></a>
-          <a href="https://github.com/MuhamedShahabasC" target="_blank" rel="noopener noreferrer" class="footer__social-icon" aria-label="GitHub"><svg class="icon"><use href="assets/icons.svg#github"></use></svg></a>
-        </div>
-        <span class="footer__copy">© Muhamed Shahabas C. All rights reserved.</span>
+    <footer class="site-footer">
+      <div class="footer-intro">
+        <a class="footer-name" href="#top">Muhamed Shahabas C</a>
+        <p>Software Development Engineer building platforms and the solutions on top of them.</p>
       </div>
+      <nav aria-label="Footer navigation">
+        <a href="#work">Work</a>
+        <a href="#notes">Field notes</a>
+        <a href="#about">About</a>
+        <a href="blogs/">Blog</a>
+      </nav>
+      <div class="footer-social" aria-label="External profiles">
+        <a href="https://github.com/MuhamedShahabasC" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/MuhamedShahabasC" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+        <a href="https://medium.com/@muhamedshahabasc" target="_blank" rel="noopener noreferrer">Medium ↗</a>
+        <a href="https://drive.google.com/file/d/1tWK0WmGo5Y097LXnTWll-bXXXvmc4tKH/view?usp=sharing" target="_blank" rel="noopener noreferrer">Résumé ↗</a>
+      </div>
+      <p class="footer-copy">© 2026 Muhamed Shahabas C</p>
     </footer>
-
-    <a href="#home" class="scrollup" :class="{ 'show-scroll': showScrollUp }" aria-label="Back to top">
-      <svg class="icon scrollup__icon"><use href="assets/icons.svg#arrow-up"></use></svg>
-    </a>
-
-    <button
-      type="button"
-      class="theme-toggle"
-      @click="toggleTheme"
-      :aria-label="dark ? 'Switch to light theme' : 'Switch to dark theme'"
-    >
-      <svg class="icon" x-show="!dark"><use href="assets/icons.svg#moon"></use></svg>
-      <svg class="icon" x-show="dark" x-cloak><use href="assets/icons.svg#sun"></use></svg>
-    </button>
+    <script src="assets/js/horizon.js"></script>
   </body>
 </html>
