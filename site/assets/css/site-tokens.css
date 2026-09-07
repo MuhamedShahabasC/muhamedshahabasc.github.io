@@ -7,6 +7,14 @@
 }
 
 @font-face {
+  font-family: "Syne";
+  src: url("../fonts/syne-400-800.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Poppins";
   src: url("../fonts/poppins-500.woff2") format("woff2");
   font-style: normal;
@@ -57,6 +65,7 @@
   --grid: rgb(16 24 39 / 7%);
   --shadow-sm: 0 6px 20px rgb(16 24 39 / 8%);
   --font-sans: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-portfolio: "Syne", "Poppins", system-ui, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 

@@ -37,6 +37,21 @@ for page in index.html blogs/index.html blogs/kubernetes-persistent-volumes-azur
 done
 
 rg -q 'assets/css/site-tokens.css' "$dist_dir/index.html"
+rg -q 'id="portfolio-platform-canvas"' "$dist_dir/index.html"
+rg -q 'id="portfolio-prompt-canvas"' "$dist_dir/index.html"
+rg -q 'id="portfolio-tools-canvas"' "$dist_dir/index.html"
+rg -q 'id="portfolio-production-canvas"' "$dist_dir/index.html"
+rg -q 'assets/vendor/konva-10.3.0.min.js' "$dist_dir/index.html"
+rg -q 'class="social-icon-roll"' "$dist_dir/index.html"
+rg -q '\["PydanticAI", "Temporal", "FastAPI"\]' "$dist_dir/assets/js/horizon.js"
+rg -q 'label: "Durable"' "$dist_dir/assets/js/horizon.js"
+rg -q 'flex: 0 0 auto' "$dist_dir/assets/css/horizon.css"
+rg -q '<h3>Closing the production loop</h3>' "$dist_dir/index.html"
+rg -q 'Built with PydanticAI, Temporal, and FastAPI' "$dist_dir/index.html"
+rg -q '<span>DSPy</span><span>GEPA</span><span>FastAPI</span>' "$dist_dir/index.html"
+rg -q '<span>PydanticAI</span><span>MCP SDK</span><span>SQLAlchemy</span>' "$dist_dir/index.html"
+rg -q 'Agent tools route requests to APIs, data, storage, and business operations' "$dist_dir/index.html"
+rg -q '<span>FastAPI</span><span>SQLAlchemy</span><span>Pydantic</span>' "$dist_dir/index.html"
 for page in blogs/index.html blogs/kubernetes-persistent-volumes-azure-aks.html blogs/stateless-mcp-2026-spec-explained.html; do
   file="$dist_dir/$page"
   rg -q '../assets/css/site-tokens.css' "$file"
@@ -79,7 +94,11 @@ printf '%s  %s\n' \
   "aa41150f5240714d45b3eee34be60c8eccf4bbfa6cd875b227d60e293403a24d" \
   "$dist_dir/assets/vendor/lit-css-tag-2.1.2.min.js" \
   "f17dfd9abb8c95953f09893cfefaaf9e09b9205012f6a2e3976dc946c89f6d7d" \
-  "$dist_dir/assets/vendor/konva-10.3.0.min.js" |
+  "$dist_dir/assets/vendor/konva-10.3.0.min.js" \
+  "53195c9797e7ce7bf9d7fa9242b08209e57f46de4c9dac126a6494fa780e3346" \
+  "$dist_dir/assets/vendor/lenis-1.3.26.min.js" \
+  "cfff412005eed2f0152d1c110c78ac564642b943e64322fbd687083177d6fa70" \
+  "$dist_dir/assets/fonts/syne-400-800.woff2" |
   shasum -a 256 -c
 
 if rg -n 'â|Ã|Â|�' "$dist_dir" --glob '*.html' --glob '*.js' \
