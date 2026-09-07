@@ -4,5 +4,6 @@
 - Lit 3.3.3 browser bundle — `d4292342cd1c591a0b75fc5108be17dfbfd54311c95f26a02b9d955d406958fe`
 - Lit reactive-element CSS support 2.1.2 — `aa41150f5240714d45b3eee34be60c8eccf4bbfa6cd875b227d60e293403a24d`
 - Konva 10.3.0 — `f17dfd9abb8c95953f09893cfefaaf9e09b9205012f6a2e3976dc946c89f6d7d`
+- Lenis 1.3.26 — `53195c9797e7ce7bf9d7fa9242b08209e57f46de4c9dac126a6494fa780e3346`
 
-Both libraries are pinned and served locally. Their licenses are stored beside the bundles.
+These libraries are pinned and served locally. Their licenses are stored beside the bundles.
